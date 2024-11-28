@@ -2,7 +2,7 @@ import React from "react";
 import TransparentImage from '../../assets/Transparent-logo.png'
 const Navbar = () => {
   return (
-    <div className="w-screen fixed px-[25px] h-[90px] flex justify-between lg:justify-between items-center bg-transparent">
+    <div className="w-screen fixed px-[25px] lg:px-[80px] h-[90px] flex justify-between lg:justify-between items-center bg-transparent">
       <div className="w-3/4 lg:w-1/4 flex items-center">
         <img src={TransparentImage} alt="" className="w-[80px] h-[80px]" />
         <h4 className="text-[#FD0C0C] text-nowrap font-semibold">
