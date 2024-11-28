@@ -8,11 +8,4 @@
     padding: 0;
     box-sizing: border-box;
 }
-body{
-    height: 100vh;
-    width: 100%;
-    background: url('./assets/pexels-huuhuynh-28922850.jpg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
+
