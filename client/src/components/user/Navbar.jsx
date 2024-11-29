@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className={`w-screen px-[25px] absolute lg:px-[80px] h-[90px] flex justify-between lg:justify-between items-center ${menuOpen ? "bg-white" : "bg-transparent"} lg:bg-transparent`}>
+      <div className={`w-screen px-[25px] absolute z-20 lg:px-[80px] h-[90px] flex justify-between lg:justify-between items-center ${menuOpen ? "bg-white" : "bg-transparent"} lg:bg-transparent`}>
         {/* Navbar left starts */}
         <div className="w-3/4 lg:w-1/4 flex items-center">
           <img src={TransparentImage} alt="" className="w-[80px] h-[80px]" />
@@ -71,7 +71,7 @@ const Navbar = () => {
       </div>
       {/* Navbar toggler menu */}
       <div
-        className={`navbar-toggler py-[16px] absolute z-10 transition-all duration-500 ease-in-out lg:hidden bg-white w-full ${
+        className={`navbar-toggler py-[16px] absolute top-16 z-10 transition-all duration-500 ease-in-out lg:hidden bg-white w-full ${
           menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
