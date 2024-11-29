@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className={`w-screen px-[25px] lg:px-[80px] h-[90px] flex justify-between lg:justify-between items-center ${menuOpen ? "bg-white" : "bg-transparent"} lg:bg-transparent`}>
+      <div className={`w-screen px-[25px] absolute lg:px-[80px] h-[90px] flex justify-between lg:justify-between items-center ${menuOpen ? "bg-white" : "bg-transparent"} lg:bg-transparent`}>
         {/* Navbar left starts */}
         <div className="w-3/4 lg:w-1/4 flex items-center">
           <img src={TransparentImage} alt="" className="w-[80px] h-[80px]" />
