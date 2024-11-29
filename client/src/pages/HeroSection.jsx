@@ -12,7 +12,9 @@ const HeroSection = () => {
           Start one of our 1000 high quality courses from the world’s leading
           experts today! Registration Here
         </p>
-        <button className="mt-10 px-10 bg-[#FE0000] py-5 text-white rounded">Registration Now !</button>
+        <button className="mt-10 px-10 bg-[#FE0000] hover:bg-[#581F27] transition-all duration-200 py-5 text-white rounded">
+          Registration Now !
+        </button>
       </div>
     </div>
   );
