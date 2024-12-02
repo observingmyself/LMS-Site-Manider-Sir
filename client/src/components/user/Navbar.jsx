@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TransparentImage from "../../assets/images/Transparent-logo.png";
+import {NavLink} from 'react-router'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,7 +11,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className={`w-screen px-[25px] absolute z-20 lg:px-[80px] h-[90px] flex justify-between lg:justify-between items-center ${menuOpen ? "bg-white" : "bg-transparent"} lg:bg-transparent`}>
+      <div className={`w-screen px-[25px] fixed z-20 lg:px-[80px] h-[90px] flex justify-between lg:justify-between items-center ${menuOpen ? "bg-white" : "bg-transparent"} lg:bg-transparent`}>
         {/* Navbar left starts */}
         <div className="w-3/4 lg:w-1/4 flex items-center">
           <img src={TransparentImage} alt="" className="w-[80px] h-[80px]" />
@@ -32,39 +33,39 @@ const Navbar = () => {
           </div>
           <ul className="hidden lg:flex justify-evenly w-1/4 lg:w-3/4">
             <li>
-              <a href="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
+              <NavLink to="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
                 Home
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
+              <NavLink to="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
                 About
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
+              <NavLink to="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
                 Courses
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
+              <NavLink to="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
                 Blog
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
+              <NavLink to="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
                 Portfolio
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
+              <NavLink to="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
                 Contact
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
+              <NavLink to="" className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]">
                 Login
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -77,39 +78,39 @@ const Navbar = () => {
       >
         <ul className="flex gap-4 mt-1 flex-col justify-evenly items-center w-full">
           <li>
-            <a href="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
+            <NavLink to="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
               Home
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
+            <NavLink to="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
               About
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
+            <NavLink to="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
               Courses
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
+            <NavLink to="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
               Blog
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
+            <NavLink to="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
               Portfolio
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
+            <NavLink to="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
               Contact
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
+            <NavLink to="" className=" text-slate-600 hover:text-[#FE0000] text-[16px]">
               Login
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
