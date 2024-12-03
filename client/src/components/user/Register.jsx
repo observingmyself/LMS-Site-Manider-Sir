@@ -41,11 +41,11 @@ const Register = () => {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-[#F8FAFC]">
-      <h1 className="text-center  mt-28 text-3xl mb-8 font-bold p-7 w-full bg-[#d8e3f2]">
+      {/* <h1 className="text-center  mt-28 text-3xl mb-8 font-bold p-7 w-full bg-[#d8e3f2]">
         Register
-      </h1>
+      </h1> */}
 
-      <div className="bg-white mb-10 w-92 md:w-96 p-8 shadow-lg rounded-lg">
+      <div className="bg-white mt-28 mb-10 w-92 md:w-96 p-8 shadow-lg rounded-lg">
         <h2 className="text-2xl font-bold text-[#FE0000] text-center mb-6">
           Sign up now
         </h2>

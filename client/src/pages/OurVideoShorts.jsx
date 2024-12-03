@@ -3,7 +3,7 @@ import React from 'react'
 const OurVideoShorts = () => {
   return (
     <div className="flex flex-col items-center justify-center my-16">
-      <h2 className="text-3xl md:text-5xl font-semibold">Our Video Shorts</h2>
+      <h2 className="text-3xl md:text-4xl font-semibold">Our Video Shorts</h2>
       <p className="text-[16px] md:text-xl text-[#735A5A] w-80 md:w-3/4 lg:w-1/2 text-center mt-4 ">
         We live in a digital age, and there’s no going back. As we move towards
         the future, technology will keep developing and help us overcome

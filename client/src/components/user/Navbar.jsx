@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TransparentImage from "../../assets/images/Transparent-logo.png";
 import { NavLink, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32,6 +33,7 @@ const Navbar = () => {
     localStorage.setItem("token", JSON.stringify(""));
     setToken(null); // Update the state to trigger a re-render
     navigate('/login')
+    toast.success('LogOut Successfully')
   };
 
   return (

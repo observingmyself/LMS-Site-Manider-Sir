@@ -26,10 +26,10 @@ const Login = () => {
             token: data.data.data.accessToken,
           })
         );
-        toast.success(data.data.message);
         setEmail("");
         setPassword("");
         window.location.reload();
+        toast.success(data.data.message);
       }
     } catch (err) {
       console.log(err);
@@ -37,9 +37,9 @@ const Login = () => {
   };
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
-      <h1 className="text-center mt-5 text-3xl mb-8 font-bold p-7 w-full bg-[#d8e3f2]">
+      {/* <h1 className="text-center mt-5 text-3xl mb-8 font-bold p-7 w-full bg-[#d8e3f2]">
         Login
-      </h1>
+      </h1> */}
       <div className="w-92 sm:w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         {/* Title */}
         <h2 className="text-2xl font-semibold text-[#FE0000] text-center mb-6">

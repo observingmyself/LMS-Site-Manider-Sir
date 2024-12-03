@@ -9,6 +9,7 @@ import Register from "./components/user/Register";
 import About from "./pages/About";
 import HeroSection from "./pages/HeroSection";
 import OurVideoShorts from "./pages/OurVideoShorts";
+import Carousel from "./pages/Carousel";
 
 function App() {
   return (
@@ -34,7 +35,6 @@ function App() {
             <Route path="about" element={<About />} />
           </Route>
         </Routes>
-        {/* <OurVideoShorts/> */}
       </div>
     </>
   );
