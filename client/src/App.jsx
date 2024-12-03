@@ -1,26 +1,44 @@
+import React from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Routes, Route } from "react-router-dom";
 
-import Layout from './components/layout/Layout'
-import Navbar from './components/user/Navbar'
-import About from './pages/About'
-import HeroSection from './pages/HeroSection'
-import { Routes,Route } from 'react-router-dom'
+import Layout from "./components/layout/Layout";
+import Login from "./components/user/Login";
+import Register from "./components/user/Register";
+import About from "./pages/About";
+import HeroSection from "./pages/HeroSection";
+import OurVideoShorts from "./pages/OurVideoShorts";
+
 function App() {
-
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div>
-        {/* <Navbar/> */}
-        {/* <HeroSection/> */}
         <Routes>
-          <Route path='/' element={<Layout/>} >
-            <Route path="" element={<HeroSection/>} />
-            <Route path="about" element={<About/>} />  
+          <Route path="/" element={<Layout />}>
+            <Route path="" element={<HeroSection />} />
+            <Route path="" element={<OurVideoShorts/>} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="about" element={<About />} />
           </Route>
-         
         </Routes>
+        {/* <OurVideoShorts/> */}
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
