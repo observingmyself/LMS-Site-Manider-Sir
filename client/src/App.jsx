@@ -35,7 +35,7 @@ function App() {
             <Route path="" element={<HeroSection />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="contactus" element={<ContactUs/>} />
+            <Route path="contact" element={<ContactUs/>} />
             <Route path="about" element={<About />} />
           </Route>
         </Routes>
