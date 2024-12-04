@@ -130,20 +130,20 @@ const Navbar = () => {
                 </button>
               ) : (
                 <>
-                <NavLink
-                  to="/login"
-                  onClick={() => setMenuOpen(false)}
-                  className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
-                >
-                  Login
-                </NavLink>
-                <NavLink
-                  to="/register"
-                  onClick={() => setMenuOpen(false)}
-                  className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
-                >
-                  Register
-                </NavLink>
+                  <NavLink
+                    to="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                  >
+                    Login
+                  </NavLink>
+                  <NavLink
+                    to="/register"
+                    onClick={() => setMenuOpen(false)}
+                    className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                  >
+                    Register
+                  </NavLink>
                 </>
               )}
             </li>
@@ -161,6 +161,7 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/"
+              onClick={() => setMenuOpen(false)}
               className="text-slate-600 hover:text-[#FE0000] text-[16px]"
             >
               Home
@@ -169,6 +170,7 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/about"
+              onClick={() => setMenuOpen(false)}
               className="text-slate-600 hover:text-[#FE0000] text-[16px]"
             >
               About
@@ -177,6 +179,7 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/courses"
+              onClick={() => setMenuOpen(false)}
               className="text-slate-600 hover:text-[#FE0000] text-[16px]"
             >
               Courses
@@ -185,6 +188,7 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/blog"
+              onClick={() => setMenuOpen(false)}
               className="text-slate-600 hover:text-[#FE0000] text-[16px]"
             >
               Blog
@@ -193,6 +197,7 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/portfolio"
+              onClick={() => setMenuOpen(false)}
               className="text-slate-600 hover:text-[#FE0000] text-[16px]"
             >
               Portfolio
@@ -201,6 +206,7 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/contact"
+              onClick={() => setMenuOpen(false)}
               className="text-slate-600 hover:text-[#FE0000] text-[16px]"
             >
               Contact
