@@ -1,7 +1,8 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
-import { ApiError } from "../utils/apiErrorHandler.js"
+import { ApiError } from "../utils/apiErrorHandler.js";
 import { User } from "../models/user.models.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const generateToken = async (userId) => {
   try {
@@ -26,19 +27,31 @@ const Register = asyncHandler(async (req, res) => {
   if ([userName, email, mobileNo, password].some((field) => field?.trim() == "")) {
     throw new ApiError(400, "All fields are Required");
   }
+
   const existingUser = await User.findOne({
     $or: [{ email: email }, { mobileNo: mobileNo }]
   });
 
+  // Check Existing User
   if (existingUser) {
-    throw new ApiError(400, "User already exists");
+    throw new ApiError(409, "User already exists");
   }
 
+  // upload Profile Img
+  let profileImgLocalPath;
+  // first check upcoming file and then check profileImg is Array or not than after check is length is grater than 0;
+  if (req.files && Array.isArray(req.files.profileImg) && req.files.profileImg.length > 0) {
+    profileImgLocalPath = req.files.profileImg[0].path;
+  }
+  const ProfilePic = await uploadOnCloudinary(profileImgLocalPath);
+
+  // Create User
   const userCreate = await User.create({
     userName,
     email,
     mobileNo,
     password,
+    profileImg: ProfilePic?.url || "",
   })
 
   const createUser = await User.findById(userCreate._id).select("-password -refreshToken");
@@ -53,14 +66,14 @@ const Register = asyncHandler(async (req, res) => {
 })
 
 const login = asyncHandler(async (req, res) => {
-  const { email, mobileNo, password } = req.body;
+  const { email, password } = req.body;
 
-  if (!(email || mobileNo)) {
+  if (!email) {
     throw new ApiError(400, "Email or Mobile Number is required")
   }
 
   const checkUser = await User.findOne({
-    $or: [{ email: email }, { mobileNo: mobileNo }]
+    $or: [{ email: email }, { mobileNo: email }]
   })
 
   if (!checkUser) {
@@ -92,7 +105,7 @@ const logout = asyncHandler(async (req, res) => {
       }
     },
     {
-      new: true
+      new: true,
     })
   return res
     .status(200)
@@ -130,10 +143,52 @@ const updateProfile = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "User Profile has been updated Successfully"))
 })
 
+const updateProfileImg = asyncHandler(async (req, res) => {
+  let profileImgLocalPath = req.file?.path;
+  if (!profileImgLocalPath) {
+    throw new ApiError(400, "Profile Image is Required");
+  }
+  const updateImg = await uploadOnCloudinary(profileImgLocalPath);
+  if (!updateImg.url) {
+    throw new ApiError(400, "Failed to upload Profile Image");
+  }
+  await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: { profileImg: updateImg?.url }
+    },
+    {
+      new: true,
+    }
+  )
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Profile Image updated Successfulluy"))
+})
+
+const changePassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    throw new ApiError(404, "User Not Found");
+  }
+  const isPasswordValid = await user.comparePassword(oldPassword);
+  if (!isPasswordValid) {
+    throw new ApiError(409, "Old Password is Incorrect");
+  }
+  user.password = newPassword;
+  await user.save({ validateBeforeSave: false });
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Password Changed Successfully"))
+})
+
 export {
   Register,
   login,
   logout,
   getProfile,
-  updateProfile
+  updateProfile,
+  updateProfileImg,
+  changePassword,
 }
