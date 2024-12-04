@@ -3,6 +3,9 @@ import Navbar from "../components/user/Navbar";
 import OurVideoShorts from "./OurVideoShorts";
 import Carousel from "./Carousel";
 import Review from "../components/user/Review";
+import NumberingCounter from "../components/user/NumberingCounter";
+import Banner from "../components/user/Banner";
+import SubscriptionEmailAcceptor from "../components/user/SubscriptionEmailAcceptor";
 
 const HeroSection = () => {
   return (
@@ -26,6 +29,9 @@ const HeroSection = () => {
       <OurVideoShorts />
       <Carousel />
       <Review/>
+      <NumberingCounter/>
+      <Banner/>
+      <SubscriptionEmailAcceptor/>
     </>
   );
 };

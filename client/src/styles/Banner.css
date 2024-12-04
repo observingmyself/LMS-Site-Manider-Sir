@@ -1,0 +1,6 @@
+.banner{
+    background: url('../assets/images/join.jpg'),;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: color-burn;
+}

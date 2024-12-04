@@ -89,7 +89,7 @@ const Carousel = () => {
       <Slider {...settings}>
         {courses.map((course, index) => (
           <div key={index} className="p-5">
-            <div className="bg-white shadow-lg rounded-sm py-6 text-left relative">
+            <div className="bg-white shadow-lg rounded-sm pb-5 text-left relative">
               <div className="w-full">
                 <img src={CarouselImage} alt="" className="rounded-t-lg" />
               </div>

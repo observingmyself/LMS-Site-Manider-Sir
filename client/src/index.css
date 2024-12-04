@@ -9,7 +9,9 @@
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
-
+body{
+    background-color: #F7F9FC;
+}
 .latest::-webkit-scrollbar{
     display: none;
 }
