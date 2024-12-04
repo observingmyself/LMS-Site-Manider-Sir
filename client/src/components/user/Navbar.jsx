@@ -39,7 +39,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`w-screen px-[25px] fixed z-20 lg:px-[80px] ${
+        className={`w-screen px-[25px] fixed top-0 left-0 z-20 lg:px-[80px] ${
           isScrolled ? "h-[80px] bg-white shadow-lg" : "h-[90px] bg-transparent"
         } flex justify-between lg:justify-between items-center transition-all duration-300 ${
           menuOpen ? "bg-white" : ""
@@ -129,13 +129,22 @@ const Navbar = () => {
                   Logout
                 </button>
               ) : (
+                <>
                 <NavLink
                   to="/login"
                   onClick={() => setMenuOpen(false)}
-                  className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+                  className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
                 >
                   Login
                 </NavLink>
+                <NavLink
+                  to="/register"
+                  onClick={() => setMenuOpen(false)}
+                  className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                >
+                  Register
+                </NavLink>
+                </>
               )}
             </li>
           </ul>

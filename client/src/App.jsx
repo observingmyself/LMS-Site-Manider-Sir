@@ -12,6 +12,7 @@ import OurVideoShorts from "./pages/OurVideoShorts";
 import Carousel from "./pages/Carousel";
 import NumberingCounter from "./components/user/NumberingCounter";
 import Banner from "./components/user/Banner";
+import ContactUs from "./components/user/ContactUs";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="" element={<HeroSection />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="contactus" element={<ContactUs/>} />
             <Route path="about" element={<About />} />
           </Route>
         </Routes>
