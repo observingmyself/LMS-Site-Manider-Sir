@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/user/Navbar";
 import OurVideoShorts from "./OurVideoShorts";
 import Carousel from "./Carousel";
+import Review from "../components/user/Review";
 
 const HeroSection = () => {
   return (
@@ -24,6 +25,7 @@ const HeroSection = () => {
       </div>
       <OurVideoShorts />
       <Carousel />
+      <Review/>
     </>
   );
 };
