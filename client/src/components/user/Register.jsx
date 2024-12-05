@@ -24,7 +24,7 @@ const Register = () => {
         });
         if (data) {
           console.log(data);
-          navigate("/");
+          navigate("/login");
           toast.success(data.data.message);
           setUserName('')
           setEmail('')

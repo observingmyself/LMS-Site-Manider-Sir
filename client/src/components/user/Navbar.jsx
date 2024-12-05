@@ -153,8 +153,8 @@ const Navbar = () => {
 
       {/* Navbar toggler menu */}
       <div
-        className={`navbar-toggler py-[16px] fixed top-16 z-10 transition-all duration-500 ease-in-out lg:hidden bg-white w-full ${
-          menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        className={`navbar-toggler py-[16px] fixed top-16 z-10 transition-all duration-500 lg:hidden bg-white w-full ${
+          menuOpen ? "block" : "hidden"
         }`}
       >
         <ul className="flex gap-4 mt-1 flex-col justify-evenly items-center w-full">
@@ -221,13 +221,22 @@ const Navbar = () => {
                 Logout
               </button>
             ) : (
-              <NavLink
-                to="/login"
-                onClick={() => setMenuOpen(false)}
-                className="text-slate-600 hover:text-[#FE0000] text-[16px]"
-              >
-                Login
-              </NavLink>
+              <div className="flex gap-4 mt-1 flex-col justify-evenly items-center w-full">
+                <NavLink
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+                >
+                  Login
+                </NavLink>
+                <NavLink
+                  to="/register"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+                >
+                  Register
+                </NavLink>
+              </div>
             )}
           </li>
         </ul>

@@ -9,7 +9,7 @@ const SubscriptionEmailAcceptor = () => {
           <input
             type="email"
             placeholder="Enter your email..."
-            className="w-full px-2 py-2 outline-none border border-slate-400"
+            className="w-92 px-2 py-2 outline-none border border-slate-400"
             name="email"
           />
           <br />

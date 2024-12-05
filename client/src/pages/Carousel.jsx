@@ -88,13 +88,12 @@ const Carousel = () => {
       </p>
       <Slider {...settings}>
         {courses.map((course, index) => (
-          <div key={index} className="p-5">
-            <div className="bg-white shadow-lg rounded-sm pb-5 text-left relative">
+          <div key={index} className="p-5 ">
+            <div className="bg-white shadow-sm hover:shadow-lg duration-200 rounded-sm pb-5 text-left relative">
               <div className="w-full">
                 <img src={CarouselImage} alt="" className="rounded-t-lg" />
               </div>
 
-              {/* Centered Price */}
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#DF5E7E] text-white px-6 py-2 rounded-full text-center font-semibold">
                 {course.price}
               </div>

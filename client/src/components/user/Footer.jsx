@@ -123,8 +123,8 @@ const Footer = () => {
         </div>
         <div>
           <h1 className="text-center text-[#5A5A5A] px-5 pb-5">
-            © 2021 Advance computer centre. All rights reserved | Powered by 
-            <span className="hover:text-[#FE0000] font-semibold "> Pardeep & Moksh</span>
+            © 2021 Advance computer centre. All rights reserved | Design by 
+            <span className="hover:text-[#FE0000] font-semibold "> Sunita</span> <br />Powered by <span className="hover:text-[#fd0c0c] font-semibold">Pardeep & Moksh</span>
           </h1>
         </div>
       </div>
