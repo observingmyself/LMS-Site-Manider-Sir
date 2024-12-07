@@ -64,7 +64,7 @@ const Footer = () => {
                 <img src={Winter} alt="" className="w-[93px] h-[70px]" />
                 <div className="hover:text-[#fd0c0c]">
                   <h4 className="text-sm">{news.title}</h4>
-                  <h5 className="text-sm">
+                  <h5 className="text-[13px]">
                     <i className="fa-regular fa-clock"></i> {news.lastDate}
                   </h5>
                 </div>

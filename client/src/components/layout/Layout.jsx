@@ -5,7 +5,7 @@ import Footer from "../user/Footer";
 
 const Layout = () => {
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       <Navbar />
       <main className="min-h-screen">
         <Outlet />
