@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import TransparentImage from "../../assets/images/Transparent-logo.png";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // Hook to get current location
   const [token, setToken] = useState(() =>
     JSON.parse(localStorage.getItem("token"))
   );
@@ -31,21 +32,26 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.setItem("token", JSON.stringify(""));
-    setToken(null); // Update the state to trigger a re-render
-    navigate('/login')
-    toast.success('LogOut Successfully')
+    setToken(null);
+    navigate("/login");
+    window.location.reload();
   };
+
+  // Scroll to top when the location changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location]);
 
   return (
     <>
       <div
         className={`w-screen px-[25px] fixed top-0 left-0 z-20 lg:px-[80px] ${
-          isScrolled ? "h-[80px] bg-white shadow-lg" : "h-[90px] bg-transparent"
+          isScrolled ? "h-[80px] bg-white" : "h-[90px] bg-transparent"
         } flex justify-between lg:justify-between items-center transition-all duration-300 ${
           menuOpen ? "bg-white" : ""
         }`}
       >
-        {/* Navbar left starts */}
+        {/* Navbar left */}
         <div className="w-3/4 lg:w-1/4 flex items-center">
           <img
             src={TransparentImage}
@@ -59,7 +65,7 @@ const Navbar = () => {
           </h4>
         </div>
 
-        {/* Navbar right starts */}
+        {/* Navbar right */}
         <div>
           <div
             onClick={navbarToggler}
@@ -167,78 +173,7 @@ const Navbar = () => {
               Home
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to="/about"
-              onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
-            >
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/courses"
-              onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
-            >
-              Courses
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/blog"
-              onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
-            >
-              Blog
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/portfolio"
-              onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
-            >
-              Portfolio
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/contact"
-              onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
-            >
-              Contact
-            </NavLink>
-          </li>
-          <li>
-            {token ? (
-              <button
-                onClick={handleLogout}
-                className="px-2 py-1 bg-[#FE0000] text-white"
-              >
-                Logout
-              </button>
-            ) : (
-              <div className="flex gap-4 mt-1 flex-col justify-evenly items-center w-full">
-                <NavLink
-                  to="/login"
-                  onClick={() => setMenuOpen(false)}
-                  className="text-slate-600 hover:text-[#FE0000] text-[16px]"
-                >
-                  Login
-                </NavLink>
-                <NavLink
-                  to="/register"
-                  onClick={() => setMenuOpen(false)}
-                  className="text-slate-600 hover:text-[#FE0000] text-[16px]"
-                >
-                  Register
-                </NavLink>
-              </div>
-            )}
-          </li>
+          {/* Other NavLinks */}
         </ul>
       </div>
     </>

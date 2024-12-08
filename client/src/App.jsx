@@ -1,18 +1,21 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Routes, Route, RouterProvider } from "react-router-dom";
-
+import { Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import About from "./pages/About";
 import HeroSection from "./pages/HeroSection";
-import OurVideoShorts from "./pages/OurVideoShorts";
-import Carousel from "./pages/Carousel";
-import NumberingCounter from "./components/user/NumberingCounter";
-import Banner from "./components/user/Banner";
 import ContactUs from "./components/user/ContactUs";
+import AdminLayout from "./components/layout/Layout";
+import AdminLogin from "./pages/admin/AdminLogin";
+import PagesNotFound from "./pages/PagesNotFound";
+import AuthCheck from "./auth/AuthCheck";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ScrollUp from "./components/user/ScrollUp";
+import ScrollToTopButton from "./components/user/ScrollUp";
+import AdminHomepage from "./components/admin/AdminHomepage";
 
 function App() {
   return (
@@ -31,14 +34,39 @@ function App() {
       />
       <div>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          {/* <Route
+            path="/"
+            element={
+              <AuthCheck>
+                <Layout />
+              </AuthCheck>
+            }
+          >
             <Route path="" element={<HeroSection />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="contact" element={<ContactUs/>} />
+            <Route path="contact" element={<ContactUs />} />
             <Route path="about" element={<About />} />
+            <Route path="" element={<ScrollUp />} />
+          </Route> */}
+
+          {/* admin routes */}
+          <Route
+            path="/admin"
+            element={
+              <AuthCheck>
+                <AdminLayout />
+              </AuthCheck>
+            }
+          >
+            <Route path="" element={<AdminLogin />} />
+            <Route path="dashboard" element={<AdminDashboard />} >
+            <Route path="" element={<AdminHomepage/>} />
+            </Route>
           </Route>
-        </Routes> 
+          <Route path="*" element={<PagesNotFound />} />
+        </Routes>
+        <ScrollToTopButton />
       </div>
     </>
   );
