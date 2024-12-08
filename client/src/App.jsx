@@ -34,7 +34,7 @@ function App() {
       />
       <div>
         <Routes>
-          {/* <Route
+          <Route
             path="/"
             element={
               <AuthCheck>
@@ -48,7 +48,7 @@ function App() {
             <Route path="contact" element={<ContactUs />} />
             <Route path="about" element={<About />} />
             <Route path="" element={<ScrollUp />} />
-          </Route> */}
+          </Route>
 
           {/* admin routes */}
           <Route
