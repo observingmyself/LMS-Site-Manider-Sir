@@ -81,7 +81,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/"
-                className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                className="mx-4 px-2 rounded bg-[#F2EFF2] text-[#FE0000] py-1 text-[16px]"
               >
                 Home
               </NavLink>

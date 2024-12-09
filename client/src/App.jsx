@@ -8,12 +8,11 @@ import Register from "./components/user/Register";
 import About from "./pages/About";
 import HeroSection from "./pages/HeroSection";
 import ContactUs from "./components/user/ContactUs";
-import AdminLayout from "./components/layout/Layout";
+import AdminLayout from "./pages/admin/AdminDashboard";
 import AdminLogin from "./pages/admin/AdminLogin";
 import PagesNotFound from "./pages/PagesNotFound";
 import AuthCheck from "./auth/AuthCheck";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import ScrollUp from "./components/user/ScrollUp";
 import ScrollToTopButton from "./components/user/ScrollUp";
 import AdminHomepage from "./components/admin/AdminHomepage";
 
@@ -47,7 +46,6 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="contact" element={<ContactUs />} />
             <Route path="about" element={<About />} />
-            <Route path="" element={<ScrollUp />} />
           </Route>
 
           {/* admin routes */}
@@ -55,14 +53,24 @@ function App() {
             path="/admin"
             element={
               <AuthCheck>
-                <AdminLayout />
+                <AdminLogin />
+              </AuthCheck>
+            }
+          />
+
+          {/* Admin Dashboard and Nested Routes */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <AuthCheck>
+                <AdminLayout>
+                  <AdminDashboard />
+                </AdminLayout>
               </AuthCheck>
             }
           >
-            <Route path="" element={<AdminLogin />} />
-            <Route path="dashboard" element={<AdminDashboard />} >
-            <Route path="" element={<AdminHomepage/>} />
-            </Route>
+            {/* Nested Route for Homepage */}
+            <Route path="" element={<AdminHomepage />} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>
