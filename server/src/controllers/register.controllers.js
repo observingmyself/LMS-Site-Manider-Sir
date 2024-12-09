@@ -8,6 +8,10 @@ const registerForm = asyncHandler(async (req, res) => {
   if (!data) {
     throw new ApiError(400, "Data not recieved")
   }
+  const existingRequest = await register.findOne({ contact: data.contact })
+  if (existingRequest) {
+    throw new ApiError(409, "This number is Already register")
+  }
   const create = new register(data);
   const response = await create.save();
   return res

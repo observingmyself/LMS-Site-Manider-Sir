@@ -32,7 +32,7 @@ const registerSchema = new mongoose.Schema({
     require: true,
   },
   DOB: {
-    type: Date,
+    type: String,
   },
   contact: {
     type: String,
