@@ -18,9 +18,11 @@ app.get("/", (req, res) => {
 // import Routes
 import { userRouter } from "./routes/user.routes.js";
 import { registerRouter } from "./routes/register.routes.js";
+import { newsRouter } from "./routes/news.routes.js";
 
 app.use("/api/v1/user", userRouter)
 app.use("/api/v1/register", registerRouter)
+app.use("/api/v1/news", newsRouter)
 export { app };
 
 

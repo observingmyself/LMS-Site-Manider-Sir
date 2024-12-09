@@ -4,12 +4,12 @@ import { ApiResponse } from "../utils/apiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 
-const newNews = asyncHandler(async (req, res) => {
+const CreateNews = asyncHandler(async (req, res) => {
   const { newsHeadline, newsDescription } = req.body
   if (!(newsDescription || newsHeadline)) {
     throw new ApiError(400, "Please fill all fields")
   }
-  const newsImgLocalPath = req.files?.Image[0]?.path;
+  const newsImgLocalPath = req.files?.newsImage[0]?.path;
   if (!newsImgLocalPath) {
     throw new ApiError(401, "Img is Require")
   }
@@ -22,11 +22,11 @@ const newNews = asyncHandler(async (req, res) => {
   })
   return res
     .status(200)
-    .json(new ApiResponse(201, news, "News has bee\n created Successfully"))
+    .json(new ApiResponse(201, news, "News has been created Successfully"))
 })
 
 const updateNews = asyncHandler(async (req, res) => {
-  const id = req.params;
+  const id = req.params.id;
   if (!id) {
     throw new ApiError(400, "news Id is not provide")
   }
@@ -51,7 +51,7 @@ const updateNews = asyncHandler(async (req, res) => {
   }
   return res
     .status(200)
-    .json(200, "news is updated")
+    .json(new ApiResponse(200, update, "news updated"))
 })
 
 // Read all Latest news
@@ -81,14 +81,14 @@ const getSingleNews = asyncHandler(async (req, res) => {
 
 const updatenewImage = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const imageLocalPath = req.file;
+  const imageLocalPath = req.file?.path;
   if (!imageLocalPath) {
     throw new ApiError(400, "Image not found")
   }
   const updateImg = await uploadOnCloudinary(imageLocalPath);
   const updateNews = await News.findByIdAndUpdate(id, {
     $set: {
-      newsImage: updateImg.url
+      newsImage: updateImg?.url
     }
   }, {
     new: true
@@ -117,7 +117,7 @@ const deleteNews = asyncHandler(async (req, res) => {
 
 
 export {
-  newNews,
+  CreateNews,
   getLatestNews,
   getSingleNews,
   updateNews,
