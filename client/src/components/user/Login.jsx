@@ -24,12 +24,17 @@ const Login = () => {
           JSON.stringify({
             isLoggedIn: true,
             token: data.data.data.accessToken,
+            user:data.data.data.user,
+            role:data.data.data.user.role
           })
         );
         setEmail("");
         setPassword("");
         window.location.reload();
-        toast.success(data.data.message);
+        // toast.success(data.data.message);
+      }
+      else{
+        toast.error("Invalid Credentials")
       }
     } catch (err) {
       console.log(err);

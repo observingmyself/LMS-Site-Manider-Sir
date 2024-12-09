@@ -13,7 +13,7 @@ const Banner = () => {
       }}
     >
       <div className="z-10">
-        <h1 className="text-2xl md:text-4xl font-bold mb-10 text-center">
+        <h1 className="text-xl md:text-4xl font-bold mb-10 text-center">
           To Check The Authentication Of Your <br />Certificate, Please
         </h1>
         <button className="px-6 py-4 bg-white text-black  rounded-sm shadow hover:bg-gray-200">

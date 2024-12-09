@@ -1,11 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../user/Navbar";
-import Footer from "../user/Footer";
+import Footer from '../user/Footer'
 
 const Layout = () => {
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       <Navbar />
       <main className="min-h-screen">
         <Outlet />
