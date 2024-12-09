@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AdminNavbar from "../../components/admin/AdminNavbar";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import { Outlet } from "react-router-dom";
+import AdminHomepage from "../../components/admin/AdminHomepage";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -19,6 +20,7 @@ const AdminDashboard = () => {
           isSidebarOpen ? "lg:w-5/6" : "lg:w-full"
         } h-full right-0`}
       >
+        <AdminHomepage/>
         <Outlet />
       </div>
     </div>

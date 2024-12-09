@@ -7,7 +7,7 @@ const registerSchema = new mongoose.Schema({
     trim: true,
     uppercase: true,
   },
-  class: {
+  classs: {
     type: String,
     required: true,
   },

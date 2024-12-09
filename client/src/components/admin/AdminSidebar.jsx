@@ -187,7 +187,7 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p className="hover:text-blue-600 cursor-pointer flex items-center justify-left">
+                <p onClick={()=>navigate('/admin/dashboard/registrations')} className="hover:text-blue-600 cursor-pointer flex items-center justify-left">
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Registrations
                 </p>

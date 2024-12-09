@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import ScrollToTopButton from "./components/user/ScrollUp";
 import AdminHomepage from "./components/admin/AdminHomepage";
 import RegistrationForm from "./components/user/RegistrationForm";
+import DisplayRegistration from "./pages/admin/DisplayRegistration";
 
 function App() {
   return (
@@ -72,7 +73,7 @@ function App() {
             }
           >
             {/* Nested Route for Homepage */}
-            <Route path="" element={<AdminHomepage />} />
+            <Route path="registrations" element={<DisplayRegistration/>} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>

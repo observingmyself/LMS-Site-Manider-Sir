@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -118,9 +118,9 @@ const Login = () => {
           {/* Register Link */}
           <p className="text-sm text-center text-gray-600 mt-4">
             Don't have an account yet?{" "}
-            <a href="/register" className="text-red-600 hover:underline">
+            <NavLink to="/register" className="text-red-600 hover:underline">
               Get it now
-            </a>
+            </NavLink>
           </p>
         </form>
       </div>

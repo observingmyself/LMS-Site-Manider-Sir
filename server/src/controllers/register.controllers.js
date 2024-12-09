@@ -12,14 +12,14 @@ const registerForm = asyncHandler(async (req, res) => {
   const response = await create.save();
   return res
     .status(200)
-    .json(new ApiResponse(201, response, "user has been register"))
+    .json(new ApiResponse(201, response, "Form Submitted"))
 })
 
 const getRegisterData = asyncHandler(async (req, res) => {
   const data = await register.find();
   return res
     .status(200)
-    .json(new ApiResponse(200, data, "registration data has been fetched successfully"))
+    .json(new ApiResponse(200, data, "Data Fetched"))
 })
 
 export {

@@ -173,7 +173,86 @@ const Navbar = () => {
               Home
             </NavLink>
           </li>
-          {/* Other NavLinks */}
+          <li>
+            <NavLink
+              to="/about"
+              onClick={() => setMenuOpen(false)}
+              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+            >
+              About
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/courses"
+              onClick={() => setMenuOpen(false)}
+              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+            >
+              Courses
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/blog"
+              onClick={() => setMenuOpen(false)}
+              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+            >
+              Blog
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/portfolio"
+              onClick={() => setMenuOpen(false)}
+              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+            >
+              Portfolio
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/contact"
+              onClick={() => setMenuOpen(false)}
+              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+            >
+              Contact
+            </NavLink>
+          </li>
+          <li>
+            {token ? (
+              <button
+                onClick={handleLogout}
+                className="px-2 py-1 bg-[#FE0000] text-white"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <ul className="flex gap-4 mt-1 flex-col justify-evenly items-center w-full">
+                  <li>
+                    {" "}
+                    <NavLink
+                      to="/login"
+                      onClick={() => setMenuOpen(false)}
+                      className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+                    >
+                      Login
+                    </NavLink>
+                  </li>
+                  <li>
+                    {" "}
+                    <NavLink
+                      to="/register"
+                      onClick={() => setMenuOpen(false)}
+                      className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+                    >
+                      Register
+                    </NavLink>
+                  </li>
+                </ul>
+              </>
+            )}
+          </li>
         </ul>
       </div>
     </>
