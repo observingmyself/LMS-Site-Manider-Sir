@@ -15,6 +15,7 @@ import AuthCheck from "./auth/AuthCheck";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ScrollToTopButton from "./components/user/ScrollUp";
 import AdminHomepage from "./components/admin/AdminHomepage";
+import RegistrationForm from "./components/user/RegistrationForm";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="contact" element={<ContactUs />} />
             <Route path="about" element={<About />} />
+            <Route path="registration-form" element={<RegistrationForm/>} />
           </Route>
 
           {/* admin routes */}
