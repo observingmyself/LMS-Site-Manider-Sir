@@ -13,7 +13,7 @@ router.route('/register').post(upload.fields([
 router.post("/login", login)
 router.post("/logout", verifyJWT, logout)
 router.post("/profile", verifyJWT, getProfile)
-router.post("/updateProfile", verifyJWT, updateProfile)
-router.post("/updateImg", verifyJWT, upload.single("profileImg"), updateProfileImg)
-router.post("/updatePassword", verifyJWT, changePassword)
+router.patch("/updateProfile", verifyJWT, updateProfile)
+router.patch("/updateImg", verifyJWT, upload.single("profileImg"), updateProfileImg)
+router.patch("/updatePassword", verifyJWT, changePassword)
 export { router as userRouter };
