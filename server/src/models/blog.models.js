@@ -8,11 +8,11 @@ const blogSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  instructor: {
+  Instructor: {
     type: String,
     trim: true
   },
-  description: {
+  Description: {
     type: String,
     trim: true
   },

@@ -25,7 +25,9 @@ const options = {
 
 const Register = asyncHandler(async (req, res) => {
   const { userName, email, mobileNo, password, role } = req.body;
-  if ([userName, email, mobileNo, password].some((field) => field?.trim() == "")) {
+  if (
+    [userName, email, mobileNo, password].some((field) => field?.trim() === "")
+  ) {
     throw new ApiError(400, "All fields are Required");
   }
 
@@ -125,10 +127,10 @@ const refreshAndAccessToken = asyncHandler(async (req, res) => {
   // try {
 
   // decode token
+  console.log(user)
   const decodedToken = JWT.verify(IncomingRefreshToken, process.env.REFRESH_TOKEN_SECRET_KEY);
 
   const user = await User.findById(decodedToken?._id)
-  console.log(user)
   if (!user) {
     throw new ApiError(401, "Invalid Refresh token")
   }

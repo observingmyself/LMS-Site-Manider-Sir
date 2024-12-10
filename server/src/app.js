@@ -19,10 +19,15 @@ app.get("/", (req, res) => {
 import { userRouter } from "./routes/user.routes.js";
 import { registerRouter } from "./routes/register.routes.js";
 import { newsRouter } from "./routes/news.routes.js";
+import { blogRouter } from "./routes/blog.routes.js";
+
+import { errorHandler } from "./middleware/errorHandler.middleware.js";
 
 app.use("/api/v1/user", userRouter)
 app.use("/api/v1/register", registerRouter)
 app.use("/api/v1/news", newsRouter)
+app.use("/api/v1/blog", blogRouter)
+// app.use(errorHandler())
 export { app };
 
 

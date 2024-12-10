@@ -56,10 +56,20 @@ const updateNews = asyncHandler(async (req, res) => {
 
 // Read all Latest news
 const getLatestNews = asyncHandler(async (req, res) => {
-  const news = await News.find().sort({ createdAt: -1 }).limit(5);
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 6;
+  const sortBy = req.query.sortBy || "createdAt";
+  const sortOrder = req.query.sortOrder === "asc" ? 1 : -1;
+  // The skip variable calculates how many items to skip based on the current page and limit.
+  const skip = (page - 1) * limit;
+  const news = await News.find().sort({ [sortBy]: sortOrder }).skip(skip).limit(limit);
+
+  // Get the total count of news items for pagination info
+  const totalCount = await News.countDocuments();
+
   return res
     .status(200)
-    .json(new ApiResponse(200, news, "fecth news scuccessfully"))
+    .json(new ApiResponse(200, { news, totalCount, currentPage: page, totalPages: Math.ceil(totalCount / limit) }, "fecth news scuccessfully"))
 })
 
 // Read Single News
