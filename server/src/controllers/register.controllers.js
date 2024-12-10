@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiErrorHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
-import { register } from "../models/register.model.js";
+import { register } from "../models/register.models.js";
 
 const registerForm = asyncHandler(async (req, res) => {
   const data = req.body;
