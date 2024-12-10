@@ -120,40 +120,37 @@ const logout = asyncHandler(async (req, res) => {
 
 const refreshAndAccessToken = asyncHandler(async (req, res) => {
   const IncomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
-  console.log(IncomingRefreshToken)
+
   if (!IncomingRefreshToken) {
     throw new ApiError(401, "unauthorized User")
   }
-  // try {
+  try {
 
-  // decode token
-  console.log(user)
-  const decodedToken = JWT.verify(IncomingRefreshToken, process.env.REFRESH_TOKEN_SECRET_KEY);
+    // decode token
+    const decodedToken = JWT.verify(IncomingRefreshToken, process.env.REFRESH_TOKEN_SECRET_KEY);
 
-  const user = await User.findById(decodedToken?._id)
-  if (!user) {
-    throw new ApiError(401, "Invalid Refresh token")
+    const user = await User.findById(decodedToken?._id)
+    if (!user) {
+      throw new ApiError(401, "Invalid Refresh token")
+    }
+
+    if (IncomingRefreshToken !== user?.refreshToken) {
+      throw new ApiError(401, "Refresh token is expired or used")
+    }
+
+    // generate new token
+    const { accessToken, refreshToken } = await generateToken(user?._id)
+    return res.
+      status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json(
+        new ApiResponse(200, { accessToken, refreshToken }, "your Access Token is Refreshed")
+      )
   }
-
-  if (IncomingRefreshToken !== user?.refreshToken) {
-    throw new ApiError(401, "Refresh token is expired or used")
-
+  catch (error) {
+    throw new ApiError(401, error?.message || "Invalid RefreshToken")
   }
-
-  // generate new token
-  const { accessToken, newRefreshToken } = await generateToken(user?._id)
-  console.log(accessToken)
-  res.
-    status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", newRefreshToken, options)
-    .json(
-      new ApiResponse(200, { accessToken, refreshToken: newRefreshToken }, "your Access Token is Refreshed")
-    )
-  // } 
-  // catch (error) {
-  //   throw new ApiError(500, "Invalid RefreshToken")
-  // }
 })
 
 const getProfile = asyncHandler(async (req, res) => {

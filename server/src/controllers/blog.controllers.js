@@ -43,12 +43,13 @@ const getBlog = asyncHandler(async (req, res) => {
   const sortOrder = req.query.sortOrder === "asc" ? 1 : -1;
   const skip = (page - 1) * limit;
   const data = await Blog.find().sort({ [sortBy]: sortOrder }).skip(skip).limit(limit)
+  const totalCount = await Blog.countDocuments();
   if (!data) {
     throw new ApiError(500, "Something went wrong to fetch data")
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, data, "Successfully fetch Blog data"));
+    .json(new ApiResponse(200, { data, currentPage: page, totalPage: Math.ceil(totalCount / limit) }, "Successfully fetch Blog data"));
 })
 
 const getSingleBlog = asyncHandler(async (req, res) => {

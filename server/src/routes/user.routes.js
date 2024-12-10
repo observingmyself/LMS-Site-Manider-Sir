@@ -12,7 +12,7 @@ router.route('/register').post(upload.fields([
 ]), Register);
 router.post("/login", login)
 router.post("/logout", verifyJWT, logout)
-// router.post("/genrateToken", refreshAndAccessToken)
+router.post("/genrateToken", refreshAndAccessToken)
 router.get("/profile", verifyJWT, getProfile)
 router.patch("/updateProfile", verifyJWT, updateProfile)
 router.patch("/updateImg", verifyJWT, upload.single("profileImg"), updateProfileImg)
