@@ -17,6 +17,9 @@ import ScrollToTopButton from "./components/user/ScrollUp";
 import AdminHomepage from "./components/admin/AdminHomepage";
 import RegistrationForm from "./components/user/RegistrationForm";
 import DisplayRegistration from "./pages/admin/DisplayRegistration";
+import SinglePageLatestNews from "./components/user/SinglePageLatestNews";
+import DisplayNews from "./pages/admin/DisplayNews";
+import NewsAddForm from "./pages/admin/NewsAddForm";
 
 function App() {
   return (
@@ -46,6 +49,7 @@ function App() {
             <Route path="" element={<HeroSection />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="news/:id" element={<SinglePageLatestNews/>} />
             <Route path="contact" element={<ContactUs />} />
             <Route path="about" element={<About />} />
             <Route path="registration-form" element={<RegistrationForm/>} />
@@ -74,6 +78,8 @@ function App() {
           >
             {/* Nested Route for Homepage */}
             <Route path="registrations" element={<DisplayRegistration/>} />
+            <Route path="news" element={<DisplayNews/>} />
+            <Route path="news-form" element={<NewsAddForm/>} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>
