@@ -1,38 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TransparentLogo from "../../assets/images/Transparent-logo.png";
 import Winter from "../../assets/images/WINTER.jpg";
 import CertificateBadge from "../../assets/images/certificate-1356.png";
 import "../../index.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import axios from "axios";
 
 const Footer = () => {
-  const latestNews = [
-    {
-      id: 1,
-      title: "WINTER CODING CAMP",
-      lastDate: "20 Dec 2023",
-      imgSrc: "../../assets/images/Transparent-logo.png",
-    },
-    {
-      id: 2,
-      title: "WINTER CODING CAMP",
-      lastDate: "20 Dec 2023",
-      imgSrc: "../../assets/images/Transparent-logo.png",
-    },
-    {
-      id: 3,
-      title: "WINTER CODING CAMP",
-      lastDate: "20 Dec 2023",
-      imgSrc: "../../assets/images/Transparent-logo.png",
-    },
-    {
-      id: 4,
-      title: "WINTER CODING CAMP",
-      lastDate: "20 Dec 2023",
-      imgSrc: "../../assets/images/Transparent-logo.png",
-    },
-  ];
+  const [news,setNews] = useState({})
 
+  const navigate = useNavigate();
+
+  const getLatestNews = async () => {
+    try{
+      const data = await axios.get('/api/v1/news')
+      if(data){
+        setNews(data.data.data)
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
+  useEffect(()=>{
+    getLatestNews()
+  },[])
+ 
   return (
     <div className="main">
       {/* Footer Main Section */}
@@ -59,17 +51,22 @@ const Footer = () => {
         <div className="h-80 flex flex-col justify-start mt-5">
           <h4 className="font-semibold text-xl mb-4">Latest News</h4>
           <div className="flex flex-col gap-3 latest overflow-scroll">
-            {latestNews.map((news) => (
-              <div className="flex gap-2" key={news.id}>
-                <img src={Winter} alt="" className="w-[93px] h-[70px]" />
-                <div className="hover:text-[#fd0c0c]">
-                  <h4 className="text-sm">{news.title}</h4>
-                  <h5 className="text-[13px]">
-                    <i className="fa-regular fa-clock"></i> {news.lastDate}
-                  </h5>
+            {Array.isArray(news) &&
+              news.map((item) => (
+                <div className="flex gap-2" onClick={()=>navigate(`/news/${item._id}`)} key={item._id}>
+                  <img
+                    src={item.newsImage || "https://via.placeholder.com/93x70"}
+                    alt=""
+                    className="w-[93px] h-[70px]"
+                  />
+                  <div className="hover:text-[#fd0c0c]">
+                    <h4 className="text-sm">{item.newsHeadline}</h4>
+                    <h5 className="text-[13px]">
+                      <i className="fa-regular fa-clock"></i> {new Date(item.createdAt).toLocaleDateString()}
+                    </h5>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
 
@@ -123,8 +120,16 @@ const Footer = () => {
         </div>
         <div>
           <h1 className="text-center text-[#5A5A5A] px-5 pb-5">
-            © 2021 Advance computer centre. All rights reserved | Design by 
-            <span className="hover:text-[#FE0000] font-semibold "> Sunita</span> <br />Powered by <span className="hover:text-[#fd0c0c] font-semibold">Pardeep & Moksh</span>
+            © 2021 Advance computer centre. All rights reserved | Design by
+            <span className="hover:text-[#FE0000] font-semibold ">
+              {" "}
+              Sunita
+            </span>{" "}
+            <br />
+            Powered by{" "}
+            <span className="hover:text-[#fd0c0c] font-semibold">
+              Pardeep & Moksh
+            </span>
           </h1>
         </div>
       </div>

@@ -74,7 +74,7 @@ const AdminSidebar = ({ isSidebarOpen }) => {
   };
     const handleLogout = () => {
       localStorage.setItem("token", JSON.stringify(""));
-      navigate("/admin");
+      navigate("/");
     };
   return (
     <div
@@ -101,7 +101,10 @@ const AdminSidebar = ({ isSidebarOpen }) => {
             }}
           >
             <div className="ml-8 mt-3 text-sm">
-              <p onClick={handleLogout} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+              <p
+                onClick={handleLogout}
+                className="cursor-pointer hover:text-blue-600 flex items-center justify-left"
+              >
                 <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                 LogOut
               </p>
@@ -187,7 +190,10 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p onClick={()=>navigate('/admin/dashboard/registrations')} className="hover:text-blue-600 cursor-pointer flex items-center justify-left">
+                <p
+                  onClick={() => navigate("/admin/dashboard/registrations")}
+                  className="hover:text-blue-600 cursor-pointer flex items-center justify-left"
+                >
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Registrations
                 </p>
@@ -435,11 +441,14 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p
+                  onClick={() => navigate("/admin/dashboard/news")}
+                  className="cursor-pointer hover:text-blue-600 flex items-center justify-left"
+                >
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Posts
                 </p>
-                <p className="cursor-pointer hover:text-blue-600 mt-2">
+                <p className="cursor-pointer hover:text-blue-600 mt-2" onClick={()=>navigate('/admin/dashboard/news-form')}>
                   {" "}
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   Insert New Posts

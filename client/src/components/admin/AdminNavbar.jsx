@@ -16,7 +16,7 @@ const AdminNavbar = ({ toggleSidebar }) => {
   };
   const handleLogout = () => {
     localStorage.setItem('token',JSON.stringify(""))
-    navigate('/admin')
+    navigate('/')
   }
   return (
     <div className="flex z-20 fixed shadow-lg flex-col lg:flex-row w-full h-20 bg-white">
