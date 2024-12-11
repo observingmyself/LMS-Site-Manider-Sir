@@ -9,8 +9,7 @@ const DisplayNews = () => {
     try {
       const data = await axios.get("/api/v1/news");
       if (data) {
-        setNews(data.data.data);
-        // console.log(data)
+        setNews(data.data.data.news);
       }
     } catch (err) {
       console.log(err);
