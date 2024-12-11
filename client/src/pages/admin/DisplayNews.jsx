@@ -1,15 +1,17 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+
 
 const DisplayNews = () => {
     const [news , setNews] = useState([])
-
+    const navigate = useNavigate();
     const getAllNews = async() => {
         try{
             const data = await axios.get('/api/v1/news')
             if(data){
-                setNews(data.data.data)
+                setNews(data.data.data.news)
                 // console.log(data)
             }
         }catch(err){
@@ -80,7 +82,7 @@ const DisplayNews = () => {
                   </button>
                 </td>
                 <td className="px-4 py-2 border">
-                  <button className="px-2 py-2 bg-blue-500 hover:bg-blue-700 text-white mx-auto rounded-sm">Update</button>
+                  <button className="px-2 py-2 bg-blue-500 hover:bg-blue-700 text-white mx-auto rounded-sm" onClick={()=>navigate(`/admin/dashboard/update-news/${news._id}`)}>Update</button>
                 </td>
               </tr>
             ))}
