@@ -78,11 +78,18 @@ const DisplayNews = () => {
                     onClick={() => handleDelete(news._id)}
                     className="px-2 py-2 bg-[#fd0c0c] hover:bg-[brown] text-white mx-auto rounded-sm"
                   >
-                    Delete
+                    <i class="fa-solid fa-trash px-2 py-2"></i>
                   </button>
                 </td>
                 <td className="px-4 py-2 border">
-                  <button className="px-2 py-2 bg-blue-500 hover:bg-blue-700 text-white mx-auto rounded-sm" onClick={()=>navigate(`/admin/dashboard/update-news/${news._id}`)}>Update</button>
+                  <button
+                    className="px-2 py-2 bg-blue-500 hover:bg-blue-700 text-white mx-auto rounded-sm"
+                    onClick={() =>
+                      navigate(`/admin/dashboard/update-news/${news._id}`)
+                    }
+                  >
+                    Update
+                  </button>
                 </td>
               </tr>
             ))}
