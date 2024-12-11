@@ -8,6 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [invalidPassword, setInvalidPassword] = useState('')
   const [errors,setErrors] = useState([])
   const navigate = useNavigate();
   const handleLogin = async (e) => {
@@ -38,7 +39,12 @@ const Login = () => {
         toast.error("Invalid Credentials")
       }
     } catch (err) {
-      console.log(err)
+      if(err.response && err.response.data && err.response.data.message){
+        setInvalidPassword(err.response.data.message);
+      }
+      else{
+        setInvalidPassword("Something unexected happened")
+      }
     }
   };
   return (
@@ -89,6 +95,7 @@ const Login = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
                 placeholder="Enter your password"
               />
+              {invalidPassword && <span className="text-sm text-[#fd0c0c]">{invalidPassword}</span>}
               {/* Eye icon */}
               <button
                 type="button"

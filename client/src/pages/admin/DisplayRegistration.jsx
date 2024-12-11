@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const DisplayRegistration = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -18,6 +19,16 @@ const DisplayRegistration = () => {
   useEffect(() => {
     getRegistration();
   }, []);
+
+  const handleDelete = async (id) => {
+    try{
+      const data = await axios.delete(`/api/v1/register/${id}`)
+      getRegistration();
+      toast.success("Registration deleted")
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <div className="px-4 lg:px-8 h-screen w-screen">
@@ -41,6 +52,7 @@ const DisplayRegistration = () => {
               <th className="px-4 py-3 border">Address</th>
               <th className="px-4 py-3 border">City</th>
               <th className="px-4 py-3 border">State</th>
+              <th className="px-4 py-3 border">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -58,13 +70,35 @@ const DisplayRegistration = () => {
                 <td className="px-4 py-2 border">{registration.school}</td>
                 <td className="px-4 py-2 border">{registration.gender}</td>
                 <td className="px-4 py-2 border text-nowrap">
-                  {registration.DOB?.slice(0, 10)}
+                  {new Date(registration.DOB).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
                 </td>
                 <td className="px-4 py-2 border">{registration.fatherName}</td>
                 <td className="px-4 py-2 border">{registration.contact}</td>
                 <td className="px-4 py-2 border">{registration.Address}</td>
                 <td className="px-4 py-2 border">{registration.city}</td>
                 <td className="px-4 py-2 border">{registration.State}</td>
+                <td className="px-4 py-2 border">
+                  <button
+                    onClick={() => handleDelete(registration._id)}
+                    className="flex items-center justify-center group text-white mx-auto rounded-sm"
+                  >
+                    <span className="group-hover:hidden">
+                      <box-icon name="trash" color="#fc2121"></box-icon>
+                    </span>
+                    <span className="hidden group-hover:block">
+                      <box-icon
+                        name="trash"
+                        animation="tada"
+                        flip="horizontal"
+                        color="red"
+                      ></box-icon>
+                    </span>
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

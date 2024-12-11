@@ -21,6 +21,7 @@ import SinglePageLatestNews from "./components/user/SinglePageLatestNews";
 import DisplayNews from "./pages/admin/DisplayNews";
 import NewsAddForm from "./pages/admin/NewsAddForm";
 import NewsUpdateForm from "./pages/admin/NewsUpdateForm";
+import DisplayContact from "./pages/admin/DisplayContact";
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
             <Route path="news" element={<DisplayNews/>} />
             <Route path="news-form" element={<NewsAddForm/>} />
             <Route path="update-news/:id" element={<NewsUpdateForm/>} />
+            <Route path="contact" element={<DisplayContact/>} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>

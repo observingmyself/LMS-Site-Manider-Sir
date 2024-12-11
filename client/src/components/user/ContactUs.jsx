@@ -1,6 +1,53 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import {toast} from "react-toastify"
 
 const ContactUs = () => {
+  const [name,setName] = useState('')
+  const [email,setEmail] = useState('')
+  const [subject,setSubject] = useState('')
+  const [message,setMessage] = useState('')
+  const [errors,setErrors] = useState({})
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const errors = {}
+
+    if(!name.trim()) errors.name = "Name is required."
+    if(!email.trim()) errors.email = "Email is required."
+    if(!subject.trim()) errors.subject = "Subject is required."
+    if(!message.trim()) errors.message = "Message is required."
+
+    if(Object.keys(errors).length > 0){
+      setErrors(errors)
+      return
+    }
+    
+    setErrors({})
+
+    try{  
+      const data = await axios.post('/api/v1/contact/create',{
+        name : name,
+        email : email,
+        subject : subject,
+        message : message
+      })
+      if(data){
+        // console.log(data)
+        toast.success('Query Delivered')
+        setName('')
+        setEmail('')
+        setSubject('')
+        setMessage('')
+      }
+      else{
+        console.log('Failed to send message.')
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
+  
   return (
     <div className="mt-24">
       {/* Page Heading */}
@@ -31,36 +78,48 @@ const ContactUs = () => {
         </div>
 
         {/* Form Section */}
-        <form className="lg:w-1/2 w-full px-4 lg:px-0">
+        <form onSubmit={(e)=>handleSubmit(e)} className="lg:w-1/2 w-full px-4 lg:px-0">
           <div className="flex flex-col gap-4">
             <input
               type="text"
+              value={name}
+              onChange={(e)=>setName(e.target.value)}
               className="outline-none border focus:border-[#fd0c0c] py-3 w-full rounded-lg placeholder:text-sm px-4"
               placeholder="Your Name*"
               name="name"
             />
+            {errors.name && <span className="text-sm text-[#fd0c0c]">{errors.name}</span>}
             <input
               type="email"
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
               className="outline-none border focus:border-[#fd0c0c] py-3 w-full rounded-lg placeholder:text-sm px-4"
               placeholder="Your Email*"
               name="email"
             />
+            {errors.email && <span className="text-sm text-[#fd0c0c]">{errors.email}</span>}
             <input
               type="text"
+              value={subject}
+              onChange={(e)=>setSubject(e.target.value)}
               className="outline-none border focus:border-[#fd0c0c] py-3 w-full rounded-lg placeholder:text-sm px-4"
               name="subject"
               placeholder="Subject*"
             />
+            {errors.subject && <span className="text-sm text-[#fd0c0c]">{errors.subject}</span>}
             <textarea
               name="message"
+              value={message}
+              onChange={(e)=>setMessage(e.target.value)}
               className="outline-none border focus:border-[#fd0c0c] py-3 w-full rounded-lg placeholder:text-sm px-4"
               id="message"
               rows={3}
               placeholder="Type your message here*"
             ></textarea>
+            {errors.message && <span className="text-sm text-[#fd0c0c]">{errors.message}</span>}
             {/* Send Message Button */}
             <div className="flex justify-end">
-              <button className="py-3 px-8 text-white bg-[#fd0c0c] rounded-lg">
+              <button type="submit" className="py-3 px-8 text-white bg-[#fd0c0c] rounded-lg">
                 Send Message
               </button>
             </div>

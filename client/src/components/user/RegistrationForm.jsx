@@ -61,6 +61,7 @@ const RegistrationForm = () => {
       if (data) {
         toast.success(data.data.message);
         navigate("/");
+        console.log(data)
       }
       setName("");
       setClasss("");
@@ -85,7 +86,7 @@ const RegistrationForm = () => {
         <p className="mt-4 text-xl md:text-2xl">{"{WINTER CODING CAMP}"}</p>
       </div>
       <form
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={(e) => handleSubmit(e,console.log(e))}
         className="mt-10 flex flex-col px-10 md:px-32 lg:px-52"
       >
         <div className="flex flex-col gap-2 mb-4">
@@ -265,7 +266,7 @@ const RegistrationForm = () => {
             <span className="text-red-500 text-sm">{errors.state}</span>
           )}
         </div>
-        <button className="bg-[#fd0c0c] hover:bg-[brown] transition-all duration-200 ease-in-out text-white py-3">
+        <button type="submit"  className="bg-[#fd0c0c] hover:bg-[brown] transition-all duration-200 ease-in-out text-white py-3">
           Submit
         </button>
       </form>

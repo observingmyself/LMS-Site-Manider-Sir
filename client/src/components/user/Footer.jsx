@@ -54,7 +54,11 @@ const Footer = () => {
           <div className="flex flex-col gap-3 latest overflow-scroll">
             {Array.isArray(news) &&
               news.map((item) => (
-                <div className="flex gap-2" onClick={()=>navigate(`/news/${item._id}`)} key={item._id}>
+                <div
+                  className="flex gap-2"
+                  onClick={() => navigate(`/news/${item._id}`)}
+                  key={item._id}
+                >
                   <img
                     src={item.newsImage || "https://via.placeholder.com/93x70"}
                     alt=""
@@ -63,7 +67,12 @@ const Footer = () => {
                   <div className="hover:text-[#fd0c0c]">
                     <h4 className="text-sm">{item.newsHeadline}</h4>
                     <h5 className="text-[13px]">
-                      <i className="fa-regular fa-clock"></i> {new Date(item.createdAt).toLocaleDateString()}
+                      <i className="fa-regular fa-clock"></i>{" "}
+                      {new Date(item.createdAt).toLocaleDateString("en-IN", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })}
                     </h5>
                   </div>
                 </div>
