@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { FaTruckMonster } from "react-icons/fa";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
 
@@ -7,15 +8,18 @@ const NewsUpdateForm = () => {
   const { id } = useParams();
   const [updateImage,setUpdateImage] = useState(null)
   const [isLoading,setIsLoading] = useState(false)
+  const [contentLoading,setContentLoading] = useState(false)
+  const [newsHeadline,setNewsHeadline] = useState('')
+  const [newsDescription,setNewsDescription] = useState('')
 
 
   const updateImageController = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     const form = new FormData()
     form.append('newsImage',updateImage)
     try{
       const data = await axios.patch(`/api/v1/news/updateImage/${id}`,form)
-      setIsLoading(true)
       if(data){
         toast.success('Image Updated')
         console.log(data)
@@ -28,6 +32,40 @@ const NewsUpdateForm = () => {
       console.log(err)
     }
   }
+
+  const getSingleNews = async () => {
+      try{
+        const data = await axios.get(`/api/v1/news/${id}`)
+        if(data){
+          setNewsHeadline(data.data.data.newsHeadline)
+          setNewsDescription(data.data.data.newsDescription)
+        }
+      }catch(err){
+        console.log(err)
+      }
+  }
+
+  useEffect(()=> {
+    getSingleNews();
+  },[])
+
+  const updateContentController = async (e) => {
+    e.preventDefault();
+    setContentLoading(true)
+    try{
+      const data = await axios.patch(`/api/v1/news/update/${id}`,{
+        newsHeadline : newsHeadline,
+        newsDescription : newsDescription
+      })
+      if(data){
+        toast.success('News Updated')
+        setContentLoading(false)
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]
@@ -77,7 +115,11 @@ const NewsUpdateForm = () => {
         <h3 className="text-xl font-semibold text-gray-700 mb-4">
           Update News
         </h3>
-        <form id="updateNewsForm" className="space-y-4">
+        <form
+          onSubmit={(e) => updateContentController(e)}
+          id="updateNewsForm"
+          className="space-y-4"
+        >
           <div className="flex flex-col">
             <label
               htmlFor="headlineInput"
@@ -87,6 +129,8 @@ const NewsUpdateForm = () => {
             </label>
             <input
               type="text"
+              value={newsHeadline}
+              onChange={(e) => setNewsHeadline(e.target.value)}
               id="headlineInput"
               name="headline"
               placeholder="Enter headline"
@@ -103,6 +147,8 @@ const NewsUpdateForm = () => {
             </label>
             <textarea
               id="descriptionInput"
+              value={newsDescription}
+              onChange={(e) => setNewsDescription(e.target.value)}
               name="description"
               rows="5"
               placeholder="Enter description"
@@ -114,7 +160,7 @@ const NewsUpdateForm = () => {
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:outline-none"
           >
-            Update News
+            {contentLoading ? "Loading..." : "Update News"}
           </button>
         </form>
       </div>
