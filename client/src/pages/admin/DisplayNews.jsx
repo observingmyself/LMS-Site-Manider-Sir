@@ -1,36 +1,36 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const DisplayNews = () => {
-    const [news , setNews] = useState([])
+  const [news, setNews] = useState([]);
 
-    const getAllNews = async() => {
-        try{
-            const data = await axios.get('/api/v1/news')
-            if(data){
-                setNews(data.data.data)
-                // console.log(data)
-            }
-        }catch(err){
-            console.log(err)
-        }
+  const getAllNews = async () => {
+    try {
+      const data = await axios.get("/api/v1/news");
+      if (data) {
+        console.log(data);
+        setNews(data.data.data.news);
+      }
+    } catch (err) {
+      console.log(err);
     }
-    useEffect(()=>{
-        getAllNews()
-    },[])
+  };
+  useEffect(() => {
+    getAllNews();
+  }, []);
 
-    const handleDelete = async (id) => {
-       try{
-         const data = await axios.delete(`/api/v1/news/delete/${id}`);
-         if(data){
-            getAllNews()
-            toast.success('News Deleted')
-         }
-       }catch(err){
-        console.log(err)
-       }
+  const handleDelete = async (id) => {
+    try {
+      const data = await axios.delete(`/api/v1/news/delete/${id}`);
+      if (data) {
+        getAllNews();
+        toast.success("News Deleted");
+      }
+    } catch (err) {
+      console.log(err);
     }
+  };
   return (
     <div className="px-4 lg:px-8 h-screen w-screen">
       <h4 className="text-2xl lg:text-3xl font-semibold text-center mb-6 text-gray-800">
@@ -80,7 +80,9 @@ const DisplayNews = () => {
                   </button>
                 </td>
                 <td className="px-4 py-2 border">
-                  <button className="px-2 py-2 bg-blue-500 hover:bg-blue-700 text-white mx-auto rounded-sm">Update</button>
+                  <button className="px-2 py-2 bg-blue-500 hover:bg-blue-700 text-white mx-auto rounded-sm">
+                    Update
+                  </button>
                 </td>
               </tr>
             ))}
@@ -89,6 +91,6 @@ const DisplayNews = () => {
       </div>
     </div>
   );
-}
+};
 
-export default DisplayNews
+export default DisplayNews;

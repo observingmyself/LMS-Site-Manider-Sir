@@ -8,7 +8,8 @@ const DisplayRegistration = () => {
     try {
       const { data } = await axios.post("/api/v1/register/getData");
       if (data) {
-        setRegistrations(data.data);
+        console.log(data);
+        setRegistrations(data.data.data);
       }
     } catch (err) {
       console.log(err);
