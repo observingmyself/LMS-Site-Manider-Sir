@@ -4,11 +4,11 @@ const reviewSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
-    require: true,
+    required: true,
   },
   message: {
     type: String,
-    require: true
+    required: true
   },
   reviewImage: {
     type: String,
