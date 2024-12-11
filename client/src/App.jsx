@@ -20,6 +20,7 @@ import DisplayRegistration from "./pages/admin/DisplayRegistration";
 import SinglePageLatestNews from "./components/user/SinglePageLatestNews";
 import DisplayNews from "./pages/admin/DisplayNews";
 import NewsAddForm from "./pages/admin/NewsAddForm";
+import NewsUpdateForm from "./pages/admin/NewsUpdateForm";
 
 function App() {
   return (
@@ -80,6 +81,7 @@ function App() {
             <Route path="registrations" element={<DisplayRegistration/>} />
             <Route path="news" element={<DisplayNews/>} />
             <Route path="news-form" element={<NewsAddForm/>} />
+            <Route path="update-news/:id" element={<NewsUpdateForm/>} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>

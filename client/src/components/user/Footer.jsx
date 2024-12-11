@@ -15,7 +15,8 @@ const Footer = () => {
     try{
       const data = await axios.get('/api/v1/news')
       if(data){
-        setNews(data.data.data)
+        setNews(data.data.data.news)
+        // console.log(data)
       }
     }catch(err){
       console.log(err)
