@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import {toast} from "react-toastify"
 
 const ContactUs = () => {
@@ -8,6 +9,7 @@ const ContactUs = () => {
   const [subject,setSubject] = useState('')
   const [message,setMessage] = useState('')
   const [errors,setErrors] = useState({})
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,9 +53,21 @@ const ContactUs = () => {
   return (
     <div className="mt-24">
       {/* Page Heading */}
-      <h2 className="flex justify-center items-center text-4xl font-semibold bg-[#EEF4FC] h-[15vh]">
-        Contact Us
-      </h2>
+      <div className="bg-[#EEF4FC] py-4">
+        {" "}
+        <h2 className="flex justify-center items-center text-4xl font-semibold">
+          Contact Us
+        </h2>
+        <p className="text-center mt-4 flex items-center justify-center gap-2">
+          <span
+            className="text-[#fd0c0c] hover:underline"
+            onClick={() => navigate("/")}
+          >
+            Home
+          </span>
+          <box-icon name="fast-forward" flip="vertical"></box-icon>Contact
+        </p>
+      </div>
 
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row w-full justify-between items-start py-10 lg:px-52 gap-10">
@@ -78,48 +92,62 @@ const ContactUs = () => {
         </div>
 
         {/* Form Section */}
-        <form onSubmit={(e)=>handleSubmit(e)} className="lg:w-1/2 w-full px-4 lg:px-0">
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className="lg:w-1/2 w-full px-4 lg:px-0"
+        >
           <div className="flex flex-col gap-4">
             <input
               type="text"
               value={name}
-              onChange={(e)=>setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               className="outline-none border focus:border-[#fd0c0c] py-3 w-full rounded-lg placeholder:text-sm px-4"
               placeholder="Your Name*"
               name="name"
             />
-            {errors.name && <span className="text-sm text-[#fd0c0c]">{errors.name}</span>}
+            {errors.name && (
+              <span className="text-sm text-[#fd0c0c]">{errors.name}</span>
+            )}
             <input
               type="email"
               value={email}
-              onChange={(e)=>setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               className="outline-none border focus:border-[#fd0c0c] py-3 w-full rounded-lg placeholder:text-sm px-4"
               placeholder="Your Email*"
               name="email"
             />
-            {errors.email && <span className="text-sm text-[#fd0c0c]">{errors.email}</span>}
+            {errors.email && (
+              <span className="text-sm text-[#fd0c0c]">{errors.email}</span>
+            )}
             <input
               type="text"
               value={subject}
-              onChange={(e)=>setSubject(e.target.value)}
+              onChange={(e) => setSubject(e.target.value)}
               className="outline-none border focus:border-[#fd0c0c] py-3 w-full rounded-lg placeholder:text-sm px-4"
               name="subject"
               placeholder="Subject*"
             />
-            {errors.subject && <span className="text-sm text-[#fd0c0c]">{errors.subject}</span>}
+            {errors.subject && (
+              <span className="text-sm text-[#fd0c0c]">{errors.subject}</span>
+            )}
             <textarea
               name="message"
               value={message}
-              onChange={(e)=>setMessage(e.target.value)}
+              onChange={(e) => setMessage(e.target.value)}
               className="outline-none border focus:border-[#fd0c0c] py-3 w-full rounded-lg placeholder:text-sm px-4"
               id="message"
               rows={3}
               placeholder="Type your message here*"
             ></textarea>
-            {errors.message && <span className="text-sm text-[#fd0c0c]">{errors.message}</span>}
+            {errors.message && (
+              <span className="text-sm text-[#fd0c0c]">{errors.message}</span>
+            )}
             {/* Send Message Button */}
             <div className="flex justify-end">
-              <button type="submit" className="py-3 px-8 text-white bg-[#fd0c0c] rounded-lg">
+              <button
+                type="submit"
+                className="py-3 px-8 text-white bg-[#fd0c0c] rounded-lg"
+              >
                 Send Message
               </button>
             </div>

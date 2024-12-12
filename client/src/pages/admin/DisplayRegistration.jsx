@@ -31,13 +31,13 @@ const DisplayRegistration = () => {
   }
 
   return (
-    <div className="px-4 lg:px-8 h-screen w-screen">
+    <div className="px-4 lg:px-8 h-screen w-screen ">
       <h4 className="text-2xl lg:text-3xl font-semibold text-center mb-6 text-gray-800">
         Registered Students
       </h4>
       {/* Wrapper with overflow-x-auto */}
       <div className="overflow-x-auto border rounded-lg shadow-lg">
-        <table className="table-auto w-full bg-white border-collapse min-w-[800px]">
+        <table className="table-auto w-screen bg-white border-collapse min-w-[800px]">
           <thead className="bg-blue-500 text-white">
             <tr>
               <th className="px-4 py-3 border">S.No.</th>

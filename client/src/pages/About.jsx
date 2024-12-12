@@ -6,9 +6,11 @@ import Video from "../assets/video/coding.mp4";
 import Ankita from "../assets/images/WhatsApp Image 2023-09-08 at 10.00.15 (1).jpeg";
 import Maninder from '../assets/images/team.jpg'
 import Prachi from '../assets/images/team4.jpeg'
+import { useNavigate } from "react-router";
 
 const About = () => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleOpenPopUp = () => {
     setIsPopUpVisible(true);
@@ -21,9 +23,19 @@ const About = () => {
   };
   return (
     <div className="">
-      <h3 className="text-4xl text-center font-semibold mt-24 bg-[#EEF4FC] py-8">
-        About Us
-      </h3>
+      <div className="bg-[#EEF4FC] py-4  mt-24">
+        {" "}
+        <h3 className="text-4xl text-center font-semibold ">About Us</h3>
+        <p className="text-center mt-4 flex items-center justify-center gap-2">
+          <span
+            className="text-[#fd0c0c] hover:underline"
+            onClick={() => navigate("/")}
+          >
+            Home
+          </span>
+          <box-icon name="fast-forward" flip="vertical"></box-icon>About Us
+        </p>
+      </div>
 
       {/* First Section */}
       <div className="p-5 flex flex-col lg:flex-row my-5 md:my-20 gap-8 md:mx-20 lg:mx-60">

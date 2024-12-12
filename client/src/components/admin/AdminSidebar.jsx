@@ -334,7 +334,7 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p onClick={()=>navigate('/admin/dashboard/contact')} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Contacts
                 </p>
@@ -402,11 +402,11 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p onClick={()=>navigate('/admin/dashboard/blog')} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Blogs
                 </p>
-                <p className="cursor-pointer hover:text-blue-600 mt-2">
+                <p onClick={()=>navigate('/admin/dashboard/add-blog')} className="cursor-pointer hover:text-blue-600 mt-2">
                   {" "}
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   Insert New Blogs
