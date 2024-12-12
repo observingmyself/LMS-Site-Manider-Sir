@@ -13,7 +13,7 @@ const registerSchema = new mongoose.Schema({
   },
   school: {
     type: String,
-    require: true,
+    required: true,
     trim: true,
     lowercase: true,
   },
@@ -29,14 +29,14 @@ const registerSchema = new mongoose.Schema({
   fatherName: {
     type: String,
     trim: true,
-    require: true,
+    required: true,
   },
   DOB: {
     type: String,
   },
   contact: {
     type: String,
-    require: true,
+    required: true,
   },
   Address: {
     type: String,
@@ -51,7 +51,7 @@ const registerSchema = new mongoose.Schema({
   city: {
     type: String,
     trim: true,
-    require: true,
+    required: true,
   }
 })
 
