@@ -12,7 +12,7 @@ const DisplayContact = () => {
             const data = await axios.post('/api/v1/contact')
             if(data){
                 setContact(data.data.data.contacts)
-                console.log(data)
+                // console.log(data)
             }
         }catch(err){
             console.log(err)

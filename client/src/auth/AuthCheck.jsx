@@ -2,23 +2,22 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const AuthCheck = ({ children }) => {
-  const token = JSON.parse(localStorage.getItem("token"));
+const AuthCheck = ({ isAuthenticated,user,children }) => {
   const location = useLocation();
 
-    if(token && location.pathname.includes('/login') && token.role === 'student'){
+    if(isAuthenticated && location.pathname.includes('/login') && user.role === 'student'){
         toast.success("You're already logged in!")
         return <Navigate to={"/"} />
     } 
-    if(token && location.pathname.includes('/admin') && token.role === 'student'){
+    if(isAuthenticated && location.pathname.includes('/admin') && user.role === 'student'){
         toast.warn("can't access protected routes")
         return <Navigate to={"/"} />
     }
-    if(!token && location.pathname.includes('dashboard')){
+    if(!isAuthenticated && location.pathname.includes('dashboard')){
         toast.warn("Please Login to access this page")
-        return <Navigate to={"/admin"} />
+        return <Navigate to={"/login"} />
     }
-    if(token && location.pathname.length < 7 && token.role === 'admin'){
+    if(isAuthenticated && location.pathname.length < 7 && user.role === 'admin'){
         toast.success("You're already logged in!")
         return <Navigate to={"/admin/dashboard"} />
     }
