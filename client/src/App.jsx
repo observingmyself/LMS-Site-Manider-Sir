@@ -27,6 +27,7 @@ import BlogSingle from "./components/user/BlogSingle";
 import DisplayBlog from "./pages/admin/DisplayBlog";
 import BlogAddForm from "./pages/admin/BlogAddForm";
 import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
+import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 
 function App() {
   return (
