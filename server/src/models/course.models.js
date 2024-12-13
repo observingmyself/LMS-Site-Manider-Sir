@@ -1,5 +1,19 @@
 import mongoose from "mongoose"
 
+const syllabusSchema = new mongoose.Schema({
+  courseName: {
+    type: String,
+    trim: true,
+  },
+  fileName: {
+    type: String,
+  },
+  file: {
+    type: String,
+    required: true,
+  }
+})
+
 const courseSchema = new mongoose.Schema({
   courseTitle: {
     type: String,
@@ -31,11 +45,9 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  syllabus: [
-    {
-      type: String,
-    }
-  ],
+
+  syllabus: [syllabusSchema],
+
   courseDuration: {
     type: String,
   },
