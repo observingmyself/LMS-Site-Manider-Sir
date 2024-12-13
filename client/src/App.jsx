@@ -32,15 +32,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
 
 function App() {
-  const {isAuthenticated,user} = useSelector((state) => state.auth)
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  useEffect(()=>{
-    if(isAuthenticated){
-      dispatch(checkAuth())
-    }
-  },[dispatch])
-  
-  console.log(isAuthenticated)
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
 
   return (
     <>
@@ -76,7 +72,6 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="registration-form" element={<RegistrationForm />} />
           </Route>
-
 
           {/* Admin Dashboard and Nested Routes */}
           <Route

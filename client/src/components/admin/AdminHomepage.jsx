@@ -42,7 +42,9 @@ const AdminHomepage = () => {
           <h5 className="text-[#FC6180] text-sm font-semibold">
             Total Courses
           </h5>
-          <p className="text-right text-2xl"><CountUp start={0} end={14} duration={6} /></p>
+          <p className="text-right text-2xl">
+            <CountUp start={0} end={14} duration={6} />
+          </p>
         </div>
       </div>
       <div className="flex group shadow-lg p-3 justify-between items-center bg-white ">
@@ -53,10 +55,11 @@ const AdminHomepage = () => {
           <h5 className="text-[#93BE52] text-sm font-semibold">
             Total Visitors
           </h5>
-          <p className="text-right text-2xl"><CountUp start={0} end={87538} duration={3} /></p>
+          <p className="text-right text-2xl">
+            <CountUp start={0} end={87538} duration={3} />
+          </p>
         </div>
       </div>
-      <button className="px-4 py-4 bg-blue-500 text-white">Get Profile</button>
     </div>
   );
 };

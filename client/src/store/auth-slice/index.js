@@ -8,32 +8,37 @@ const initialState = {
 };
 
 export const userRegister = createAsyncThunk("/register", async (formData) => {
-  const response = await axios.post(
-    "http://localhost:3000/api/v1/user/register",
-    formData
-  );
-  //   console.log(response)
-  return response.data;
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/user/register",
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error, "ERROR in userRegister")
+  }
 });
+
 export const userLogin = createAsyncThunk("/login", async (formData) => {
-  const response = await axios.post(
-    "http://localhost:3000/api/v1/user/login",
-    formData
-  );
-  console.log(response);
-  return response.data;
+  try {
+    const response = await axios.post(
+      "/api/v1/user/login",
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error, "ERROR in userLogin")
+  }
 });
 
 export const checkAuth = createAsyncThunk("/checkauth", async () => {
   try {
     const response = await axios.get(
-      "http://localhost:3000/api/v1/user/profile",
-      {withCredentials : true}
+      "/api/v1/user/profile",
     );
-    console.log(response);
     return response.data;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error, "checkAuth error")
   }
 });
 
@@ -41,7 +46,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    addUser: (state, action) => {},
+    addUser: (state, action) => { },
   },
   extraReducers: (builder) => {
     builder
@@ -76,7 +81,7 @@ const authSlice = createSlice({
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.success ? action.payload.data.user : null;
+        state.user = action.payload.success ? action.payload.data : null;
         state.isAuthenticated = action.payload.success;
       })
       .addCase(checkAuth.rejected, (state) => {
