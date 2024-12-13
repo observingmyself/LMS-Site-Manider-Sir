@@ -11,10 +11,12 @@ const registerCourse = asyncHandler(async (req, res) => {
   }
   // upload image
   const courseImage = req.file?.path;
+  console.log(courseImage)
   if (!courseImage) {
     throw new ApiError(401, "Please upload a course image");
   }
   const uploadImg = await uploadOnCloudinary(courseImage);
+  console.log(uploadImg.url)
   if (!uploadImg) {
     throw new ApiError(401, "Failed to upload image");
   }
@@ -23,6 +25,7 @@ const registerCourse = asyncHandler(async (req, res) => {
   const createCourse = await Course.create({
     courseTitle, category, coursePrice, description, subtitle, courseLevel, courseDuration, courseLanguage, courseThumbnail: uploadImg?.url, instructor
   })
+
   if (!createCourse) {
     throw new ApiError(500, "Something went wrong while creating a course")
   }
@@ -62,6 +65,7 @@ const getSingleCourse = asyncHandler(async (req, res) => {
 
 const addSyllabus = asyncHandler(async (req, res) => {
   const id = req.params.id;
+  const { courseName } = req.body;
   if (!id) {
     throw new ApiError(401, "Please provide course id")
   }
@@ -82,7 +86,7 @@ const addSyllabus = asyncHandler(async (req, res) => {
     throw new ApiError(401, "upload file not recievd")
   }
 
-  Data.syllabus.push(uploadSyllabus?.url);
+  Data.syllabus.push({ courseName, fileName: uploadSyllabus?.original_filename, file: uploadSyllabus?.url });
   const savefile = await Data.save({ validateBeforeSave: true });
   if (!savefile) {
     throw new ApiError(500, "something went wrong adding a syllabus file")
@@ -90,6 +94,7 @@ const addSyllabus = asyncHandler(async (req, res) => {
   return res.status(200)
     .json(new ApiResponse(200, "Successfully add Syllabus"))
 })
+
 
 export {
   registerCourse,
