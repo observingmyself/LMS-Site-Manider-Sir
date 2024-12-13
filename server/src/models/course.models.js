@@ -7,6 +7,7 @@ const syllabusSchema = new mongoose.Schema({
   },
   fileName: {
     type: String,
+    trim: true,
   },
   file: {
     type: String,

@@ -221,6 +221,27 @@ const changePassword = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, "Password Changed Successfully"))
 })
+const forgetPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    throw new ApiError(400, "Email is Required");
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new ApiError(404, "Please provid valid email");
+  }
+  const token = JWT.sign({
+    _id: user._id,
+    userName: user.userName,
+    email: user.email,
+    mobileNo: user.mobileNo
+  },
+    process.env.REST_PASSWORD_SECRET_KEY,
+    {
+      expiresIn: process.env.REST_PASSWORD_EXPIRY
+    }
+  )
+})
 
 export {
   Register,
@@ -228,7 +249,7 @@ export {
   logout,
   getProfile,
   updateProfile,
-  updateProfileImg,
   changePassword,
+  updateProfileImg,
   refreshAndAccessToken,
 }
