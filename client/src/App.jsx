@@ -27,6 +27,7 @@ import BlogSingle from "./components/user/BlogSingle";
 import DisplayBlog from "./pages/admin/DisplayBlog";
 import BlogAddForm from "./pages/admin/BlogAddForm";
 import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
+import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 
 function App() {
   return (
@@ -87,6 +88,7 @@ function App() {
           >
             {/* Nested Route for Homepage */}
             <Route path="registrations" element={<DisplayRegistration/>} />
+            <Route path="add-course" element={<NewCourseAddForm/>} />
             <Route path="news" element={<DisplayNews/>} />
             <Route path="blog" element={<DisplayBlog/>} />
             <Route path="add-blog" element={<BlogAddForm/>} />
