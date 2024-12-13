@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
@@ -28,12 +28,24 @@ import DisplayBlog from "./pages/admin/DisplayBlog";
 import BlogAddForm from "./pages/admin/BlogAddForm";
 import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
 import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
+import { useDispatch, useSelector } from "react-redux";
+import { checkAuth } from "./store/auth-slice";
 
 function App() {
+  const {isAuthenticated,user} = useSelector((state) => state.auth)
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    if(isAuthenticated){
+      dispatch(checkAuth())
+    }
+  },[dispatch])
+  
+  console.log(isAuthenticated)
+
   return (
     <>
       <ToastContainer
-        position="top-right"
+        position="bottom-right"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -49,7 +61,7 @@ function App() {
           <Route
             path="/"
             element={
-              <AuthCheck>
+              <AuthCheck isAuthenticated={isAuthenticated} user={user}>
                 <Layout />
               </AuthCheck>
             }
@@ -65,21 +77,12 @@ function App() {
             <Route path="registration-form" element={<RegistrationForm/>} />
           </Route>
 
-          {/* admin routes */}
-          <Route
-            path="/admin"
-            element={
-              <AuthCheck>
-                <AdminLogin />
-              </AuthCheck>
-            }
-          />
 
           {/* Admin Dashboard and Nested Routes */}
           <Route
             path="/admin/dashboard"
             element={
-              <AuthCheck>
+              <AuthCheck isAuthenticated={isAuthenticated} user={user}>
                 <AdminLayout>
                   <AdminDashboard />
                 </AdminLayout>

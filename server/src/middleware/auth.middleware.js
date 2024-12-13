@@ -12,7 +12,7 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
   if (!decodedToken) {
     throw new ApiError(401, "Unauthorized Request, Token is not Valid");
   }
-  const user = await User.findById(decodedToken._id).select("-password -refreshToken");
+  const user = await User.findById(decodedToken._id).select("-password -refreshToken"); 
   req.user = user;
   next();
 

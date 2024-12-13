@@ -6,8 +6,22 @@ import Review from "../components/user/Review";
 import NumberingCounter from "../components/user/NumberingCounter";
 import Banner from "../components/user/Banner";
 import SubscriptionEmailAcceptor from "../components/user/SubscriptionEmailAcceptor";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const HeroSection = () => {
+
+  const handleLogoutProcess = async () => {
+    try{
+      const data = await axios.post('/api/v1/user/logout')
+      if(data){
+        console.log(data)
+        toast.success('logout');
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
   return (
     <>
       <div className='herosection w-screen h-screen bg-[url("./assets/images/banner.jpg")] bg-cover bg-center'>
@@ -27,6 +41,7 @@ const HeroSection = () => {
           </a>
         </div>
       </div>
+      <button className="px-4 py-4 mx-auto bg-red-300 text-white" onClick={handleLogoutProcess}>Logout</button>
       <OurVideoShorts />
       <Carousel />
       <Review />

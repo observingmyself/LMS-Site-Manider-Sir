@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import {useDispatch} from 'react-redux'
+import { userRegister } from "../../store/auth-slice";
 const Register = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,33 +13,56 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleSubmit = async (e) => {
+  function handleSubmit(e){
     e.preventDefault();
-    try {
-      if (password === confirmPassword) {
-        const data = await axios.post("/api/v1/user/register", {
-          userName: userName,
-          email: email,
-          mobileNo: mobileNo,
-          password: password,
-        });
-        if (data) {
-          console.log(data);
-          navigate("/login");
-          toast.success(data.data.message);
-          setUserName('')
-          setEmail('')
-          setMobileNo('')
-          setPassword('')
-        }
-      } else {
+    const formData = new FormData();
+    formData.append("userName",userName)
+    formData.append("email",email)
+    formData.append("mobileNo",mobileNo)
+    formData.append("password",password)
+    // console.log(formData)
+    dispatch(userRegister(formData)).then((data)=>{
+      if(data?.payload?.success) {
+        navigate('/login')
+        toast.success("Registration Successfull")
+        setUserName('')
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+        setMobileNo('')
       }
-    } catch (err) {
-      toast.error();
-      console.log(err);
-    }
-  };
+
+    })
+  }
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     if (password === confirmPassword) {
+  //       const data = await axios.post("/api/v1/user/register", {
+          // userName: userName,
+          // email: email,
+          // mobileNo: mobileNo,
+          // password: password,
+  //       });
+  //       if (data) {
+  //         console.log(data);
+  //         navigate("/login");
+  //         toast.success(data.data.message);
+  //         setUserName('')
+  //         setEmail('')
+  //         setMobileNo('')
+  //         setPassword('')
+  //       }
+  //     } else {
+  //     }
+  //   } catch (err) {
+  //     toast.error();
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-[#F8FAFC]">
@@ -50,9 +75,7 @@ const Register = () => {
           Sign up now
         </h2>
         <form
-          onSubmit={(e) => {
-            handleSubmit(e);
-          }}
+          onSubmit={(e) => handleSubmit(e)}
         >
           {/* Name Field */}
           <div className="mb-4">
@@ -145,14 +168,14 @@ const Register = () => {
           <div className="mb-4 relative">
             <label
               className="block text-gray-700 font-medium mb-2"
-              htmlFor="password"
+              htmlFor="confirmpassword"
             >
               Password
             </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"} // Toggle input type
-                id="password"
+                id="confirmpassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
@@ -167,18 +190,6 @@ const Register = () => {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
-          </div>
-
-          {/* Remember Me Checkbox */}
-          <div className="mb-4 flex items-center">
-            <input
-              type="checkbox"
-              id="remember"
-              className="mr-2 h-4 w-4 border-gray-300 rounded focus:ring-2 focus:ring-[#FE0000]"
-            />
-            <label htmlFor="remember" className="text-gray-700">
-              Remember me
-            </label>
           </div>
 
           {/* Signup Button */}

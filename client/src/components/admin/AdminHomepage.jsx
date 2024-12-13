@@ -56,6 +56,7 @@ const AdminHomepage = () => {
           <p className="text-right text-2xl"><CountUp start={0} end={87538} duration={3} /></p>
         </div>
       </div>
+      <button className="px-4 py-4 bg-blue-500 text-white">Get Profile</button>
     </div>
   );
 };

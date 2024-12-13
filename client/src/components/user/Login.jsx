@@ -3,50 +3,69 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../store/auth-slice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [invalidPassword, setInvalidPassword] = useState('')
-  const [errors,setErrors] = useState([])
   const navigate = useNavigate();
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const data = await axios.post("/api/v1/user/login", {
-        email: email,
-        password: password,
-      });
-      if (data) {
-        navigate("/");
-        console.log(data);
-        localStorage.setItem(
-          "token",
-          JSON.stringify({
-            isLoggedIn: true,
-            token: data.data.data.accessToken,
-            user:data.data.data.user,
-            role:data.data.data.user.role
-          })
-        );
-        setEmail("");
-        setPassword("");
-        window.location.reload();
-        // toast.success(data.data.message);
+  const dispatch = useDispatch();
+
+  function handleLogin(event){
+    event.preventDefault();
+    // const formData = new FormData();
+    // formData.append("email",email)
+    // formData.append("password",password)
+    // console.log(formData.email)
+    dispatch(userLogin({
+      email : email,
+      password : password
+    })).then((data)=>{
+      if(data?.payload?.success){
+        toast.success(data.payload.message)
       }
-      else{
-        toast.error("Invalid Credentials")
-      }
-    } catch (err) {
-      if(err.response && err.response.data && err.response.data.message){
-        setInvalidPassword(err.response.data.message);
-      }
-      else{
-        setInvalidPassword("Something unexected happened")
-      }
-    }
-  };
+    })
+  }
+  
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const data = await axios.post("/api/v1/user/login", {
+  //       email: email,
+  //       password: password,
+  //     });
+  //     if (data) {
+  //       navigate("/");
+  //       console.log(data);
+  //       localStorage.setItem(
+  //         "token",
+  //         JSON.stringify({
+  //           isLoggedIn: true,
+  //           token: data.data.data.accessToken,
+  //           user:data.data.data.user,
+  //           role:data.data.data.user.role
+  //         })
+  //       );
+  //       setEmail("");
+  //       setPassword("");
+  //       window.location.reload();
+  //       // toast.success(data.data.message);
+  //     }
+  //     else{
+  //       toast.error("Invalid Credentials")
+  //     }
+  //   } catch (err) {
+  //     if(err.response && err.response.data && err.response.data.message){
+  //       setInvalidPassword(err.response.data.message);
+  //     }
+  //     else{
+  //       setInvalidPassword("Something unexected happened")
+  //     }
+  //   }
+  // };
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
       {/* <h1 className="text-center mt-5 text-3xl mb-8 font-bold p-7 w-full bg-[#d8e3f2]">
