@@ -22,6 +22,11 @@ import DisplayNews from "./pages/admin/DisplayNews";
 import NewsAddForm from "./pages/admin/NewsAddForm";
 import NewsUpdateForm from "./pages/admin/NewsUpdateForm";
 import DisplayContact from "./pages/admin/DisplayContact";
+import Blog from "./components/user/Blog";
+import BlogSingle from "./components/user/BlogSingle";
+import DisplayBlog from "./pages/admin/DisplayBlog";
+import BlogAddForm from "./pages/admin/BlogAddForm";
+import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
 
 function App() {
   return (
@@ -52,6 +57,8 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="news/:id" element={<SinglePageLatestNews/>} />
+            <Route path="blog" element={<Blog/>} />
+            <Route path="blog/:id" element={<BlogSingle/>} />
             <Route path="contact" element={<ContactUs />} />
             <Route path="about" element={<About />} />
             <Route path="registration-form" element={<RegistrationForm/>} />
@@ -81,6 +88,9 @@ function App() {
             {/* Nested Route for Homepage */}
             <Route path="registrations" element={<DisplayRegistration/>} />
             <Route path="news" element={<DisplayNews/>} />
+            <Route path="blog" element={<DisplayBlog/>} />
+            <Route path="add-blog" element={<BlogAddForm/>} />
+            <Route path="update-blog/:id" element={<BlogUpdateForm/>} />
             <Route path="news-form" element={<NewsAddForm/>} />
             <Route path="update-news/:id" element={<NewsUpdateForm/>} />
             <Route path="contact" element={<DisplayContact/>} />
