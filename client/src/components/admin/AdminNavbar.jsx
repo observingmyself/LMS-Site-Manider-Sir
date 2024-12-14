@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import WhiteLogo from "../../assets/images/White-logo-removebg-preview.png";
 import Sunita from "../../assets/images/t1.jpg";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { logoutAuth } from "../../store/auth-slice";
+import { toast } from "react-toastify";
 
 const AdminNavbar = ({ toggleSidebar }) => {
   const [isFull, setIsFull] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleScreenSize = () => {
     if (!isFull) {
@@ -15,8 +19,7 @@ const AdminNavbar = ({ toggleSidebar }) => {
     }
   };
   const handleLogout = () => {
-    localStorage.setItem('token',JSON.stringify(""))
-    navigate('/')
+      dispatch(logoutAuth()).then(()=>toast("Logged out"))
   }
   return (
     <div className="flex z-20 fixed shadow-lg flex-col lg:flex-row w-full h-20 bg-white">

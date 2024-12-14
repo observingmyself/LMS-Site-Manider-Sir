@@ -14,7 +14,6 @@ const AuthCheck = ({ isAuthenticated,user,children }) => {
         return <Navigate to={"/"} />
     }
     if(!isAuthenticated && location.pathname.includes('dashboard')){
-        toast.warn("Please Login to access this page")
         return <Navigate to={"/login"} />
     }
     if(isAuthenticated && location.pathname.length < 7 && user.role === 'admin'){
