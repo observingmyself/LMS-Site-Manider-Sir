@@ -272,11 +272,27 @@ const resetPassword = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "Password change successfully"))
 })
 
+const getAllUser = asyncHandler(async (req, res) => {
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 20;
+  const sortBy = req.query.sortBy || "createdAt";
+  const order = req.query.order === "desc" ? -1 : 1;
+  const skip = (page - 1) * limit;
+  const users = await User.find().sort({ [sortBy]: order }).skip(skip).limit(limit).select("-password -refreshToken");
+  if (!users) {
+    throw new ApiError(404, "User Not Found");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, users, "User list successfully"))
+})
+
 export {
   Register,
   login,
   logout,
   getProfile,
+  getAllUser,
   changePassword,
   resetPassword,
   forgetPassword,

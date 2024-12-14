@@ -2,7 +2,7 @@ import { News } from "../models/news.models.js"
 import { ApiError } from "../utils/apiErrorHandler.js"
 import { ApiResponse } from "../utils/apiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
-import { uploadOnCloudinary } from "../utils/cloudinary.js"
+import { uploadOnCloudinary, deleteMediaFromCloudinary } from "../utils/cloudinary.js"
 
 const CreateNews = asyncHandler(async (req, res) => {
   const { newsHeadline, newsDescription } = req.body
@@ -95,7 +95,23 @@ const updatenewImage = asyncHandler(async (req, res) => {
   if (!imageLocalPath) {
     throw new ApiError(400, "Image not found")
   }
+
+  const data = await News.findById(id);
+  if (!data) {
+    throw new ApiError(404, "No News found")
+  }
+  console.log(data.newsImage)
+
+  if (data.newsImage) {
+    const publicId = data.newsImage.split("/").pop().split(".")[0];
+    await deleteMediaFromCloudinary(publicId)
+  }
+
   const updateImg = await uploadOnCloudinary(imageLocalPath);
+  if (!updateImg) {
+    throw new ApiError(400, "Failed to upload image")
+  }
+
   const updateNews = await News.findByIdAndUpdate(id, {
     $set: {
       newsImage: updateImg?.url
@@ -116,6 +132,17 @@ const deleteNews = asyncHandler(async (req, res) => {
   if (!id) {
     throw new ApiError(400, "News Id is not provide")
   }
+  const data = await News.findById(id);
+  if (!data) {
+    throw new ApiError(404, "No News found")
+  }
+  console.log(data.newsImage)
+
+  if (data.newsImage) {
+    const publicId = data.newsImage.split("/").pop().split(".")[0];
+    await deleteMediaFromCloudinary(publicId)
+  }
+
   const deleteNews = await News.findByIdAndDelete(id);
   if (!deleteNews) {
     throw new ApiError(404, "News not found")
