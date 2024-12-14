@@ -2,15 +2,20 @@ import React, { useState, useEffect } from "react";
 import TransparentImage from "../../assets/images/Transparent-logo.png";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import {useDispatch, useSelector} from 'react-redux'
+import { logoutAuth } from "../../store/auth-slice";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation(); // Hook to get current location
-  const [token, setToken] = useState(() =>
-    JSON.parse(localStorage.getItem("token"))
-  );
+  const {isAuthenticated} = useSelector(state=>state.auth)
+  const [token, setToken] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    setToken(isAuthenticated)
+  },[isAuthenticated])
 
   const navbarToggler = () => {
     setMenuOpen((prevState) => !prevState);
@@ -31,11 +36,12 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.setItem("token", JSON.stringify(""));
-    setToken(null);
-    navigate("/login");
-    window.location.reload();
-  };
+    try{
+      dispatch(logoutAuth()).then(()=>toast('Logged out'))
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   // Scroll to top when the location changes
   useEffect(() => {

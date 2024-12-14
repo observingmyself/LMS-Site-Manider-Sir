@@ -11,7 +11,7 @@ const DisplayBlog = () => {
     try{
         const data = await axios.get('/api/v1/blog')
         if(data){
-            console.log(data)
+            // console.log(data)
             setBlog(data.data.data.data)
         }
     }catch(err){

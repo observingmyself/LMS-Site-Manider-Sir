@@ -1,6 +1,9 @@
 import React, { useState, useRef } from "react";
 import Sunita from "../../assets/images/t1.jpg";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { logoutAuth } from "../../store/auth-slice";
+import { toast } from "react-toastify";
 
 const AdminSidebar = ({ isSidebarOpen }) => {
   const [isLogoutOpen,setIsLogoutOpen] = useState(false)
@@ -16,6 +19,8 @@ const AdminSidebar = ({ isSidebarOpen }) => {
   const [isTeamOpen, setIsTeamOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const coursesContentRef = useRef(null);
   const studentsContentRef = useRef(null);
@@ -72,10 +77,10 @@ const AdminSidebar = ({ isSidebarOpen }) => {
   const toggleTeamDropdown = () => {
     setIsTeamOpen((prev) => !prev);
   };
-    const handleLogout = () => {
-      localStorage.setItem("token", JSON.stringify(""));
-      navigate("/");
-    };
+  const handleLogout = () => {
+    dispatch(logoutAuth()).then(()=>toast("Logged out"))
+  }
+  
   return (
     <div
       className={`w-[280px] overflow-scroll  py-8 px-5 flex flex-col justify-start items-start z-20 fixed top-20 -left-64 h-full bg-white shadow-lg transition-all duration-300 ${

@@ -89,6 +89,7 @@ function App() {
             <Route path="news" element={<DisplayNews />} />
             <Route path="blog" element={<DisplayBlog />} />
             <Route path="add-blog" element={<BlogAddForm />} />
+            
             <Route path="update-blog/:id" element={<BlogUpdateForm />} />
             <Route path="news-form" element={<NewsAddForm />} />
             <Route path="update-news/:id" element={<NewsUpdateForm />} />
