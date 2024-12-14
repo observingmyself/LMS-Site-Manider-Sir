@@ -258,7 +258,6 @@ const resetPassword = asyncHandler(async (req, res) => {
   }
 
   const decodedToken = JWT.verify(token, process.env.REST_PASSWORD_SECRET_KEY)
-  console.log(decodedToken)
   if (!decodedToken) {
     throw new ApiError(401, "Invalid Token");
   }
