@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import { ApiError } from "../utils/apiErrorHandler.js";
 import { User } from "../models/user.models.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { sendEmail } from "../utils/mailService.js";
 import JWT from "jsonwebtoken";
 
 const generateToken = async (userId) => {
@@ -97,7 +98,7 @@ const login = asyncHandler(async (req, res) => {
     .status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
-    .json(new ApiResponse(200, { user: loggedInUser, accessToken, refreshToken }, "Logged in Successfully"))
+    .json(new ApiResponse(200, { user: loggedInUser, accessToken, refreshToken }, "User has been logged in Successfully"))
 })
 
 const logout = asyncHandler(async (req, res) => {
@@ -230,17 +231,46 @@ const forgetPassword = asyncHandler(async (req, res) => {
   if (!user) {
     throw new ApiError(404, "Please provid valid email");
   }
-  const token = JWT.sign({
+  const restPasswordtoken = JWT.sign({
     _id: user._id,
-    userName: user.userName,
     email: user.email,
-    mobileNo: user.mobileNo
   },
     process.env.REST_PASSWORD_SECRET_KEY,
     {
       expiresIn: process.env.REST_PASSWORD_EXPIRY
     }
   )
+  const resetField = `http://localhost:5173/reset-password/${restPasswordtoken}`
+  const userEmail = user.email
+
+  await sendEmail({ userEmail, resetField });
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "password link send successfully"))
+})
+
+const resetPassword = asyncHandler(async (req, res) => {
+  const { newPassword } = req.body;
+  const { token } = req.params;
+
+  if (!(newPassword || token)) {
+    throw new ApiError(400, "Please provide new password and token");
+  }
+
+  const decodedToken = JWT.verify(token, process.env.REST_PASSWORD_SECRET_KEY)
+  console.log(decodedToken)
+  if (!decodedToken) {
+    throw new ApiError(401, "Invalid Token");
+  }
+  const user = await User.findOne({ _id: decodedToken._id }).select("-password -refreshToken")
+  user.password = newPassword;
+  if (!user) {
+    throw new ApiError(404, "User Not Found");
+  }
+  await user.save({ validateBeforeSave: false });
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "Password change successfully"))
 })
 
 export {
@@ -248,8 +278,10 @@ export {
   login,
   logout,
   getProfile,
-  updateProfile,
   changePassword,
+  resetPassword,
+  forgetPassword,
+  updateProfile,
   updateProfileImg,
   refreshAndAccessToken,
 }

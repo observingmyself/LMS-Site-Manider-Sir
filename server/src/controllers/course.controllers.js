@@ -95,7 +95,6 @@ const addSyllabus = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Successfully add Syllabus"))
 })
 
-
 export {
   registerCourse,
   getCourse,
