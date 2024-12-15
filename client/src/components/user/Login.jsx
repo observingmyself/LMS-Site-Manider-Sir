@@ -5,72 +5,52 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../../store/auth-slice";
+import { useGoogleLogin } from "@react-oauth/google";
+import { googleAuth } from "../../login with google/api";
+import GOOGLEPNG from "../../assets/admin/google.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [invalidPassword, setInvalidPassword] = useState('')
+  const [invalidPassword, setInvalidPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  function handleLogin(event){
-    event.preventDefault();
-    // const formData = new FormData();
-    // formData.append("email",email)
-    // formData.append("password",password)
-    // console.log(formData.email)
-    dispatch(userLogin({
-      email : email,
-      password : password
-    })).then((data)=>{
-      if(data?.payload?.success){
-        toast.success(data.payload.message)
+  const responseGoogle = async (authResult) => {
+    try {
+      if (authResult["code"]) {
+        const result = await googleAuth(authResult["code"]);
+        console.log(result); // Debug Google Auth Response
       }
-    })
-  }
+    } catch (err) {
+      console.log("responseGoogle", err);
+    }
+  };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: responseGoogle,
+    onError: responseGoogle,
+    flow: "auth-code",
+  });
   
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const data = await axios.post("/api/v1/user/login", {
-  //       email: email,
-  //       password: password,
-  //     });
-  //     if (data) {
-  //       navigate("/");
-  //       console.log(data);
-  //       localStorage.setItem(
-  //         "token",
-  //         JSON.stringify({
-  //           isLoggedIn: true,
-  //           token: data.data.data.accessToken,
-  //           user:data.data.data.user,
-  //           role:data.data.data.user.role
-  //         })
-  //       );
-  //       setEmail("");
-  //       setPassword("");
-  //       window.location.reload();
-  //       // toast.success(data.data.message);
-  //     }
-  //     else{
-  //       toast.error("Invalid Credentials")
-  //     }
-  //   } catch (err) {
-  //     if(err.response && err.response.data && err.response.data.message){
-  //       setInvalidPassword(err.response.data.message);
-  //     }
-  //     else{
-  //       setInvalidPassword("Something unexected happened")
-  //     }
-  //   }
-  // };
+
+  function handleLogin(event) {
+    event.preventDefault();
+    dispatch(
+      userLogin({
+        email: email,
+        password: password,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        toast.success(data.payload.message);
+      }
+    });
+  }
+
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
-      {/* <h1 className="text-center mt-5 text-3xl mb-8 font-bold p-7 w-full bg-[#d8e3f2]">
-        Login
-      </h1> */}
+    <div className="flex mt-10 flex-col justify-center items-center h-screen bg-gray-100">
       <div className="w-92 sm:w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         {/* Title */}
         <h2 className="text-2xl font-semibold text-[#FE0000] text-center mb-6">
@@ -107,18 +87,22 @@ const Login = () => {
             </label>
             <div className="relative">
               <input
-                type={showPassword ? "text" : "password"} // Toggle input type
+                type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
                 placeholder="Enter your password"
               />
-              {invalidPassword && <span className="text-sm text-[#fd0c0c]">{invalidPassword}</span>}
+              {invalidPassword && (
+                <span className="text-sm text-[#fd0c0c]">
+                  {invalidPassword}
+                </span>
+              )}
               {/* Eye icon */}
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                onClick={() => setShowPassword(!showPassword)}
                 className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500 hover:text-gray-700"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -138,8 +122,11 @@ const Login = () => {
           </div>
 
           {/* Login Button */}
-          <button className="w-full bg-[#FE0000] text-white py-2 rounded-lg hover:bg-[#581F27] transition duration-300">
-         Login
+          <button
+            type="submit"
+            className="w-full bg-[#FE0000] text-white py-2 rounded-lg hover:bg-[#581F27] transition duration-300"
+          >
+            Login
           </button>
 
           {/* Register Link */}
@@ -150,6 +137,24 @@ const Login = () => {
             </NavLink>
           </p>
         </form>
+
+        {/* Divider */}
+        <div className="flex items-center justify-center my-6">
+          <span className="border-b border-gray-300 flex-grow"></span>
+          <span className="text-sm text-gray-500 px-4">or</span>
+          <span className="border-b border-gray-300 flex-grow"></span>
+        </div>
+
+        {/* Google Login Button */}
+        <div className="flex justify-center">
+          <button
+            className="flex items-center gap-2 bg-white border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 transition-all duration-300"
+            onClick={googleLogin}
+          >
+            <img src={GOOGLEPNG} alt="google logo" className="h-6" />
+            <span className="text-sm font-medium">Login with Google</span>
+          </button>
+        </div>
       </div>
     </div>
   );

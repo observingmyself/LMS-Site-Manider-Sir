@@ -1,10 +1,12 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { ApiError } from "../utils/apiErrorHandler.js";
+import axios from 'axios'
 import { User } from "../models/user.models.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { sendEmail } from "../utils/mailService.js";
 import JWT from "jsonwebtoken";
+import { oauth2client } from "../utils/googleConfig.js";
 
 const generateToken = async (userId) => {
   try {
@@ -67,7 +69,7 @@ const Register = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(200, createUser, "User has been Registerd Successfully"))
+    .json(new ApiResponse(200, createUser, "Registerd Successfully"))
 })
 
 const login = asyncHandler(async (req, res) => {
@@ -98,7 +100,7 @@ const login = asyncHandler(async (req, res) => {
     .status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
-    .json(new ApiResponse(200, { user: loggedInUser, accessToken, refreshToken }, "User has been logged in Successfully"))
+    .json(new ApiResponse(200, { user: loggedInUser, accessToken, refreshToken }, "logged in Successfully"))
 })
 
 const logout = asyncHandler(async (req, res) => {
@@ -272,6 +274,49 @@ const resetPassword = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "Password change successfully"))
 })
 
+const googleLogin = asyncHandler(async (req,res)=>{
+  const { code } = req.query;
+  // console.log(code)
+  if(!code){
+    throw new ApiError(400, "Code is required");
+  }
+
+  const googleResponse = await oauth2client.getToken(code)
+  // console.log(googleResponse)
+  oauth2client.setCredentials(googleResponse.tokens)
+
+  const userResponse = await axios.get(
+    `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleResponse.tokens.access_token}`
+  );
+  // console.log(userResponse.data)
+  const {name,email,picture} = userResponse.data;
+  let user = await User.findOne({email : email})
+  if(!user){
+    user = await User.create  ({
+      userName: name,
+      email: email,
+      profileImg: picture,
+      password: "google-password",
+    })
+  }
+  const {_id } = user
+  const {accessToken,refreshToken} = await generateToken(_id)
+    const loggedInUser = await User.findById(_id).select(
+      "-password -refreshToken"
+    );
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json(
+        new ApiResponse(
+          200,
+          { user: loggedInUser, accessToken, refreshToken },
+          "Logged in Successfully"
+        )
+      );
+})
+
 export {
   Register,
   login,
@@ -283,4 +328,5 @@ export {
   updateProfile,
   updateProfileImg,
   refreshAndAccessToken,
+  googleLogin
 }

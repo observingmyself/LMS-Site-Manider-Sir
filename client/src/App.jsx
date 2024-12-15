@@ -30,7 +30,7 @@ import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
 import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
-
+import {GoogleOAuthProvider} from '@react-oauth/google'
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -38,6 +38,14 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
+
+  const GoogleAuthWrapper = () => {
+    return (
+      <GoogleOAuthProvider clientId="1047315488836-d6hqn66bas9bcvrkldlsuvogg0k6dpjp.apps.googleusercontent.com">
+        <Login></Login>
+      </GoogleOAuthProvider>
+    )
+  }
   return (
     <>
       <ToastContainer
@@ -63,7 +71,7 @@ function App() {
             }
           >
             <Route path="" element={<HeroSection />} />
-            <Route path="login" element={<Login />} />
+            <Route path="login" element={<GoogleAuthWrapper />} />
             <Route path="register" element={<Register />} />
             <Route path="news/:id" element={<SinglePageLatestNews />} />
             <Route path="blog" element={<Blog />} />

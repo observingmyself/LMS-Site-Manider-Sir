@@ -42,6 +42,7 @@ export const checkAuth = createAsyncThunk("/checkauth", async () => {
   }
 });
 
+
 export const logoutAuth = createAsyncThunk("/logout",async ()=>{
   try{
     const response = await axios.post('/api/v1/user/logout')
