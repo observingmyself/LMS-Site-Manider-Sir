@@ -16,7 +16,7 @@ router.route("/register").post(
 router.post("/login", login);
 router.post("/logout", verifyJWT, logout);
 router.get("/google", googleLogin);
-// router.post("/",verifyJWT,getAllUser)
+router.post("/", verifyJWT, getAllUser)
 router.post("/genrateToken", refreshAndAccessToken);
 router.post("/forget-password", forgetPassword);
 router.post("/reset-password/:token", resetPassword)
