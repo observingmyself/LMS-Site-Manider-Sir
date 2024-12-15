@@ -286,7 +286,46 @@ const resetPassword = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, user, "Password change successfully"))
 })
+const googleLogin = asyncHandler(async (req, res) => {
+  const { code } = req.params;
+  if (!code) {
+    throw new ApiError(400, "Code is required");
+  }
 
+  const googleResponse = await oauth2client.getToken(code);
+  oauth2client.setCredentials(googleResponse.tokens);
+
+  const userResponse = await axios.get(`
+    https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleResponse.tokens.access_token}
+ `);
+  const { name, email, picture } = userResponse.data;
+  let user = await User.findOne({ email: email });
+  if (!user) {
+    user = await User.create({
+      userName: name,
+      email: email,
+      profileImg: picture,
+      password: "google-password",
+    });
+  }
+  console.log(userResponse);
+  const { _id } = user;
+  const { accessToken, refreshToken } = await generateToken(_id);
+  const loggedInUser = await User.findById(_id).select(
+    "-password -refreshToken"
+  );
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        { user: loggedInUser, accessToken, refreshToken },
+        "Logged in Successfully"
+      )
+    );
+});
 export {
   Register,
   login,
