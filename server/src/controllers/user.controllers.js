@@ -330,6 +330,7 @@ export {
   Register,
   login,
   logout,
+  getAllUser,
   getProfile,
   changePassword,
   resetPassword,
