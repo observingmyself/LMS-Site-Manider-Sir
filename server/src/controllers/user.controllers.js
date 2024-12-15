@@ -162,6 +162,19 @@ const getProfile = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, req.user, "User Profile has been fetched Successfully"))
 })
 
+const getAllUser = asyncHandler(async (req, res) => {
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 20;
+  const sortBy = req.query.sortBy || "createdAt"
+  const order = req.query.order === "desc" ? "-1" : "1";
+  const skip = (page - 1) * limit;
+  const users = await User.find().sort({ [sortBy]: order }).skip(skip).limit(limit);
+  if (!users) {
+    throw new ApiError(404, "No User found")
+  }
+  return res.status(200).json(new ApiResponse(200, users, "fetch all users"))
+})
+
 const updateProfile = asyncHandler(async (req, res) => {
   const { userName, email, mobileNo } = req.body;
   if (!userName || !email || !mobileNo) {
@@ -272,6 +285,45 @@ const resetPassword = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, user, "Password change successfully"))
+})
+
+const googleLogin = asyncHandler(async (req, res) => {
+  const { code } = req.query;
+  if (!code) {
+    throw new ApiError(400, "Please provide code")
+  }
+  const googleResponse = await oauth2client.getToken(code)
+  oauth2client.setCredentials(googleResponse.tokens)
+
+  const userResponse = await axios.get(`
+    https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleResponse.tokens.access_token}
+ ` );
+  const { name, email, picture } = userResponse.data;
+  let user = await User.findOne({ email: email })
+  if (!user) {
+    user = await User.create({
+      userName: name,
+      email: email,
+      profileImg: picture,
+      password: "google-password",
+    })
+  }
+  const { _id } = user
+  const { accessToken, refreshToken } = await generateToken(_id)
+  const loggedInUser = await User.findById(_id).select(
+    "-password -refreshToken"
+  );
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        { user: loggedInUser, accessToken, refreshToken },
+        "Logged in Successfully"
+      )
+    )
 })
 
 export {
