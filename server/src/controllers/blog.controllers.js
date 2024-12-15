@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiErrorHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { Blog } from "../models/blog.models.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { uploadOnCloudinary, deleteMediaFromCloudinary } from "../utils/cloudinary.js";
 
 const createBlog = asyncHandler(async (req, res) => {
   const { BlogTitle, Instructor, Description, BlogType } = req.body;
@@ -103,6 +103,15 @@ const updateBlogImg = asyncHandler(async (req, res) => {
   if (!localPath) {
     throw new ApiError(404, "File is not found on your local storage");
   }
+  const blogData = await Blog.findById(id);
+  if (!blogData) {
+    throw new ApiError(404, "Blog Data is not avialable in Server");
+  }
+  if (blogData?.BlogUrl) {
+    const publicId = blogData.BlogUrl.split("/").pop().split(".")[0];
+    await deleteMediaFromCloudinary(publicId)
+  }
+
   const data = await uploadOnCloudinary(localPath);
   if (!data) {
     throw new ApiError(500, "Something went wrong while updating Blog Image");
@@ -126,6 +135,14 @@ const deleteBlog = asyncHandler(async (req, res) => {
   const id = req.params.id;
   if (!id) {
     throw new ApiError(404, "id not found!!");
+  }
+  const blogData = await Blog.findById(id);
+  if (!blogData) {
+    throw new ApiError(404, "Blog Data is not avialable in Server");
+  }
+  if (blogData?.BlogUrl) {
+    const publicId = blogData.BlogUrl.split("/").pop().split(".")[0];
+    await deleteMediaFromCloudinary(publicId)
   }
   await Blog.findByIdAndDelete(id)
   return res
