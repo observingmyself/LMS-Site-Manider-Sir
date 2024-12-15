@@ -287,7 +287,7 @@ const resetPassword = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "Password change successfully"))
 })
 const googleLogin = asyncHandler(async (req, res) => {
-  const { code } = req.params;
+  const { code } = req.query;
   if (!code) {
     throw new ApiError(400, "Code is required");
   }
