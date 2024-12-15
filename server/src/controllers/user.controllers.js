@@ -331,7 +331,6 @@ export {
   login,
   logout,
   getProfile,
-  getAllUser,
   changePassword,
   resetPassword,
   forgetPassword,
