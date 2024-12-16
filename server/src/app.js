@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json({ limit: "30kb" }))
 app.use(express.urlencoded({ extended: true, limit: "30kb" }))
 app.use(cors({
-  Credential: true,
+  credentials : true,
   origin: process.env.CORS_ORIGIN
 }));
 app.use(cookieParser());
