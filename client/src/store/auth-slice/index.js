@@ -11,7 +11,7 @@ const initialState = {
 export const userRegister = createAsyncThunk("/register", async (formData) => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/v1/user/register",
+      "/api/v1/user/register",
       formData
     );
     return response.data;
