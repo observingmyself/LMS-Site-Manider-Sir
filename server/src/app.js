@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json({ limit: "30kb" }))
 app.use(express.urlencoded({ extended: true, limit: "30kb" }))
 app.use(cors({
-  credentials : true,
+  credentials: true,
   origin: process.env.CORS_ORIGIN
 }));
 app.use(cookieParser());
@@ -24,6 +24,7 @@ import { reviewRouter } from "./routes/review.routes.js";
 import { contactRouter } from "./routes/contact.routes.js";
 import { courseRouter } from "./routes/course.routes.js";
 import { teamRouter } from "./routes/team.routes.js";
+import { certificateRouter } from "./routes/certificate.routes.js";
 import { errorHandler } from "./middleware/errorHandler.middleware.js";
 
 app.use("/api/v1/user", userRouter)
@@ -34,6 +35,7 @@ app.use("/api/v1/review", reviewRouter)
 app.use("/api/v1/contact", contactRouter)
 app.use("/api/v1/course", courseRouter)
 app.use("/api/v1/team", teamRouter)
+app.use("/api/v1/certificate", certificateRouter)
 app.use(errorHandler())
 export { app };
 

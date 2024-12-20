@@ -3,6 +3,7 @@ import { ApiError } from "../utils/apiErrorHandler.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Course } from "../models/course.models.js"
 import { ApiResponse } from "../utils/apiResponse.js"
+import { deleteFileFromGoogleDrive, uploadToGoogleDrive } from "../utils/googleDrive.js";
 
 const registerCourse = asyncHandler(async (req, res) => {
   const { courseTitle, category, coursePrice, description, subtitle, courseLevel, courseDuration, courseLanguage, instructor } = req.body
@@ -37,7 +38,7 @@ const registerCourse = asyncHandler(async (req, res) => {
 const getCourse = asyncHandler(async (req, res) => {
   const page = req.query.page || 1;
   const limit = req.query.limit || 12;
-  const sortBy = req.query.sortBy || "cratedAt";
+  const sortBy = req.query.sortBy || "createdAt";
   const order = req.query.order === "asc" ? 1 : -1;
   const skip = (page - 1) * limit;
   const data = await Course.find().sort({ [sortBy]: order }).skip(skip).limit(limit);
@@ -65,7 +66,6 @@ const getSingleCourse = asyncHandler(async (req, res) => {
 
 const addSyllabus = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const { courseName } = req.body;
   if (!id) {
     throw new ApiError(401, "Please provide course id")
   }
@@ -74,19 +74,19 @@ const addSyllabus = asyncHandler(async (req, res) => {
   if (!Data) {
     throw new ApiError(404, "Course not found")
   }
-
   // upload on gallery
   const localPath = req.file?.path;
   if (!localPath) {
     throw new ApiError(400, "Please provide syllabus")
   }
 
-  const uploadSyllabus = await uploadOnCloudinary(localPath);
+  const folderId = process.env.SYLLABUS_FOLDERID
+  const uploadSyllabus = await uploadToGoogleDrive(localPath, folderId);
   if (!uploadSyllabus) {
     throw new ApiError(401, "upload file not recievd")
   }
 
-  Data.syllabus.push({ courseName, fileName: uploadSyllabus?.original_filename, file: uploadSyllabus?.url });
+  Data.syllabus.push({ fileName: req.file?.originalname, fileId: uploadSyllabus?.fileId, fileUrl: uploadSyllabus?.fileUrl });
   const savefile = await Data.save({ validateBeforeSave: true });
   if (!savefile) {
     throw new ApiError(500, "something went wrong adding a syllabus file")
@@ -95,9 +95,37 @@ const addSyllabus = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Successfully add Syllabus"))
 })
 
+const deleteSyllabus = asyncHandler(async (req, res) => {
+  const { id } = req.params
+  const { syllabusId } = req.params
+  if (!id) {
+    throw new ApiError(401, "Please provide course id")
+  }
+  const Data = await Course.findById(id)
+  if (!Data) {
+    throw new ApiError(404, "Course not found")
+  }
+  // console.log(Data.syllabus)
+  const fieldId = Data.syllabus.id(syllabusId)
+  if (!fieldId) {
+    throw new ApiError(404, "Syllabus not found")
+  }
+  await deleteFileFromGoogleDrive(fieldId.fileId)
+  await Course.updateOne({
+    $pull: {
+      syllabus: { _id: syllabusId }
+    }
+  })
+  return res.status(200)
+    .json(new ApiResponse(200, "Successfully delete Syllabus"))
+})
+
+
+
 export {
   registerCourse,
   getCourse,
   getSingleCourse,
   addSyllabus,
+  deleteSyllabus
 }

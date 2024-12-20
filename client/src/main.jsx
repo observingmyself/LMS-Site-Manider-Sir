@@ -13,9 +13,7 @@ const persistor = persistStore(store);
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>
-      <PersistGate persistor={persistor}>
-        <App />
-      </PersistGate>
+      <App />
     </BrowserRouter>
   </Provider>
 );

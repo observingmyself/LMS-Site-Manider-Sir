@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 const syllabusSchema = new mongoose.Schema({
-  courseName: {
+  fileUrl: {
     type: String,
     trim: true,
   },
@@ -9,7 +9,7 @@ const syllabusSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  file: {
+  fileId: {
     type: String,
     required: true,
   }

@@ -76,8 +76,15 @@ const updateImg = asyncHandler(async (req, res) => {
     const publicId = data.image.split("/").pop().split(".")[0];
     await deleteMediaFromCloudinary(publicId)
   }
-  const newImg = req.file?.path;
-  const update = await Team.findByIdAndUpdate(id, { $set: { image: newImg } }, {
+  const newImgpath = req.file?.path;
+  if (!newImgpath) {
+    throw new ApiError(400, "Please provide valid file");
+  }
+  const upload = await uploadOnCloudinary(newImgpath);
+  if (!upload) {
+    throw new ApiError(500, "failed to upload");
+  }
+  const update = await Team.findByIdAndUpdate(id, { $set: { image: upload?.url } }, {
     new: true,
   })
   if (!update) {
@@ -85,7 +92,7 @@ const updateImg = asyncHandler(async (req, res) => {
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, "update image successfully"))
+    .json(new ApiResponse(200, update, "update image successfully"))
 })
 
 const deleteTeamMember = asyncHandler(async (req, res) => {

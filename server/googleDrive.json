@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "advance-computer-centre",
+  "private_key_id": "c003928b3bfe9854756fc5a813f51218e3b2f5ea",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDAZ8BIKzfvChMC\n956G3SaNJaDAmWGwCEJeNZgjSZOB/a/DntqA3vMCeG2zQAUdrjJaZW1doj6FP9CF\nhJuXpuzrvgpFxF7bXZWuu2aQ9ZGVfskj5d6o4JWL8TQwv1NqvAhy10Eax+0vcTMK\n6IMGrl2zeuYUZ1phyErVLE/qgAxgZ1aPdNw/1/5BAcii2sIf+1HkCw4i6U+62VNh\nZhglEJB3eVMCYkrWkV+Hv6lB8lgA/SjUAwVis5Y+soGxWRTdFhmcErT5JJbefIxA\nTi39WekWeiTFJ1VldUxRSHOB3aznAcE6qq+KYz6jK06mAARzNfcoXL/s6Jl2zp+d\nSp3ysoy/AgMBAAECggEALeKwZyWzdbUL2qnOKzCjqIbAQx5xPyeBGHGkoknCPX6Q\nQ9FnH9PL1Zt94gFTFwR7qrZEsk9mpKWW57i72JttJj2Qupm924gCkgTMTaba/PGb\nK43/H3xL/e9cuIFwdeR5CVZPhwEGDknrV98inF3KJ+sX4ubRFb/MJPGn729xRC4G\n5188caSTnmMvTdLOn7lunp6Mb8WBNay6Sa+Wni+hwTRV2PQys+hbK17DqtbcSkoq\niKdmnP4jSO193cHtM52JJxllOfhYRcs3AVaxN8+QTVW7oBxah0U+qHTgKLxmH+CI\nLmFvua1epLDtEaOxaRNF93P1LfxfUg7B49O4P13HgQKBgQDpXulZj1G1DcDwCnby\nHYEkXgMn56iNJMwfMRQxKLZynaijayiz3rTKtq0QUSdWcLLaYeCq/Ipb5ee4HEgk\nlwAGRn0XGMEKOtC5NMSwpEQYwii0tx5ckmNI71q+LmhUFhndBtWypyrKIbAGl70O\nl9nhT6+03+iAy8XnHCGJNwXhgQKBgQDTD+54DZ2pv5xQI6tXe3IOZu6ZwnC6JdrB\nm+BjjcvD5gQqRmaQjdI6dOhSZsn0qZjSyxuG2qvEKTr49qYt18J6viHy9f3x2DuF\n7B5NfNhCMyZFUM43mrA65ZWtC2FiBETJGrh6W/V3fnd1+VUud6whVS8uvf56XQ0P\n5RKCVWsOPwKBgBZH0n2TeliP3JjOVvbcrES9mQ2JR4VaOwbLV8MtwOWGeeBITdWG\ncLpd4H4LUXcmQV0qNRn+DHOjqpDgWl7r77uppS28VknUvbLA//phZIL8nohKZ2Kt\nMz92YrJ/mcRVa9i3W1W4MhSkTLsEZ69p/gpN4lehfQA29EkRXX5NO4mBAoGBAJAU\nNhQaJ2Czfr9uOg8UI/4U4hhwlYddRAIaqIkNSOZH5Nv/BxDy32osWFO3+3FbPQnY\nwMfECrFz+9/sb/CncwlbNc2ng11O4QNA9karTO2UATIcQUnP/TGXfB+Ov0Gr7FDk\nPr64e87AtEgCltWLuCNhBT6BUHCziLErDQGP0e79AoGAMxOopUtHbbhWPu5XLLoP\n8XTKFQwESPdEyzdDHwm9ia9F6LwQfZ3fPHjKOjTOgdSI/wANmXdjeDFO7lqeiSi6\n3gpLS1S07FZCO1qNk2igzyFjHj/JEFpwZnSUmhHBFTbCQSxMx3N/Kt3Z6/5lstF5\nCaWJRcnZ72OL2LjtVGsO7Qo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-drive-api-testing1@advance-computer-centre.iam.gserviceaccount.com",
+  "client_id": "117185996926829770060",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-drive-api-testing1%40advance-computer-centre.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
