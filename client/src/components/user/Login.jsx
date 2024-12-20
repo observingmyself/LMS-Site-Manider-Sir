@@ -11,6 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -31,22 +32,34 @@ const Login = () => {
     flow: "auth-code",
   });
 
-  function handleLogin(event) {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    dispatch(
-      userLogin({
-        email: email,
-        password: password,
-      })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        toast.success(data.payload.message);
+    setErrorMessage(""); // Reset error message before login attempt
+
+    try {
+      const result = await dispatch(
+        userLogin({
+          email: email,
+          password: password,
+        })
+      );
+
+      // Debugging output
+      console.log("Result from login:", result);
+
+      if (result?.payload?.success) {
+        toast.success(result.payload.message);
         navigate("/admin/dashboard");
       } else {
-        toast.error(data.payload?.message || "Invalid credentials!");
+        // Show error message if login fails
+        const error = result.payload?.message || "Invalid email or password!";
+        setErrorMessage(error); // Set error message state
       }
-    });
-  }
+    } catch (err) {
+      console.error("Login error:", err);
+      setErrorMessage("Invalid email or password!");
+    }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
@@ -95,6 +108,12 @@ const Login = () => {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
+            {/* Display error message */}
+            {errorMessage && (
+              <span className="text-sm text-red-600 mt-2 block">
+                {errorMessage}
+              </span>
+            )}
           </div>
           <button
             type="submit"

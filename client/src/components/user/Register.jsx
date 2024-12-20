@@ -43,32 +43,6 @@ const Register = () => {
    }
   }
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     if (password === confirmPassword) {
-  //       const data = await axios.post("/api/v1/user/register", {
-          // userName: userName,
-          // email: email,
-          // mobileNo: mobileNo,
-          // password: password,
-  //       });
-  //       if (data) {
-  //         console.log(data);
-  //         navigate("/login");
-  //         toast.success(data.data.message);
-  //         setUserName('')
-  //         setEmail('')
-  //         setMobileNo('')
-  //         setPassword('')
-  //       }
-  //     } else {
-  //     }
-  //   } catch (err) {
-  //     toast.error();
-  //     console.log(err);
-  //   }
-  // };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-[#F8FAFC]">

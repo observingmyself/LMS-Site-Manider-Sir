@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import T1 from "../assets/images/t1.jpg";
 import S3 from "../assets/images/s3.jpg";
 import VideoThumbnail from "../assets/images/1640x624.png";
@@ -7,9 +7,11 @@ import Ankita from "../assets/images/WhatsApp Image 2023-09-08 at 10.00.15 (1).j
 import Maninder from '../assets/images/team.jpg'
 import Prachi from '../assets/images/team4.jpeg'
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 const About = () => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const [teamMembers,setTeamMembers] = useState([])
   const navigate = useNavigate();
 
   const handleOpenPopUp = () => {
@@ -21,6 +23,24 @@ const About = () => {
     setIsPopUpVisible(false);
     document.body.style.overflow = "auto";
   };
+
+  const getTeamMembers = async () => {
+    try{
+      const data = await axios.get('/api/v1/team')
+      if(data.data.success){
+        console.log(data.data)
+        setTeamMembers(data.data.data)
+      }
+      else{
+        console.log("Err in getting team member")
+      }
+    }catch(err){
+      console.log("err in getting team member",err)
+    }
+  }
+  useEffect(()=>{
+    getTeamMembers();
+  },[])
   return (
     <div className="">
       <div className="bg-[#EEF4FC] py-4  mt-24">
@@ -191,66 +211,25 @@ const About = () => {
             Meet Our Skilled Team Member's
           </h4>
           <div className="cards grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-            <div className="card hover:-translate-y-2 hover:shadow-lg transition-all duration-200 bg-white rounded-sm overflow-hidden shadow-md">
-              <div className="relative group">
-                <img
-                  src={Ankita}
-                  alt="Profile"
-                  className="w-full h-76 object-cover"
-                />
-                <div className="absolute bg-white bottom-0 left-0 right-0 bg-gradient-to-t to-transparent p-4">
-                  <h3 className="text-black group-hover:text-[#fd0c0c] font-bold text-lg">
-                    Ankita
-                  </h3>
-                  <p className="text-slate-600 text-sm">Back-end Developers</p>
+            {teamMembers?.map((member) => (
+              <div key={member._id} className="card hover:-translate-y-2 hover:shadow-lg transition-all duration-200 bg-white rounded-lg overflow-hidden shadow-md">
+                <div className="relative group">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-[40vh] object-cover object-top"
+                  />
+                  <div className="absolute bg-white bottom-0 left-0 right-0 bg-gradient-to-t to-transparent p-4">
+                    <h3 className="text-black group-hover:text-[#fd0c0c] font-bold text-lg">
+                      {member.name}
+                    </h3>
+                    <p className="text-slate-600 text-sm">
+                      {member.position}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="card hover:-translate-y-2 hover:shadow-lg transition-all duration-200 bg-white rounded-sm overflow-hidden shadow-md">
-              <div className="relative group">
-                <img
-                  src={T1}
-                  alt="Profile"
-                  className="w-full md:h-96 lg:h-72  object-cover"
-                />
-                <div className="absolute bg-white bottom-0 left-0 right-0 bg-gradient-to-t to-transparent p-4">
-                  <h3 className="text-black group-hover:text-[#fd0c0c] font-bold text-lg">
-                    Sunita Garg
-                  </h3>
-                  <p className="text-slate-600 text-sm">Founder & CEO</p>
-                </div>
-              </div>
-            </div>
-            <div className="card hover:-translate-y-2 hover:shadow-lg transition-all duration-200 bg-white rounded-sm overflow-hidden shadow-md">
-              <div className="relative group">
-                <img
-                  src={Prachi}
-                  alt="Profile"
-                  className="h-96 lg:h-72 w-full object-cover"
-                />
-                <div className="absolute bg-white bottom-0 left-0 right-0 bg-gradient-to-t to-transparent p-4">
-                  <h3 className="text-black group-hover:text-[#fd0c0c] font-bold text-lg">
-                    Prachi Jindal
-                  </h3>
-                  <p className="text-slate-600 text-sm">Web Designer</p>
-                </div>
-              </div>
-            </div>
-            <div className="card hover:-translate-y-2 hover:shadow-lg transition-all duration-200 bg-white rounded-sm overflow-hidden shadow-md">
-              <div className="relative group">
-                <img
-                  src={Maninder}
-                  alt="Profile"
-                  className="w-full h-96 lg:h-72 object-cover"
-                />
-                <div className="absolute bg-white bottom-0 left-0 right-0 bg-gradient-to-t to-transparent p-4">
-                  <h3 className="text-black group-hover:text-[#fd0c0c] font-bold text-lg">
-                    Maninder Singh
-                  </h3>
-                  <p className="text-slate-600 text-sm">Managing Partner</p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         {/* last div */}
