@@ -9,22 +9,28 @@ const UpdateTeamMemberForm = () => {
     const [updatedName,setUpdatedName] = useState('')
     const [updatedPosition,setUpdatedPosition] = useState('')
     const [isLoading,setIsLoading] = useState(false)
+    const [isContentLoading,setIsContentLoading] = useState(false)
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]
         setUpdateMemberImage(file)
+        // console.log(file)
     }
 
     const handleImageUpdate = async (e) => {
         e.preventDefault();
         setIsLoading(true)
+        const formData = new FormData();
+        formData.append('image',updateMemberImage)
         try{
-            const data = await axios.patch(`/api/v1/team/updateImage/${id}`,{
-                image : updateMemberImage
+            const data = await axios.patch(`/api/v1/team/updateImage/${id}`,formData,{
+                headers: {
+                    'Content-Type':'multipart/form-data'
+                }
             })
             if(data.data.success){
                 toast.success('Member Image Updated')
-                console.log(data)
+                // console.log(data)
                 setIsLoading(false)
             }
         }catch(e){
@@ -34,6 +40,30 @@ const UpdateTeamMemberForm = () => {
             return;
         }
     }
+
+    const handleContentUpdate = async (e) => {
+        e.preventDefault();
+        setIsContentLoading(true)
+        try{
+            const data = await axios.patch(`/api/v1/team/update/${id}`,{
+                name : updatedName,
+                position : updatedPosition
+            })
+            if(data){
+                toast.success('Member Content Updated')
+                console.log(data)
+                setIsContentLoading(false)
+                setUpdatedName('')
+                setUpdatedPosition('')
+            }
+        }catch(e){
+            console.log(e)
+            toast.error('Failed to update member content.')
+            setIsContentLoading(false)
+            return;
+        }
+    }
+
   return (
     <div className="flex flex-col  items-center justify-center gap-3">
       <div className="bg-white w-96 px-5 py-5 shadow-lg">
@@ -41,7 +71,10 @@ const UpdateTeamMemberForm = () => {
         <h4 className="text-center text-xl font-bold text-gray-700">
           Update Team Member
         </h4>
-        <form onSubmit={handleImageUpdate} className="flex gap-1 flex-col mt-5">
+        <form
+          onSubmit={(e) => handleImageUpdate(e)}
+          className="flex gap-1 flex-col mt-5"
+        >
           <div className="mb-4">
             <label
               htmlFor="newsImage"
@@ -64,6 +97,45 @@ const UpdateTeamMemberForm = () => {
                 {isLoading ? "Loading..." : "Update"}
               </button>
             </div>
+          </div>
+        </form>
+        <form onSubmit={handleContentUpdate}>
+          <div className="mb-4">
+            <label
+              htmlFor="memberName"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Update Member Name
+            </label>
+            <input
+              type="text"
+              id="memberName"
+              value={updatedName}
+              onChange={(e) => setUpdatedName(e.target.value)}
+              placeholder="Enter updated name"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="memberposition"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Update Member position
+            </label>
+            <input
+              type="text"
+              id="memberposition"
+              value={updatedPosition}
+              onChange={(e) => setUpdatedPosition(e.target.value)}
+              placeholder="Enter updated name"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div>
+            <button type='submit' className='px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold'>
+                {isContentLoading ? 'Loading...' : 'Update'}
+            </button>
           </div>
         </form>
       </div>

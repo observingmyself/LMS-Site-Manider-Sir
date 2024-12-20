@@ -31,6 +31,9 @@ import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
 import {GoogleOAuthProvider} from '@react-oauth/google'
+import DisplayTeamMember from "./pages/admin/DisplayTeamMember";
+import UpdateTeamMemberForm from "./pages/admin/UpdateTeamMemberForm";
+import TeamMemberAddForm from "./pages/admin/TeamMemberAddForm";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -94,14 +97,26 @@ function App() {
             }
           >
             {/* Nested Route for Homepage */}
+
+            {/* Registration Routes */}
             <Route path="registrations" element={<DisplayRegistration />} />
+
+            {/* News Routes */}
             <Route path="news" element={<DisplayNews />} />
-            <Route path="blog" element={<DisplayBlog />} />
-            <Route path="add-blog" element={<BlogAddForm />} />
-            
-            <Route path="update-blog/:id" element={<BlogUpdateForm />} />
             <Route path="news-form" element={<NewsAddForm />} />
             <Route path="update-news/:id" element={<NewsUpdateForm />} />
+
+            {/* Blog Routes */}
+            <Route path="blog" element={<DisplayBlog />} />
+            <Route path="add-blog" element={<BlogAddForm />} />
+            <Route path="update-blog/:id" element={<BlogUpdateForm />} />
+
+            {/* Team members routes */}
+            <Route path="add-member" element={<TeamMemberAddForm/>} />
+            <Route path="team-members" element={<DisplayTeamMember/>} />
+            <Route path="updateTeam/:id" element={<UpdateTeamMemberForm/>} />
+
+            {/* contact query routes */}
             <Route path="contact" element={<DisplayContact />} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
