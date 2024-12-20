@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { googleAuth } from "../../login with google/api";
-
 const initialState = {
   isAuthenticated: false,
   isLoading: false,
   user: null,
+  token: "",
 };
 
 export const userRegister = createAsyncThunk("/register", async (formData) => {
@@ -43,7 +43,8 @@ export const googleLogin = createAsyncThunk(
   }
 );
 
-export const checkAuth = createAsyncThunk("/checkauth", async () => {
+export const checkAuth = createAsyncThunk("/checkauth", async (token) => {
+  console.log(token)
   try {
     const response = await axios.get("/api/v1/user/profile");
     return response.data;
@@ -104,6 +105,7 @@ const authSlice = createSlice({
       .addCase(googleLogin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload?.data?.user || null;
+        state.token = action.payload?.data?.accessToken;
         state.isAuthenticated = !!action.payload?.success;
       })
       .addCase(googleLogin.rejected, (state) => {
@@ -141,4 +143,4 @@ const authSlice = createSlice({
 });
 
 export const { addUser } = authSlice.actions;
-export default authSlice.reducer;
+export default authSlice.reducer; 

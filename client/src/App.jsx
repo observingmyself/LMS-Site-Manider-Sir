@@ -30,22 +30,22 @@ import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
 import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
-import {GoogleOAuthProvider} from '@react-oauth/google'
+import { GoogleOAuthProvider } from "@react-oauth/google";
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, token } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(checkAuth());
+    dispatch(checkAuth(token));
   }, [dispatch]);
-
 
   const GoogleAuthWrapper = () => {
     return (
       <GoogleOAuthProvider clientId="1047315488836-d6hqn66bas9bcvrkldlsuvogg0k6dpjp.apps.googleusercontent.com">
         <Login></Login>
       </GoogleOAuthProvider>
-    )
-  }
+    );
+  };
   return (
     <>
       <ToastContainer
@@ -97,7 +97,7 @@ function App() {
             <Route path="news" element={<DisplayNews />} />
             <Route path="blog" element={<DisplayBlog />} />
             <Route path="add-blog" element={<BlogAddForm />} />
-            
+
             <Route path="update-blog/:id" element={<BlogUpdateForm />} />
             <Route path="news-form" element={<NewsAddForm />} />
             <Route path="update-news/:id" element={<NewsUpdateForm />} />

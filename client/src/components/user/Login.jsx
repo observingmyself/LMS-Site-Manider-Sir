@@ -4,8 +4,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useGoogleLogin } from "@react-oauth/google";
-import { googleLogin, userLogin } from "../../store/auth-slice";
 import GOOGLEPNG from "../../assets/admin/google.png";
+import { googleLogin, userLogin } from "../../store/auth-slice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
