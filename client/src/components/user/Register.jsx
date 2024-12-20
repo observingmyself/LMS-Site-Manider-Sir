@@ -23,18 +23,24 @@ const Register = () => {
     formData.append("mobileNo",mobileNo)
     formData.append("password",password)
     // console.log(formData)
-    dispatch(userRegister(formData)).then((data)=>{
-      if(data?.payload?.success) {
-        navigate('/login')
-        toast.success("Registration Successfull")
-        setUserName('')
-        setEmail('')
-        setPassword('')
-        setConfirmPassword('')
-        setMobileNo('')
-      }
-
-    })
+   if(password === confirmPassword){
+     dispatch(userRegister(formData)).then((data) => {
+       if (data?.payload?.success) {
+         navigate("/login");
+         toast.success("Registration Successfull");
+         setUserName("");
+         setEmail("");
+         setPassword("");
+         setConfirmPassword("");
+         setMobileNo("");
+       }
+     });
+   }
+   else{
+     toast.error("Passwords do not match");
+     setPassword("");
+     setConfirmPassword("");
+   }
   }
 
   // const handleSubmit = async (e) => {
@@ -170,7 +176,7 @@ const Register = () => {
               className="block text-gray-700 font-medium mb-2"
               htmlFor="confirmpassword"
             >
-              Password
+              Confirm Password
             </label>
             <div className="relative">
               <input
