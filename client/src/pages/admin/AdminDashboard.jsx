@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminNavbar from "../../components/admin/AdminNavbar";
 import AdminSidebar from "../../components/admin/AdminSidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import AdminHomepage from "../../components/admin/AdminHomepage";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(()=>{
+    if(window.innerWidth < 1024){
+      setIsSidebarOpen(false)
+    }
+  },[location])
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev); // Toggle sidebar visibility

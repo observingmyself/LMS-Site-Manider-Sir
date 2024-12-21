@@ -29,6 +29,7 @@ export const userLogin = createAsyncThunk("/login", async (formData) => {
   }
 });
 
+
 export const googleLogin = createAsyncThunk(
   "/google-login",
   async (authResult) => {
@@ -44,7 +45,6 @@ export const googleLogin = createAsyncThunk(
 );
 
 export const checkAuth = createAsyncThunk("/checkauth", async (token) => {
-  console.log(token)
   try {
     const response = await axios.get("/api/v1/user/profile");
     return response.data;
