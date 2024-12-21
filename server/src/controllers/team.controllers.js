@@ -37,6 +37,19 @@ const getTeamMember = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, team, "List of Team Member"))
 })
 
+const getSingleMember = asyncHandler(async (req, res) => {
+  const { id } = req.params
+  if (!id) {
+    throw new ApiError(400, "Please provide id")
+  }
+  const team = await Team.findById(id);
+  if (!team) {
+    throw new ApiError(404, "No team Member found")
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, team, "Team Member Details"))
+})
 const updateTeamMember = asyncHandler(async (req, res) => {
   const { name, position } = req.body;
   const id = req.params.id;
@@ -117,8 +130,10 @@ const deleteTeamMember = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Team Member deleted successfully"))
 })
 
+
 export {
   getTeamMember,
+  getSingleMember,
   updateTeamMember,
   createTeamMemeber,
   updateImg,

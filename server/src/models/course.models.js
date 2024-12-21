@@ -68,7 +68,7 @@ const courseSchema = new mongoose.Schema({
   Ebooks: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Ebook"
+      ref: "EBook"
     }
   ],
   ppts: [

@@ -2,8 +2,9 @@ import { google } from "googleapis";
 import path from "path";
 import fs from "fs"
 import mime from "mime-types"
+
 // Load service account credentials
-const KEY_FILE_PATH = "server/googleDrive.json";
+const KEY_FILE_PATH = "D:/LMS-Site-Manider-Sir/server/googleDrive.json";
 const SCOPES = ['https://www.googleapis.com/auth/drive.file'];
 
 const auth = new google.auth.GoogleAuth({
@@ -11,6 +12,7 @@ const auth = new google.auth.GoogleAuth({
   scopes: SCOPES,
 });
 
+// console.log(auth)
 const uploadToGoogleDrive = async (localFilePath, folderId) => {
   try {
     if (!localFilePath) {
@@ -18,13 +20,12 @@ const uploadToGoogleDrive = async (localFilePath, folderId) => {
       return null;
     }
 
-
     const drive = google.drive({ version: 'v3', auth });
-
     const fileMetadata = {
       name: path.basename(localFilePath),
       parents: [folderId], // Specify the folder ID where you want to upload the file
     };
+
     const media = {
       mimeType: mime.lookup(localFilePath) || "application/pdf", // Change this based on your file type
       body: fs.createReadStream(localFilePath),
@@ -35,7 +36,7 @@ const uploadToGoogleDrive = async (localFilePath, folderId) => {
       media: media,
       fields: 'id',
     });
-
+    // console.log(response)
     // Optionally delete the local file after upload
     fs.unlinkSync(localFilePath);
     const fileId = response.data.id;
