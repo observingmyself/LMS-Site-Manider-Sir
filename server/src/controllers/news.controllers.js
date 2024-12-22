@@ -6,7 +6,7 @@ import { uploadOnCloudinary, deleteMediaFromCloudinary } from "../utils/cloudina
 
 const CreateNews = asyncHandler(async (req, res) => {
   const { newsHeadline, newsDescription } = req.body
-  if (!(newsDescription || newsHeadline)) {
+  if ((!newsDescription || !newsHeadline)) {
     throw new ApiError(400, "Please fill all fields")
   }
   const newsImgLocalPath = req.files?.newsImage[0]?.path;
@@ -27,12 +27,12 @@ const CreateNews = asyncHandler(async (req, res) => {
 
 const updateNews = asyncHandler(async (req, res) => {
   const id = req.params.id;
+  const { newsHeadline, newsDescription } = req.body
   if (!id) {
     throw new ApiError(400, "news Id is not provide")
   }
 
-  const { newsHeadline, newsDescription } = req.body
-  if (!(newsDescription || newsHeadline)) {
+  if ((!newsDescription || !newsHeadline)) {
     throw new ApiError(400, "Please fill all fields")
   }
   const update = await News.findByIdAndUpdate(

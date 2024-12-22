@@ -1,6 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiErrorHandler.js"
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { uploadOnCloudinary, deleteMediaFromCloudinary } from "../utils/cloudinary.js";
 import { Course } from "../models/course.models.js"
 import { ApiResponse } from "../utils/apiResponse.js"
 import { deleteFileFromGoogleDrive, uploadToGoogleDrive } from "../utils/googleDrive.js";
@@ -8,7 +8,7 @@ import { PPT, EBook } from "../models/ebook.models.js"
 
 const registerCourse = asyncHandler(async (req, res) => {
   const { courseTitle, category, coursePrice, description, subtitle, courseLevel, courseDuration, courseLanguage, instructor } = req.body
-  if (!(courseTitle || category || coursePrice)) {
+  if ((!courseTitle || !category || !coursePrice)) {
     throw new ApiError(401, "This fields are required");
   }
   // upload image
@@ -64,6 +64,75 @@ const getSingleCourse = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, singleData, "successfully fetch data"))
+})
+
+// update Course 
+const updateCourse = asyncHandler(async (req, res) => {
+  const { courseId } = req.params;
+  const { courseTitle, category, coursePrice, description, subtitle, courseLevel, courseDuration, courseLanguage, instructor } = req.body
+  if ((!courseTitle || !category || !coursePrice)) {
+    throw new ApiError(401, "This fields are required");
+  }
+  if (!courseId) {
+    throw new ApiError(401, "Please provide course id")
+  }
+
+  const course = await Course.findById(courseId);
+  if (!course) {
+    throw new ApiError(404, "Course not found")
+  }
+
+  const data = await Course.findByIdAndUpdate(courseId, {
+    $set: {
+      courseTitle, category, coursePrice, description, subtitle, courseLevel, courseDuration, courseLanguage, instructor
+    }
+  }, {
+    new: true,
+  })
+
+  if (!data) {
+    throw new ApiError(404, "Course not found")
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, data, "successfully update data"))
+})
+
+const updateCourseImg = asyncHandler(async (req, res) => {
+  const { courseId } = req.params;
+  if (!courseId) {
+    throw new ApiError(401, "Please provide course id")
+  }
+  const course = await Course.findById(courseId);
+  if (!course) {
+    throw new ApiError(404, "Course not found")
+  }
+
+  const localFilePath = req.file?.path;
+  if (!localFilePath) {
+    throw new ApiError(401, "Please provide image")
+  }
+  const upload = await uploadOnCloudinary(localFilePath);
+  if (!upload) {
+    throw new ApiError(401, "Failed to upload image")
+  }
+
+  if (course?.courseThumbnail) {
+    const publicId = course.courseThumbnail.split("/").pop().split(".")[0];
+    await deleteMediaFromCloudinary(publicId)
+  }
+
+  await Course.findByIdAndUpdate(courseId, {
+    $set: {
+      courseThumbnail: upload?.url,
+    }
+  }, {
+    new: true
+  })
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "successfully update course image"))
 })
 
 const addSyllabus = asyncHandler(async (req, res) => {
@@ -239,6 +308,7 @@ const createEbook = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, data, "successfully create E-Book"))
 })
 
+// Show Ebook
 const getCourseEbook = asyncHandler(async (req, res) => {
   const { courseId } = req.params;
   if (!courseId) {
@@ -252,6 +322,8 @@ const getCourseEbook = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, { ebooks: course.Ebooks }, "successfully get course Ebook"))
 })
 
+
+// Delete E-book
 const deleteEbook = asyncHandler(async (req, res) => {
   const { ebookId } = req.params;
   // console.log("ebookId", ebookId)
@@ -262,7 +334,7 @@ const deleteEbook = asyncHandler(async (req, res) => {
   if (!ebook) {
     throw new ApiError(404, "Ebook not found!!")
   }
-  console.log(ebook)
+  // console.log(ebook)
   if (ebook?.fileId) {
     await deleteFileFromGoogleDrive(ebook.fileId);
   }
@@ -278,6 +350,7 @@ const deleteEbook = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "successfully delete Ebook"))
 })
 
+// Delete Course 
 const deleteCourse = asyncHandler(async (req, res) => {
   const { courseId } = req.params
   console.log(courseId)
@@ -297,10 +370,43 @@ const deleteCourse = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "successfully delete course"))
 })
 
+// Show Publish Course 
+const getPublishCourse = asyncHandler(async (req, res) => {
+  const courses = await Course.find({ isPublish: true })
+  if (courses.length === 0) {
+    throw new ApiError(404, "No Publish Course Found")
+  }
+  return res.status(200).json(new ApiResponse(200, courses, "fetch Publish course"))
+})
+
+// Publish and unPublish toogle Button
+const togglePublish = asyncHandler(async (req, res) => {
+  const { courseId } = req.params;
+  const { publish } = req.query;// true/false
+  if (!courseId) {
+    throw new ApiError(400, "Please provide course id")
+  }
+  const course = await Course.findById(courseId);
+  if (!course) {
+    throw new ApiError(404, "Course not found!!")
+  }
+  course.isPublish = publish === "true";
+  await course.save({ validateBeforeSave: true });
+  const sendMessage = publish ? "Publish" : "unPublish";
+  return res
+    .status(200)
+    .json(new ApiResponse(200, `Course is ${sendMessage}`));
+})
+
 export {
   registerCourse,
   getCourse,
   getSingleCourse,
+  updateCourse,
+  updateCourseImg,
+  deleteCourse,
+  getPublishCourse,
+  togglePublish,
   addSyllabus,
   deleteSyllabus,
   addPPT,
@@ -309,5 +415,4 @@ export {
   createEbook,
   getCourseEbook,
   deleteEbook,
-  deleteCourse,
 }

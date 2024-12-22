@@ -6,7 +6,7 @@ import { ApiResponse } from "../utils/apiResponse.js";
 
 const createTeamMemeber = asyncHandler(async (req, res) => {
   const { name, position } = req.body;
-  if (!(name || position)) {
+  if ((!name || !position)) {
     throw new ApiError(400, "Please provide name and position");
   }
   const playerImg = req.file?.path;
@@ -56,7 +56,7 @@ const updateTeamMember = asyncHandler(async (req, res) => {
   if (!id) {
     throw new ApiError(400, "Please provide id")
   }
-  if (!(name || position)) {
+  if ((!name || !position)) {
     throw new ApiError(400, "Please provide name and position");
   }
   const update = await Team.findByIdAndUpdate(
