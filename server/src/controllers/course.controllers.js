@@ -13,12 +13,12 @@ const registerCourse = asyncHandler(async (req, res) => {
   }
   // upload image
   const courseImage = req.file?.path;
-  console.log(courseImage)
+  // console.log(courseImage)
   if (!courseImage) {
     throw new ApiError(401, "Please upload a course image");
   }
   const uploadImg = await uploadOnCloudinary(courseImage);
-  console.log(uploadImg.url)
+  // console.log(uploadImg.url)
   if (!uploadImg) {
     throw new ApiError(401, "Failed to upload image");
   }
@@ -53,7 +53,6 @@ const getCourse = asyncHandler(async (req, res) => {
 
 const getSingleCourse = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  console.log(id)
   if (!id) {
     throw new ApiError(401, "Please provide course id")
   }
@@ -176,7 +175,7 @@ const getCoursePPT = asyncHandler(async (req, res) => {
 
 const deletePPT = asyncHandler(async (req, res) => {
   const { pptId } = req.params;
-  console.log(pptId)
+  // console.log("pptId", pptId)
   if (!pptId) {
     throw new ApiError(400, "Please provide ppt id")
   }
@@ -255,7 +254,7 @@ const getCourseEbook = asyncHandler(async (req, res) => {
 
 const deleteEbook = asyncHandler(async (req, res) => {
   const { ebookId } = req.params;
-  console.log("ebookId", ebookId)
+  // console.log("ebookId", ebookId)
   if (!ebookId) {
     throw new ApiError(400, "Please provide ebook id")
   }
@@ -280,7 +279,7 @@ const deleteEbook = asyncHandler(async (req, res) => {
 })
 
 const deleteCourse = asyncHandler(async (req, res) => {
-  const { courseId } = req.params;
+  const { courseId } = req.params
   console.log(courseId)
   if (!courseId) {
     throw new ApiError(400, "Please provide course id")

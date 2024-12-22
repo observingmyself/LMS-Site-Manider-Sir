@@ -7,16 +7,17 @@ const router = Router();
 
 router.route("/create").post(verifyJWT, upload.single("courseThumbnail"), registerCourse);
 router.route("/").get(getCourse);
-router.route("/:id").get(getSingleCourse);
+router.route("/singlecourse/:id").get(getSingleCourse);
 router.route("/ppt/:courseId").get(getCoursePPT);
 router.route("/Ebook/:courseId").get(getCourseEbook);
 router.route("/addSyllabus/:id").post(verifyJWT, upload.single("syllabus"), addSyllabus);
 router.route("/addppt/:id").post(verifyJWT, upload.single("pptUrl"), addPPT);
 router.route("/addEbook/:id").post(verifyJWT, upload.single("ebookUrl"), createEbook);
-router.route("/:id/:syllabusId").delete(verifyJWT, deleteSyllabus);
+router.route("/removeSyllabus/:id/:syllabusId").delete(verifyJWT, deleteSyllabus);
 router.route("/removePPT/:pptId").delete(verifyJWT, deletePPT)
 router.route("/removeEbook/:ebookId").delete(verifyJWT, deleteEbook);
-router.route("/removeCourse/:courseId").delete(verifyJWT, deleteEbook);
+router.route("/removeCourse/:courseId").delete(deleteCourse);
+
 
 
 export { router as courseRouter };
