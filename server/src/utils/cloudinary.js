@@ -40,13 +40,6 @@ const deleteMediaFromCloudinary = async function (publicId) {
     return
   }
 }
-const deleteFileFromCloudinary = async function (publicId) {
-  try {
-    await cloudinary.uploader.destroy(publicId, { resource_type: raw })
-  } catch (error) {
-    console.log("Failed to delete on Cloudinary")
-    return error
-  }
-}
 
-export { uploadOnCloudinary, deleteMediaFromCloudinary, deleteFileFromCloudinary };
+
+export { uploadOnCloudinary, deleteMediaFromCloudinary };

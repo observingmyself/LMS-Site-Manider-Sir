@@ -33,9 +33,9 @@ app.use("/api/v1/news", newsRouter)
 app.use("/api/v1/blog", blogRouter)
 app.use("/api/v1/review", reviewRouter)
 app.use("/api/v1/contact", contactRouter)
-app.use("/api/v1/course", courseRouter)
 app.use("/api/v1/team", teamRouter)
 app.use("/api/v1/certificate", certificateRouter)
+app.use("/api/v1/course", courseRouter);
 app.use(errorHandler())
 export { app };
 

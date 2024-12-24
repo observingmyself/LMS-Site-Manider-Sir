@@ -5,7 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 const createReview = asyncHandler(async (req, res) => {
   const { name, message } = req.body;
-  if (!(name || message)) {
+  if ((!name || !message)) {
     throw new ApiError(400, "Please fill name and message filled");
   }
   let imageLocalPath = req.files?.reviewImage?.path;

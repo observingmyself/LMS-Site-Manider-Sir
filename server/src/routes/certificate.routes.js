@@ -9,6 +9,6 @@ router.route("/create").post(verifyJWT, upload.single("certificateImg"), createC
 router.route("/").get(verifyJWT, getCertificate);
 router.route("/update/:id").patch(verifyJWT, editCertificate);
 router.route("/updateImg/:id").patch(verifyJWT, upload.single("certificateImg"), editCertificateImg);
-router.route("/:id").delete(verifyJWT, deleteCertificate);
 router.route("/check").get(getSingleCertificate)
+router.route("/:id").delete(verifyJWT, deleteCertificate);
 export { router as certificateRouter };

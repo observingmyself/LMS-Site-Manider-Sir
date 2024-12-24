@@ -82,9 +82,8 @@ const editCertificate = asyncHandler(async (req, res) => {
 
 const editCertificateImg = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const { certificateImg } = req.body;
-  if (!(id || certificateImg)) {
-    throw new ApiError(400, "Please provide Id and image")
+  if (!id) {
+    throw new ApiError(401, "Please provide Id")
   }
   const data = await Certificate.findById(id);
   if (!data) {
