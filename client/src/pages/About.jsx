@@ -134,7 +134,6 @@ const About = () => {
             challenges of the ever-changing world.
           </p>
         </div>
-
         {/* Call to Action Section */}
         <div className="flex flex-col lg:flex-row items-center gap-8 my-10">
           <div>

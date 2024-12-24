@@ -118,14 +118,6 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink
-                to="/portfolio"
-                className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
-              >
-                Portfolio
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
                 to="/contact"
                 className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
               >
@@ -204,15 +196,6 @@ const Navbar = () => {
               className="text-slate-600 hover:text-[#FE0000] text-[16px]"
             >
               Blog
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/portfolio"
-              onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
-            >
-              Portfolio
             </NavLink>
           </li>
           <li>
