@@ -115,7 +115,11 @@ const verifyPayment = asyncHandler(async (req, res) => {
 
 const getCourseDetailWithStatusSuccess = asyncHandler(async (req, res) => {
   const { courseId } = req.params;
+  // console.log(courseId)
   const user = req.user?._id;
+  if (!courseId || !user) {
+    throw new ApiError(400, "Invalid Request")
+  }
   const course = await Course.findById(courseId);
   if (!course) {
     throw new ApiError(404, "Course not found");
@@ -129,10 +133,17 @@ const getCourseDetailWithStatusSuccess = asyncHandler(async (req, res) => {
     }, "purchased data fetch"))
 })
 
-
+const getAllPurchaseCourse = asyncHandler(async (req, res) => {
+  const data = await CoursePurchase.find({ paymentStatus: "Completed" }).populate("courseId")
+  if (data.length === 0) {
+    throw new ApiError(404, "No Purchase course found")
+  }
+  return res.status(200).json(new ApiResponse(200, data, "purchased data fetch"))
+})
 
 export {
   createCheckoutSession,
   verifyPayment,
   getCourseDetailWithStatusSuccess,
+  getAllPurchaseCourse,
 }
