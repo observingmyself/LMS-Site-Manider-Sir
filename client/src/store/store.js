@@ -21,7 +21,6 @@ const store = configureStore({
         auth: authReducer
     },
     // reducer: persistReducers
-
 })
 
 export default store
