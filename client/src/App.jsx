@@ -27,18 +27,19 @@ import BlogSingle from "./components/user/BlogSingle";
 import DisplayBlog from "./pages/admin/DisplayBlog";
 import BlogAddForm from "./pages/admin/BlogAddForm";
 import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
-import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
+// import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
-import {GoogleOAuthProvider} from '@react-oauth/google'
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import DisplayTeamMember from "./pages/admin/DisplayTeamMember";
 import UpdateTeamMemberForm from "./pages/admin/UpdateTeamMemberForm";
 import TeamMemberAddForm from "./pages/admin/TeamMemberAddForm";
+import CheckoutPayment from "./components/payment/Checkout";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(checkAuth(token));
   }, [dispatch]);
@@ -83,6 +84,7 @@ function App() {
             <Route path="contact" element={<ContactUs />} />
             <Route path="about" element={<About />} />
             <Route path="registration-form" element={<RegistrationForm />} />
+            <Route path="payment" element={<CheckoutPayment />} />
           </Route>
 
           {/* Admin Dashboard and Nested Routes */}
@@ -112,9 +114,9 @@ function App() {
             <Route path="update-blog/:id" element={<BlogUpdateForm />} />
 
             {/* Team members routes */}
-            <Route path="add-member" element={<TeamMemberAddForm/>} />
-            <Route path="team-members" element={<DisplayTeamMember/>} />
-            <Route path="updateTeam/:id" element={<UpdateTeamMemberForm/>} />
+            <Route path="add-member" element={<TeamMemberAddForm />} />
+            <Route path="team-members" element={<DisplayTeamMember />} />
+            <Route path="updateTeam/:id" element={<UpdateTeamMemberForm />} />
 
             {/* contact query routes */}
             <Route path="contact" element={<DisplayContact />} />

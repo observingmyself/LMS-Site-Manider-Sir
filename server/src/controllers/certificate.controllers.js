@@ -136,17 +136,18 @@ const deleteCertificate = asyncHandler(async (req, res) => {
 })
 
 const getSingleCertificate = asyncHandler(async (req, res) => {
-  const { name, DOB, course } = req.body;
+  const { name, DOB } = req.body;
   if (!name) {
     throw new ApiError(400, "Please provide name")
   }
 
-  const data = await Certificate.findOne({ name: name, DOB: DOB, })
+  const data = await Certificate.findOne({ name: name, DOB: DOB })
   if (!data) {
     throw new ApiError(404, "data not found!!")
   }
   return res.status(200).json(new ApiResponse(200, data, "Successfully fetch data"))
 })
+
 export {
   createCertificate,
   getCertificate,
