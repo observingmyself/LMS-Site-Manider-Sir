@@ -120,6 +120,9 @@ function App() {
 
             {/* contact query routes */}
             <Route path="contact" element={<DisplayContact />} />
+
+            {/* Courses routes */}
+            <Route path="add-course" element={<NewCourseAddForm/>} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>
