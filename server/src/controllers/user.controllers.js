@@ -293,7 +293,7 @@ const forgetPassword = asyncHandler(async (req, res) => {
       expiresIn: process.env.REST_PASSWORD_EXPIRY,
     }
   );
-  const resetField = `http://localhost:5173/reset-password/${restPasswordtoken}`;
+  const resetField = `${process.env.DOMAIN_NAME}/reset-password/${restPasswordtoken}`;
   const userEmail = user.email;
 
   await sendEmail({ userEmail, resetField });
@@ -361,8 +361,8 @@ const googleLogin = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, { httpOnly: true, secure: false, sameSite: "lax" })
-    .cookie("refreshToken", refreshToken, { httpOnly: true, secure: false, sameSite: "lax" })
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
     .json(
       new ApiResponse(
         200,
