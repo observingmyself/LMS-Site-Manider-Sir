@@ -27,7 +27,7 @@ import BlogSingle from "./components/user/BlogSingle";
 import DisplayBlog from "./pages/admin/DisplayBlog";
 import BlogAddForm from "./pages/admin/BlogAddForm";
 import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
-// import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
+import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -41,7 +41,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth(token));
+    dispatch(checkAuth());
   }, [dispatch]);
 
   const GoogleAuthWrapper = () => {
@@ -122,7 +122,7 @@ function App() {
             <Route path="contact" element={<DisplayContact />} />
 
             {/* Courses routes */}
-            <Route path="add-course" element={<NewCourseAddForm/>} />
+            <Route path="add-course" element={<NewCourseAddForm />} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>

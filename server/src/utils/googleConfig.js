@@ -1,4 +1,4 @@
-import {google} from 'googleapis'
+import { google } from 'googleapis'
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
@@ -9,4 +9,4 @@ const oauth2client = new google.auth.OAuth2(
     'postmessage'
 )
 
-export{oauth2client}
+export { oauth2client }

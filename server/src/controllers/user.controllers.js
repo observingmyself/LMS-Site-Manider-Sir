@@ -24,6 +24,7 @@ const generateToken = async (userId) => {
 const options = {
   httpOnly: true,
   secure: true,
+  sameSite: "lax",
 };
 
 const Register = asyncHandler(async (req, res) => {
@@ -272,6 +273,7 @@ const changePassword = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, "Password Changed Successfully"));
 });
+
 const forgetPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
   if (!email) {
@@ -335,8 +337,11 @@ const googleLogin = asyncHandler(async (req, res) => {
   oauth2client.setCredentials(googleResponse.tokens);
 
   const userResponse = await axios.get(`
-    https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleResponse.tokens.access_token}
-  `);
+    https://www.googleapis.com/oauth2/v1/userinfo?alt=json`, {
+    headers: {
+      "Authorization": `Bearer ${googleResponse.tokens.access_token}`,
+    }
+  });
   const { name, email, picture } = userResponse.data;
   let user = await User.findOne({ email: email });
   if (!user) {
@@ -356,8 +361,8 @@ const googleLogin = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
+    .cookie("accessToken", accessToken, { httpOnly: true, secure: false, sameSite: "lax" })
+    .cookie("refreshToken", refreshToken, { httpOnly: true, secure: false, sameSite: "lax" })
     .json(
       new ApiResponse(
         200,
@@ -366,6 +371,10 @@ const googleLogin = asyncHandler(async (req, res) => {
       )
     );
 });
+
+
+
+
 
 export {
   Register,
