@@ -19,8 +19,8 @@ const CheckoutPayment = () => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
   }, []);
 
-  const Id = "6768817dcb0bb49e5dc3f085";
-
+ 
+  
   const payPayment = async (courseId) => {
     try {
       const res = await axios.post("/api/v1/payment/checkout", {
@@ -42,7 +42,7 @@ const CheckoutPayment = () => {
   const handlePaymentSuccess = async (response) => {
     console.log(response);
     const options = {
-      key: "rzp_test_b9FyB1RcbK4rZq",
+      key: import.meta.env.ROZARPAY_API_KEY,
       order_id: response.id,
       ...response,
       handler: function (response) {

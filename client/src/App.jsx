@@ -35,6 +35,7 @@ import DisplayTeamMember from "./pages/admin/DisplayTeamMember";
 import UpdateTeamMemberForm from "./pages/admin/UpdateTeamMemberForm";
 import TeamMemberAddForm from "./pages/admin/TeamMemberAddForm";
 import CheckoutPayment from "./components/payment/Checkout";
+import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -122,11 +123,12 @@ function App() {
             <Route path="contact" element={<DisplayContact />} />
 
             {/* Courses routes */}
-            <Route path="add-course" element={<NewCourseAddForm/>} />
+            <Route path="add-course" element={<NewCourseAddForm />} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>
         <ScrollToTopButton />
+        
       </div>
     </>
   );
