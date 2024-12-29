@@ -7,15 +7,13 @@ import Carousel from "./Carousel";
 import Review from "../components/user/Review";
 import NumberingCounter from "../components/user/NumberingCounter";
 import Banner from "../components/user/Banner";
-import Background1 from '../assets/images/banner.jpg'
-import Background2 from '../assets/images/banner2.jpg'
-import Background3 from '../assets/images/banner3.jpg'
+import Background1 from "../assets/images/banner.jpg";
+import Background2 from "../assets/images/banner2.jpg";
+import Background3 from "../assets/images/banner3.jpg";
 import SubscriptionEmailAcceptor from "../components/user/SubscriptionEmailAcceptor";
 
-
-
 const HeroSection = () => {
-  const images = [Background1,Background2 ,Background3 ];
+  const images = [Background1, Background2, Background3];
 
   return (
     <>

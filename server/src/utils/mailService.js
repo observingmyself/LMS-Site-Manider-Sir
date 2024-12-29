@@ -16,12 +16,12 @@ const sendEmail = asyncHandler(async ({ userEmail, resetField }) => {
   const mailOptions = {
     from: process.env.NODEMAILER_EMAIL,
     to: userEmail,
-    subject: "Advance Computer Centre Password Recovery",
+    subject: "Reset Your Password for Advance Computer Centre",
     html: `<!DOCTYPE html>
 <html lang="en" >
 <head>
 <meta charset="UTF-8">
-<title>CodePen - OTP Email Template</title>
+<title>Password Reset Email</title>
 
 
 </head>
@@ -34,7 +34,20 @@ const sendEmail = asyncHandler(async ({ userEmail, resetField }) => {
   </div>
   <p style="font-size:1.1em">Hi,</p>
   <p>Thank you for choosing Advance Computer Centre. Use the following LINK to complete your Password Recovery Procedure. LINK is valid for 10 minutes</p>
-  <h2 style=";margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${resetField}</h2>
+ <a href=${resetField} style="
+display: inline-block;
+padding: 10px 20px;
+font-size: 16px;
+color: white;
+background-color: #007BFF; /* Bootstrap primary color */
+border: none;
+border-radius: 10px;
+text-decoration: none; /* Remove underline */
+text-align: center;
+transition: background-color 0.3s ease;
+" onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007BFF'">
+        Reset Password
+    </a>
   <p style="font-size:0.9em;">Regards,<br />Advance Computer Centre</p>
   <hr style="border:none;border-top:1px solid #eee" />
   <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">

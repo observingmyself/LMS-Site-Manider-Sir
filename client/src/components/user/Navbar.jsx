@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TransparentImage from "../../assets/images/Transparent-logo.png";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAuth } from "../../store/auth-slice";
 
 const Navbar = () => {
@@ -10,12 +10,12 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation(); // Hook to get current location
-  const {isAuthenticated} = useSelector(state=>state.auth)
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const [token, setToken] = useState(false);
   const dispatch = useDispatch();
-  useEffect(()=>{
-    setToken(isAuthenticated)
-  },[isAuthenticated])
+  useEffect(() => {
+    setToken(isAuthenticated);
+  }, [isAuthenticated]);
 
   const navbarToggler = () => {
     setMenuOpen((prevState) => !prevState);
@@ -36,12 +36,12 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    try{
-      dispatch(logoutAuth()).then(()=>toast('Logged out'))
-    }catch(err){
-      console.log(err)
+    try {
+      dispatch(logoutAuth()).then(() => toast("Logged out"));
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   // Scroll to top when the location changes
   useEffect(() => {
@@ -157,7 +157,7 @@ const Navbar = () => {
 
       {/* Navbar toggler menu */}
       <div
-        className={`navbar-toggler py-[16px] fixed top-16 z-10 transition-all duration-500 lg:hidden bg-white w-full ${
+        className={`navbar-toggler py-[16px] fixed top-16 z-20 transition-all duration-500 lg:hidden bg-white w-full ${
           menuOpen ? "block" : "hidden"
         }`}
       >

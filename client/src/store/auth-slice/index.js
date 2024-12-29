@@ -44,7 +44,7 @@ export const googleLogin = createAsyncThunk(
   }
 );
 
-export const checkAuth = createAsyncThunk("/checkauth", async (token) => {
+export const checkAuth = createAsyncThunk("/checkauth", async () => {
   try {
     const response = await axios.get("/api/v1/user/profile");
     return response.data;

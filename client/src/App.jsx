@@ -27,7 +27,7 @@ import BlogSingle from "./components/user/BlogSingle";
 import DisplayBlog from "./pages/admin/DisplayBlog";
 import BlogAddForm from "./pages/admin/BlogAddForm";
 import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
-// import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
+import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -35,19 +35,20 @@ import DisplayTeamMember from "./pages/admin/DisplayTeamMember";
 import UpdateTeamMemberForm from "./pages/admin/UpdateTeamMemberForm";
 import TeamMemberAddForm from "./pages/admin/TeamMemberAddForm";
 import CheckoutPayment from "./components/payment/Checkout";
-import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth(token));
+    dispatch(checkAuth());
   }, [dispatch]);
 
   const GoogleAuthWrapper = () => {
+    const clientid = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    console.log(clientid);
     return (
-      <GoogleOAuthProvider clientId="1047315488836-d6hqn66bas9bcvrkldlsuvogg0k6dpjp.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={clientid}>
         <Login></Login>
       </GoogleOAuthProvider>
     );
@@ -83,6 +84,8 @@ function App() {
             <Route path="blog" element={<Blog />} />
             <Route path="blog/:id" element={<BlogSingle />} />
             <Route path="contact" element={<ContactUs />} />
+            <Route path="courses" element={<CoursePage />} />
+            <Route path="course-detail/:id" element={<CourseDetail />} />
             <Route path="about" element={<About />} />
             <Route path="registration-form" element={<RegistrationForm />} />
             <Route path="payment" element={<CheckoutPayment />} />

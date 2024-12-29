@@ -354,7 +354,7 @@ const deleteEbook = asyncHandler(async (req, res) => {
 // Delete Course 
 const deleteCourse = asyncHandler(async (req, res) => {
   const { courseId } = req.params
-  console.log(courseId)
+  // console.log(courseId)
   if (!courseId) {
     throw new ApiError(400, "Please provide course id")
   }

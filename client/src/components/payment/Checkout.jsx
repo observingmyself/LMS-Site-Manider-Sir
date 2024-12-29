@@ -27,8 +27,7 @@ const CheckoutPayment = () => {
         courseId: courseId,
       });
       const data = res.data;
-      console.log(data);
-
+      // console.log(data);
       if (!data.success) {
         alert("Failed to create Razorpay order");
         return;
@@ -42,11 +41,11 @@ const CheckoutPayment = () => {
   const handlePaymentSuccess = async (response) => {
     console.log(response);
     const options = {
-      key: import.meta.env.ROZARPAY_API_KEY,
+      key: "rzp_test_b9FyB1RcbK4rZq",
       order_id: response.id,
       ...response,
       handler: function (response) {
-        console.log(response);
+        // console.log(response);
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
           response;
 
@@ -58,7 +57,7 @@ const CheckoutPayment = () => {
           })
           .then((res) => {
             if (res?.data.success) alert("Payment successfull");
-            console.log(res.data);
+            // console.log(res.data);
           })
           .catch((err) => {
             console.log(err);

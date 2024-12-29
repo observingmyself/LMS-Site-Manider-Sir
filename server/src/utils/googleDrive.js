@@ -2,9 +2,12 @@ import { google } from "googleapis";
 import path from "path";
 import fs from "fs"
 import mime from "mime-types"
+import dotenv from "dotenv";
+dotenv.config();
+
 
 // Load service account credentials
-const KEY_FILE_PATH = "D:/LMS-Site-Manider-Sir/server/googleDrive.json";
+const KEY_FILE_PATH = process.env.GOOGLE_DRIVE_APPLICATION_CREDENTIALS;
 const SCOPES = ['https://www.googleapis.com/auth/drive.file'];
 
 const auth = new google.auth.GoogleAuth({
