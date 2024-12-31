@@ -306,7 +306,7 @@ const resetPassword = asyncHandler(async (req, res) => {
   const { newPassword } = req.body;
   const { token } = req.params;
 
-  if (!(newPassword || token)) {
+  if (!newPassword || !token) {
     throw new ApiError(400, "Please provide new password and token");
   }
 
