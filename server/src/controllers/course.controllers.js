@@ -7,7 +7,7 @@ import { deleteFileFromGoogleDrive, uploadToGoogleDrive } from "../utils/googleD
 import { PPT, EBook } from "../models/ebook.models.js"
 
 const registerCourse = asyncHandler(async (req, res) => {
-  const { courseTitle, category, coursePrice, description, subtitle, courseLevel, courseDuration, courseLanguage, instructor } = req.body
+  const { courseTitle, category, coursePrice, description, subTitle, courseLevel, courseDuration, courseLanguage, instructor } = req.body
   if ((!courseTitle || !category || !coursePrice)) {
     throw new ApiError(401, "This fields are required");
   }
@@ -25,7 +25,7 @@ const registerCourse = asyncHandler(async (req, res) => {
 
   // create course
   const createCourse = await Course.create({
-    courseTitle, category, coursePrice, description, subtitle, courseLevel, courseDuration, courseLanguage, courseThumbnail: uploadImg?.url, instructor
+    courseTitle, category, coursePrice, description, subTitle, courseLevel, courseDuration, courseLanguage, courseThumbnail: uploadImg?.url, instructor
   })
 
   if (!createCourse) {
@@ -69,7 +69,7 @@ const getSingleCourse = asyncHandler(async (req, res) => {
 // update Course 
 const updateCourse = asyncHandler(async (req, res) => {
   const { courseId } = req.params;
-  const { courseTitle, category, coursePrice, description, subtitle, courseLevel, courseDuration, courseLanguage, instructor } = req.body
+  const { courseTitle, category, coursePrice, description, subTitle, courseLevel, courseDuration, courseLanguage, instructor } = req.body
   if ((!courseTitle || !category || !coursePrice)) {
     throw new ApiError(401, "This fields are required");
   }
@@ -84,7 +84,7 @@ const updateCourse = asyncHandler(async (req, res) => {
 
   const data = await Course.findByIdAndUpdate(courseId, {
     $set: {
-      courseTitle, category, coursePrice, description, subtitle, courseLevel, courseDuration, courseLanguage, instructor
+      courseTitle, category, coursePrice, description, subTitle, courseLevel, courseDuration, courseLanguage, instructor
     }
   }, {
     new: true,
@@ -133,7 +133,7 @@ const updateCourseImg = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, "successfully update course image"))
-    
+
 })
 
 const addSyllabus = asyncHandler(async (req, res) => {

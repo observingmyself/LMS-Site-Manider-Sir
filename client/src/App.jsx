@@ -48,7 +48,7 @@ function App() {
 
   const GoogleAuthWrapper = () => {
     const clientid = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    console.log(clientid);
+    // console.log(clientid);
     return (
       <GoogleOAuthProvider clientId={clientid}>
         <Login></Login>

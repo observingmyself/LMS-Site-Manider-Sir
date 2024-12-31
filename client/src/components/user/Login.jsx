@@ -17,6 +17,7 @@ const Login = () => {
 
   const responseGoogle = async (authResult) => {
     dispatch(googleLogin(authResult)).then((data) => {
+      // console.log(data);
       if (data?.payload?.success) {
         toast.success("Logged in with Google successfully!");
         navigate("/");
