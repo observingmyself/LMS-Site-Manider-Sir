@@ -35,8 +35,6 @@ import DisplayTeamMember from "./pages/admin/DisplayTeamMember";
 import UpdateTeamMemberForm from "./pages/admin/UpdateTeamMemberForm";
 import TeamMemberAddForm from "./pages/admin/TeamMemberAddForm";
 import CheckoutPayment from "./components/payment/Checkout";
-import CoursePage from "./pages/CoursePage";
-import CourseDetail from "./pages/CourseDetail";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -133,6 +131,7 @@ function App() {
           <Route path="*" element={<PagesNotFound />} />
         </Routes>
         <ScrollToTopButton />
+        
       </div>
     </>
   );
