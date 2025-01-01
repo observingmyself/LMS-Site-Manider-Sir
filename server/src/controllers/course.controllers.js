@@ -378,7 +378,7 @@ const getPublishCourse = asyncHandler(async (req, res) => {
   const sortBy = req.query.sortBy || "createdAt";
   const order = req.query.order === "asc" ? 1 : -1;
   const skip = (page - 1) * limit;
-  const totalCount = await Course.find({ isPublish: true });
+  const totalCount = await Course.countDocuments({ isPublish: true });
   const courses = await Course.find({ isPublish: true }).sort({ [sortBy]: order }).skip(skip).limit(limit);
   if (courses.length === 0) {
     throw new ApiError(404, "No Publish Course Found")

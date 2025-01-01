@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 
@@ -8,24 +8,23 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 const Carousel = () => {
-    const [courses, setCourses] = useState([]);
-    const navigate = useNavigate();
-  
-    const getAllCourses = async () => {
-       try {
-         const data = await axios.get("/api/v1/course");
-         console.log(data.data.data)
-         if (data.data.success) {
-           setCourses(data.data.data);
-         }
-       } catch (e) {
-         console.log("err in gettting courses", e);
-       }
-     };
-     useEffect(() => {
-       getAllCourses();
-     }, []);
+  const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
+  const getAllCourses = async () => {
+    try {
+      const data = await axios.get("/api/v1/course");
+      console.log(data.data.data.courses);
+      if (data.data.success) {
+        setCourses(data.data.data.courses);
+      }
+    } catch (e) {
+      console.log("err in gettting courses", e);
+    }
+  };
+  useEffect(() => {
+    getAllCourses();
+  }, []);
 
   const settings = {
     dots: true,
@@ -71,7 +70,7 @@ const Carousel = () => {
         schools and colleges simply do not do this.
       </p>
       <Slider {...settings}>
-        {courses.map((course) => (
+        {courses?.map((course) => (
           <div key={course._id} className="p-5">
             <div className="bg-white shadow-lg hover:shadow-2xl transition-all duration-300 rounded-lg overflow-hidden relative">
               {/* Image Section */}
@@ -113,7 +112,10 @@ const Carousel = () => {
 
               {/* Know More Button */}
               <div className="py-4 px-5 flex justify-between items-center">
-                <button onClick={()=>navigate(`/course-detail/${course._id}`)} className="text-[#FE0000] text-sm font-semibold flex items-center gap-2 hover:text-[#581F27] transition-all duration-300">
+                <button
+                  onClick={() => navigate(`/course-detail/${course._id}`)}
+                  className="text-[#FE0000] text-sm font-semibold flex items-center gap-2 hover:text-[#581F27] transition-all duration-300"
+                >
                   <p className="hover:underline">Know More</p>
                   <i className="fa-solid fa-arrow-right-long"></i>
                 </button>
