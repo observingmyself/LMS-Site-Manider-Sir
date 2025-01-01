@@ -36,7 +36,7 @@ const NewCourseAddForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateFields()) return;
+    if (!validateFields()) return;
 
     setIsLoading(true);
     try {
@@ -253,6 +253,22 @@ const NewCourseAddForm = () => {
           />
           {errors.instructor && (
             <p className="text-red-500 text-sm">{errors.instructor}</p>
+          )}
+        </div>
+        <div className="flex mt-2 flex-col gap-1">
+          <label htmlFor="description" className="font-semibold">
+            Description
+          </label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            rows={5}
+            className="px-2 py-2 outline-none border border-gray-300"
+            placeholder="Enter description*"
+            id="description"
+          />
+          {errors.description && (
+            <p className="text-red-500 text-sm">{errors.description}</p>
           )}
         </div>
 
