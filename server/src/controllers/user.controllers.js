@@ -195,15 +195,16 @@ const getProfile = asyncHandler(async (req, res) => {
 
 const getAllUser = asyncHandler(async (req, res) => {
   const page = req.query.page || 1;
-  const limit = req.query.limit || 20;
+  const limit = req.query.limit || 10;
   const sortBy = req.query.sortBy || "createdAt";
   const order = req.query.order === "desc" ? -1 : 1;
   const skip = (page - 1) * limit;
+  const totalcount = Math.ceil(await User.countDocuments() / limit);
   const users = await User.find().sort({ [sortBy]: order }).skip(skip).limit(limit);
   if (!users) {
     throw new ApiError(404, "No User found");
   }
-  return res.status(200).json(new ApiResponse(200, users, "fetch all users"));
+  return res.status(200).json(new ApiResponse(200, { users, pages: totalcount }, "fetch all users"));
 });
 
 const updateProfile = asyncHandler(async (req, res) => {
