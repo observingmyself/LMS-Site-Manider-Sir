@@ -197,12 +197,9 @@ const getAllUser = asyncHandler(async (req, res) => {
   const page = req.query.page || 1;
   const limit = req.query.limit || 20;
   const sortBy = req.query.sortBy || "createdAt";
-  const order = req.query.order === "desc" ? "-1" : "1";
+  const order = req.query.order === "desc" ? -1 : 1;
   const skip = (page - 1) * limit;
-  const users = await User.find()
-    .sort({ [sortBy]: order })
-    .skip(skip)
-    .limit(limit);
+  const users = await User.find().sort({ [sortBy]: order }).skip(skip).limit(limit);
   if (!users) {
     throw new ApiError(404, "No User found");
   }
