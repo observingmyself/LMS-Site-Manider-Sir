@@ -10,10 +10,11 @@ const registerForm = asyncHandler(async (req, res) => {
   }
   const existingRequest = await register.findOne({ contact: data.contact })
   if (existingRequest) {
-    throw new ApiError(409, "This number is Already register")
+    throw new ApiError(409, "Already Submited Form")
   }
   const create = new register(data);
-  const response = await create.save();
+  const response = await create.save({ validateBeforeSave: false });
+
   return res
     .status(200)
     .json(new ApiResponse(201, response, "Form Submitted"))
