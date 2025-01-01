@@ -13,10 +13,9 @@ const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [token, setToken] = useState(false);
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-    setToken(isAuthenticated);
-  }, [isAuthenticated]);
+  useEffect(()=>{
+    setToken(isAuthenticated)
+  },[isAuthenticated])
 
   const navbarToggler = () => {
     setMenuOpen((prevState) => !prevState);
@@ -37,10 +36,10 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    try {
-      dispatch(logoutAuth()).then(() => {toast("Logged out"); navigate('/login')});
-    } catch (err) {
-      console.log(err);
+    try{
+      dispatch(logoutAuth()).then(()=>toast('Logged out'))
+    }catch(err){
+      console.log(err)
     }
   };
 

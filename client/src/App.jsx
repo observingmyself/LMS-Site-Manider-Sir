@@ -51,7 +51,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      dispatch(checkAuth());
+    dispatch(checkAuth(token));
   }, [dispatch]);
 
   const GoogleAuthWrapper = () => {
@@ -138,21 +138,12 @@ function App() {
             <Route path="contact" element={<DisplayContact />} />
 
             {/* Courses routes */}
-            <Route path="add-course" element={<NewCourseAddForm />} />
-            <Route path="allCourses" element={<CourseDashboard/>} />
-            <Route path="update-course/:id" element={<UpdateCourse/>} />
-
-            {/* certificate routes */}
-            <Route path="upload-certificate" element={<UploadCertificate/>} />
-            <Route path="view-certificate" element={<ViewCertificates/>} />
-            <Route path="edit-certificate/:id" element={<EditCertificate/>} />
-
-            {/* Registrations display route */}
-            <Route path="allUsers" element={<DisplayRegisterUser />} />
+            <Route path="add-course" element={<NewCourseAddForm/>} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>
         <ScrollToTopButton />
+        
       </div>
     </>
   );
