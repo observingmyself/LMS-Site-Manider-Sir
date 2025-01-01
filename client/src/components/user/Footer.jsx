@@ -5,10 +5,11 @@ import CertificateBadge from "../../assets/images/certificate-1356.png";
 import "../../index.css";
 import { Link, useNavigate } from "react-router";
 import axios from "axios";
+import CertificateModal from "./CertificateModal";
 
 const Footer = () => {
   const [news,setNews] = useState({})
-
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate();
 
   const getLatestNews = async () => {
@@ -107,7 +108,7 @@ const Footer = () => {
                 Contact Us
               </li>
             </ul>
-            <img src={CertificateBadge} alt="" className="mt-1 h-10" />
+            <img onClick={()=>setIsModalOpen(true)} src={CertificateBadge} alt="" className="mt-1 h-10 cursor-pointer" />
           </div>
         </div>
       </div>
@@ -143,6 +144,7 @@ const Footer = () => {
           </h1>
         </div>
       </div>
+      <CertificateModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
     </div>
   );
 };

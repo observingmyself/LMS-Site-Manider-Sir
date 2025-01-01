@@ -2,14 +2,18 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 
 const DisplayRegisterUser = () => {
-    const getUser = async () => {
-        const data = await axios.post('/api/v1/user')
-        if(data){
-            console.log(data)
+    const getAllUsers = async () => {
+        try{
+            const data = await axios.post('/api/v1/user')
+            if(data){
+                console.log(data)
+            }
+        }catch(e){
+            console.log("Error in getting users",e)
         }
     }
     useEffect(()=>{
-        getUser();
+        getAllUsers();
     },[])
   return (
     <div>

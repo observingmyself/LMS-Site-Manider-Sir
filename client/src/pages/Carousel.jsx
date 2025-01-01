@@ -1,47 +1,31 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
+
 import "slick-carousel/slick/slick-theme.css";
 import CarouselImage from "../assets/images/htmlcssjs.jpg";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const Carousel = () => {
-  const courses = [
-    {
-      title: "Scratch",
-      category: "Coding For Kids",
-      price: "INR 5000",
-      lessons: "22 lessons",
-      students: "26 Students",
-    },
-    {
-      title: "WordPress",
-      category: "Content Management System",
-      price: "INR 5000",
-      lessons: "22 lessons",
-      students: "26 Students",
-    },
-    {
-      title: "Adobe Photoshop",
-      category: "Graphic Designing",
-      price: "INR 5000",
-      lessons: "22 lessons",
-      students: "26 Students",
-    },
-    {
-      title: "Adobe Photoshop",
-      category: "Graphic Designing",
-      price: "INR 5000",
-      lessons: "22 lessons",
-      students: "26 Students",
-    },
-    {
-      title: "Adobe Photoshop",
-      category: "Graphic Designing",
-      price: "INR 5000",
-      lessons: "22 lessons",
-      students: "26 Students",
-    },
-  ];
+    const [courses, setCourses] = useState([]);
+    const navigate = useNavigate();
+  
+    const getAllCourses = async () => {
+       try {
+         const data = await axios.get("/api/v1/course");
+         console.log(data.data.data)
+         if (data.data.success) {
+           setCourses(data.data.data);
+         }
+       } catch (e) {
+         console.log("err in gettting courses", e);
+       }
+     };
+     useEffect(() => {
+       getAllCourses();
+     }, []);
+
 
   const settings = {
     dots: true,
@@ -87,37 +71,53 @@ const Carousel = () => {
         schools and colleges simply do not do this.
       </p>
       <Slider {...settings}>
-        {courses.map((course, index) => (
-          <div key={index} className="p-5 ">
-            <div className="bg-white shadow-sm hover:shadow-lg duration-200 rounded-sm pb-5 text-left relative">
-              <div className="w-full">
-                <img src={CarouselImage} alt="" className="rounded-t-lg" />
+        {courses.map((course) => (
+          <div key={course._id} className="p-5">
+            <div className="bg-white shadow-lg hover:shadow-2xl transition-all duration-300 rounded-lg overflow-hidden relative">
+              {/* Image Section */}
+              <div className="w-full h-56">
+                <img
+                  src={course.courseThumbnail}
+                  alt={course.courseTitle}
+                  className="w-full h-full object-cover"
+                />
               </div>
 
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#DF5E7E] text-white px-6 py-2 rounded-full text-center font-semibold">
-                {course.price}
+              {/* Price Badge */}
+              <div className="absolute top-4 left-4 bg-[#DF5E7E] text-white px-6 py-2 rounded-full font-semibold text-sm">
+                {course.coursePrice} INR
               </div>
 
-              <div className="mt-10 mb-4">
-                <p className="text-[10px] p-2 rounded-full text-[#DF5E7E] ml-3 bg-[#FCDFE4] inline">
+              {/* Course Info */}
+              <div className="p-5">
+                {/* Category Tag */}
+                <p className="text-xs p-2 rounded-full text-[#DF5E7E] ml-3 bg-[#FCDFE4] inline">
                   {course.category}
                 </p>
-                <h3 className="text-2xl hover:text-[#fd0c0c] font-semibold text-black m-3">
-                  {course.title}
+                {/* Course Title */}
+                <h3 className="text-xl mt-3 font-semibold text-[#1D2027] hover:text-[#FE0000] cursor-pointer">
+                  {course.courseTitle}
                 </h3>
+                {/* Course Stats */}
+                <div className="flex items-center gap-4 text-sm text-slate-600 mt-2">
+                  <div className="flex items-center gap-1">
+                    <i className="fa-regular fa-file text-[#FE0000]"></i>
+                    <span>21 Lessons</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <i className="fa-solid fa-user text-[#FE0000]"></i>
+                    <span> {course.enrolledStudent.length} Student</span>
+                  </div>
+                </div>
               </div>
-              <div className="mb-4 flex text-slate-600 gap-2 text-sm p-4 items-center justify-left">
-                <i className="fa-regular fa-file text-[#fd0c0c]"></i>
-                <p className="">{course.lessons}</p>
-                {"|"}
-                <i className="fa-solid fa-user text-[#fd0c0c]"></i>
-                <p className="">{course.students}</p>
+
+              {/* Know More Button */}
+              <div className="py-4 px-5 flex justify-between items-center">
+                <button onClick={()=>navigate(`/course-detail/${course._id}`)} className="text-[#FE0000] text-sm font-semibold flex items-center gap-2 hover:text-[#581F27] transition-all duration-300">
+                  <p className="hover:underline">Know More</p>
+                  <i className="fa-solid fa-arrow-right-long"></i>
+                </button>
               </div>
-              <hr className="" />
-              <button className="mt-4 px-6 py-2 text-[#fd0c0c] rounded text-sm flex items-center justify-center gap-1 hover:gap-3 transition-all">
-                <p className="hover:underline">Know More</p>{" "}
-                <i className="fa-solid fa-right-long"></i>
-              </button>
             </div>
           </div>
         ))}

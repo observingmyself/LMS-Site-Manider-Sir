@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import {toast} from 'react-toastify'
 
@@ -10,6 +10,7 @@ const UpdateTeamMemberForm = () => {
     const [updatedPosition,setUpdatedPosition] = useState('')
     const [isLoading,setIsLoading] = useState(false)
     const [isContentLoading,setIsContentLoading] = useState(false)
+    const [singleMember,setSingleMember] = useState({})
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]
@@ -41,6 +42,21 @@ const UpdateTeamMemberForm = () => {
         }
     }
 
+    const getSingleTeamMember = async () => {
+      try{
+        const data = await axios.get(`/api/v1/team/singleMember/${id}`)
+        if(data){
+          setUpdatedName(data.data.data.name)
+          setUpdatedPosition(data.data.data.position)
+        }
+      }catch(e){
+        console.log(e)
+      }
+    } 
+
+    useEffect(()=>{
+      getSingleTeamMember();
+    },[id])
     const handleContentUpdate = async (e) => {
         e.preventDefault();
         setIsContentLoading(true)
@@ -53,8 +69,6 @@ const UpdateTeamMemberForm = () => {
                 toast.success('Member Content Updated')
                 console.log(data)
                 setIsContentLoading(false)
-                setUpdatedName('')
-                setUpdatedPosition('')
             }
         }catch(e){
             console.log(e)

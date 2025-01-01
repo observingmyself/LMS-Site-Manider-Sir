@@ -19,16 +19,15 @@ const CheckoutPayment = () => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
   }, []);
 
-  const Id = "6768817dcb0bb49e5dc3f085";
-
+ 
+  
   const payPayment = async (courseId) => {
     try {
       const res = await axios.post("/api/v1/payment/checkout", {
         courseId: courseId,
       });
       const data = res.data;
-      console.log(data);
-
+      // console.log(data);
       if (!data.success) {
         alert("Failed to create Razorpay order");
         return;
@@ -46,7 +45,7 @@ const CheckoutPayment = () => {
       order_id: response.id,
       ...response,
       handler: function (response) {
-        console.log(response);
+        // console.log(response);
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
           response;
 
@@ -58,7 +57,7 @@ const CheckoutPayment = () => {
           })
           .then((res) => {
             if (res?.data.success) alert("Payment successfull");
-            console.log(res.data);
+            // console.log(res.data);
           })
           .catch((err) => {
             console.log(err);

@@ -16,7 +16,9 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const responseGoogle = async (authResult) => {
+    // console.log(authResult)
     dispatch(googleLogin(authResult)).then((data) => {
+      // console.log(data);
       if (data?.payload?.success) {
         toast.success("Logged in with Google successfully!");
         navigate("/");
@@ -49,7 +51,7 @@ const Login = () => {
 
       if (result?.payload?.success) {
         toast.success(result.payload.message);
-        navigate("/admin/dashboard");
+        navigate("/");
       } else {
         // Show error message if login fails
         const error = result.payload?.message || "Invalid email or password!";
@@ -114,6 +116,9 @@ const Login = () => {
                 {errorMessage}
               </span>
             )}
+          </div>
+          <div onClick={()=>navigate('/forget-password')} className="my-2 flex text-[#e56a6a] hover:text-[#fd0c0c] hover:underline justify-end">
+            Forget Password?
           </div>
           <button
             type="submit"

@@ -27,7 +27,7 @@ import BlogSingle from "./components/user/BlogSingle";
 import DisplayBlog from "./pages/admin/DisplayBlog";
 import BlogAddForm from "./pages/admin/BlogAddForm";
 import BlogUpdateForm from "./pages/admin/BlogUpdateForm";
-// import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
+import NewCourseAddForm from "./pages/admin/NewCourseAddForm";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -35,18 +35,30 @@ import DisplayTeamMember from "./pages/admin/DisplayTeamMember";
 import UpdateTeamMemberForm from "./pages/admin/UpdateTeamMemberForm";
 import TeamMemberAddForm from "./pages/admin/TeamMemberAddForm";
 import CheckoutPayment from "./components/payment/Checkout";
+import CourseDetail from "./pages/CourseDetail";
+import CoursePage from './pages/CoursePage'
+import DisplayRegisterUser from "./pages/admin/DisplayRegisterUser";
+import ForgetPasswordPage from "./components/user/ForgetPasswordPage";
+import ResetPassword from "./components/user/ResetPassword";
+import CourseDashboard from "./pages/admin/CourseDashboard";
+import UpdateCourse from "./pages/admin/UpdateCourse";
+import UploadCertificate from "./pages/admin/UploadCertificate";
+import ViewCertificates from "./pages/admin/ViewCertificates";
+import EditCertificate from "./pages/admin/EditCertificate";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth(token));
+      dispatch(checkAuth());
   }, [dispatch]);
 
   const GoogleAuthWrapper = () => {
+    const clientid = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    // console.log(clientid);
     return (
-      <GoogleOAuthProvider clientId="1047315488836-d6hqn66bas9bcvrkldlsuvogg0k6dpjp.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={clientid}>
         <Login></Login>
       </GoogleOAuthProvider>
     );
@@ -77,11 +89,15 @@ function App() {
           >
             <Route path="" element={<HeroSection />} />
             <Route path="login" element={<GoogleAuthWrapper />} />
+            <Route path="forget-password" element={<ForgetPasswordPage/>} />
+            <Route path="reset-password/:token" element={<ResetPassword/>} />
             <Route path="register" element={<Register />} />
             <Route path="news/:id" element={<SinglePageLatestNews />} />
             <Route path="blog" element={<Blog />} />
             <Route path="blog/:id" element={<BlogSingle />} />
             <Route path="contact" element={<ContactUs />} />
+            <Route path="courses" element={<CoursePage />} />
+            <Route path="course-detail/:id" element={<CourseDetail />} />
             <Route path="about" element={<About />} />
             <Route path="registration-form" element={<RegistrationForm />} />
             <Route path="payment" element={<CheckoutPayment />} />
@@ -122,7 +138,17 @@ function App() {
             <Route path="contact" element={<DisplayContact />} />
 
             {/* Courses routes */}
-            <Route path="add-course" element={<NewCourseAddForm/>} />
+            <Route path="add-course" element={<NewCourseAddForm />} />
+            <Route path="allCourses" element={<CourseDashboard/>} />
+            <Route path="update-course/:id" element={<UpdateCourse/>} />
+
+            {/* certificate routes */}
+            <Route path="upload-certificate" element={<UploadCertificate/>} />
+            <Route path="view-certificate" element={<ViewCertificates/>} />
+            <Route path="edit-certificate/:id" element={<EditCertificate/>} />
+
+            {/* Registrations display route */}
+            <Route path="allUsers" element={<DisplayRegisterUser />} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>

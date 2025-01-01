@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
+advance-computer-centre-e9f6eab9fbba.json
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -73,7 +74,7 @@ web_modules/
 .env
 .env.test
 .env.production
-
+googleDrive.json
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

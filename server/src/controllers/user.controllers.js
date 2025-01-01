@@ -24,6 +24,7 @@ const generateToken = async (userId) => {
 const options = {
   httpOnly: true,
   secure: true,
+  sameSite: "lax",
 };
 
 const Register = asyncHandler(async (req, res) => {
@@ -272,6 +273,7 @@ const changePassword = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, "Password Changed Successfully"));
 });
+
 const forgetPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
   if (!email) {
@@ -291,7 +293,7 @@ const forgetPassword = asyncHandler(async (req, res) => {
       expiresIn: process.env.REST_PASSWORD_EXPIRY,
     }
   );
-  const resetField = `http://localhost:5173/reset-password/${restPasswordtoken}`;
+  const resetField = `${process.env.DOMAIN_NAME}/reset-password/${restPasswordtoken}`;
   const userEmail = user.email;
 
   await sendEmail({ userEmail, resetField });
@@ -304,7 +306,7 @@ const resetPassword = asyncHandler(async (req, res) => {
   const { newPassword } = req.body;
   const { token } = req.params;
 
-  if (!(newPassword || token)) {
+  if (!newPassword || !token) {
     throw new ApiError(400, "Please provide new password and token");
   }
 
@@ -322,7 +324,7 @@ const resetPassword = asyncHandler(async (req, res) => {
   await user.save({ validateBeforeSave: false });
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "Password change successfully"));
+    .json(new ApiResponse(200, "Password change successfully"));
 });
 
 const googleLogin = asyncHandler(async (req, res) => {
@@ -335,8 +337,11 @@ const googleLogin = asyncHandler(async (req, res) => {
   oauth2client.setCredentials(googleResponse.tokens);
 
   const userResponse = await axios.get(`
-    https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleResponse.tokens.access_token}
-  `);
+    https://www.googleapis.com/oauth2/v1/userinfo?alt=json`, {
+    headers: {
+      "Authorization": `Bearer ${googleResponse.tokens.access_token}`,
+    }
+  });
   const { name, email, picture } = userResponse.data;
   let user = await User.findOne({ email: email });
   if (!user) {
@@ -366,6 +371,10 @@ const googleLogin = asyncHandler(async (req, res) => {
       )
     );
 });
+
+
+
+
 
 export {
   Register,

@@ -1,64 +1,99 @@
-import axios from 'axios';
-import React, { useState } from 'react'
-import { toast } from 'react-toastify';
+import axios from "axios";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const NewCourseAddForm = () => {
-  const [courseTitle,setCourseTitle] = useState('')
-  const [category,setCategory] = useState('')
-  const [coursePrice,setCoursePrice] = useState('');
-  const [description,setDescription] = useState('')
-  const [subtitle,setSubtitle] = useState('')
-  const [courseLevel,setCourseLevel] = useState('')
-  const [courseDuration,setCourseDuration] = useState('')
-  const [courseLanguage,setCourseLanguage] = useState('')
-  const [instructor,setInstructor] = useState('')
-  const [courseImage,setCourseImage] = useState('')
-  const [isLoading,setIsLoading] = useState(false)
+  const [courseTitle, setCourseTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [coursePrice, setCoursePrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [courseLevel, setCourseLevel] = useState("");
+  const [courseDuration, setCourseDuration] = useState("");
+  const [courseLanguage, setCourseLanguage] = useState("");
+  const [instructor, setInstructor] = useState("");
+  const [courseImage, setCourseImage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validateFields = () => {
+    const newErrors = {};
+    if (!courseTitle.trim()) newErrors.courseTitle = "This field is required.";
+    if (!category.trim()) newErrors.category = "This field is required.";
+    if (!coursePrice.trim()) newErrors.coursePrice = "This field is required.";
+    if (!description.trim()) newErrors.description = "This field is required.";
+    if (!subtitle.trim()) newErrors.subtitle = "This field is required.";
+    if (!courseLevel.trim()) newErrors.courseLevel = "This field is required.";
+    if (!courseDuration.trim())
+      newErrors.courseDuration = "This field is required.";
+    if (!courseLanguage.trim())
+      newErrors.courseLanguage = "This field is required.";
+    if (!instructor.trim()) newErrors.instructor = "This field is required.";
+    if (!courseImage) newErrors.courseImage = "This field is required.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
-    try{
-      const formData = new FormData()
-      formData.append('courseTitle',courseTitle)
-      formData.append('category',category)
-      formData.append('coursePrice',coursePrice)
-      formData.append('description',description)
-      formData.append('subtitle',subtitle)
-      formData.append('courseLevel',courseLevel)
-      formData.append('courseDuration',courseDuration)
-      formData.append('courseLanguage',courseLanguage)
-      formData.append('instructor',instructor)
-      formData.append('courseThumbnail',courseImage)
-      
-      const data = await axios.post('/api/v1/course/create',formData,{
-        headers : {
+    if (validateFields()) return;
+
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("courseTitle", courseTitle);
+      formData.append("category", category);
+      formData.append("coursePrice", coursePrice);
+      formData.append("description", description);
+      formData.append("subTitle", subtitle);
+      formData.append("courseLevel", courseLevel);
+      formData.append("courseDuration", courseDuration);
+      formData.append("courseLanguage", courseLanguage);
+      formData.append("instructor", instructor);
+      formData.append("courseThumbnail", courseImage);
+
+      const { data } = await axios.post("/api/v1/course/create", formData, {
+        headers: {
           "Content-Type": "multipart/form-data",
-        }})
-        if(data.data.success){
-          toast.success("Course created successfully")
-        }
-        else{
-          console.log("Error creating course: ",data.data.message)
-        }
-    } catch(e){
-      console.log("Error making course: ",e)
-      toast.error("Error")
-    } finally{
-      setIsLoading(false)
+        },
+      });
+
+      if (data) {
+        toast.success("Course created successfully");
+        // Clear all fields
+        setCourseTitle("");
+        setCategory("");
+        setCoursePrice("");
+        setDescription("");
+        setSubtitle("");
+        setCourseLevel("");
+        setCourseDuration("");
+        setCourseLanguage("");
+        setInstructor("");
+        setCourseImage("");
+        setErrors({});
+      }
+    } catch (error) {
+      console.log("Error making course: ", error);
+      toast.error("Error occurred while creating the course.");
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleFileChange = (e) => {
-    const file= e.target.files[0]
-    setCourseImage(file)
-  }
+    const file = e.target.files[0];
+    setCourseImage(file);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center md:px-40">
       <form
         onSubmit={handleSubmit}
-        className="w-96 bg-white shadow-lg px-10 py-4 mb-10"
+        className="w-full bg-white shadow-lg px-10 py-4 mb-10"
       >
+        <h4 className="text-center text-xl font-bold mb-2">Add New Course</h4>
+        {/* Course Image */}
         <div className="flex flex-col gap-1">
           <label htmlFor="courseImage" className="font-semibold">
             Course Image
@@ -70,7 +105,12 @@ const NewCourseAddForm = () => {
             id="courseImage"
             accept="image/*"
           />
+          {errors.courseImage && (
+            <p className="text-red-500 text-sm">{errors.courseImage}</p>
+          )}
         </div>
+
+        {/* Course Title */}
         <div className="flex mt-2 flex-col gap-1">
           <label htmlFor="courseTitle" className="font-semibold">
             Course Title
@@ -80,10 +120,15 @@ const NewCourseAddForm = () => {
             value={courseTitle}
             onChange={(e) => setCourseTitle(e.target.value)}
             className="px-2 py-2 outline-none border border-gray-300"
-            placeholder="enter title*"
+            placeholder="Enter title*"
             id="courseTitle"
           />
+          {errors.courseTitle && (
+            <p className="text-red-500 text-sm">{errors.courseTitle}</p>
+          )}
         </div>
+
+        {/* Category */}
         <div className="flex mt-2 flex-col gap-1">
           <label htmlFor="category" className="font-semibold">
             Category
@@ -93,10 +138,15 @@ const NewCourseAddForm = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="px-2 py-2 outline-none border border-gray-300"
-            placeholder="enter category*"
+            placeholder="Enter category*"
             id="category"
           />
+          {errors.category && (
+            <p className="text-red-500 text-sm">{errors.category}</p>
+          )}
         </div>
+
+        {/* Course Price */}
         <div className="flex mt-2 flex-col gap-1">
           <label htmlFor="coursePrice" className="font-semibold">
             Price
@@ -106,10 +156,15 @@ const NewCourseAddForm = () => {
             value={coursePrice}
             onChange={(e) => setCoursePrice(e.target.value)}
             className="px-2 py-2 outline-none border border-gray-300"
-            placeholder="enter price*"
+            placeholder="Enter price*"
             id="coursePrice"
           />
+          {errors.coursePrice && (
+            <p className="text-red-500 text-sm">{errors.coursePrice}</p>
+          )}
         </div>
+
+        {/* Subtitle */}
         <div className="flex mt-2 flex-col gap-1">
           <label htmlFor="subtitle" className="font-semibold">
             Subtitle
@@ -119,12 +174,17 @@ const NewCourseAddForm = () => {
             value={subtitle}
             onChange={(e) => setSubtitle(e.target.value)}
             className="px-2 py-2 outline-none border border-gray-300"
-            placeholder="enter subtitle*"
+            placeholder="Enter subtitle*"
             id="subtitle"
           />
+          {errors.subtitle && (
+            <p className="text-red-500 text-sm">{errors.subtitle}</p>
+          )}
         </div>
+
+        {/* Course Level */}
         <div className="flex mt-2 flex-col gap-1">
-          <label htmlFor="subtitle" className="font-semibold">
+          <label htmlFor="courseLevel" className="font-semibold">
             Course Level
           </label>
           <select
@@ -137,9 +197,14 @@ const NewCourseAddForm = () => {
             <option value="Intermediate">Intermediate</option>
             <option value="Advance">Advance</option>
           </select>
+          {errors.courseLevel && (
+            <p className="text-red-500 text-sm">{errors.courseLevel}</p>
+          )}
         </div>
+
+        {/* Course Duration */}
         <div className="flex mt-2 flex-col gap-1">
-          <label htmlFor="duration" className="font-semibold">
+          <label htmlFor="courseDuration" className="font-semibold">
             Duration
           </label>
           <input
@@ -147,10 +212,15 @@ const NewCourseAddForm = () => {
             value={courseDuration}
             onChange={(e) => setCourseDuration(e.target.value)}
             className="px-2 py-2 outline-none border border-gray-300"
-            placeholder="enter duration*"
-            id="duration"
+            placeholder="Enter duration*"
+            id="courseDuration"
           />
+          {errors.courseDuration && (
+            <p className="text-red-500 text-sm">{errors.courseDuration}</p>
+          )}
         </div>
+
+        {/* Course Language */}
         <div className="flex mt-2 flex-col gap-1">
           <label htmlFor="courseLanguage" className="font-semibold">
             Course Language
@@ -160,10 +230,15 @@ const NewCourseAddForm = () => {
             value={courseLanguage}
             onChange={(e) => setCourseLanguage(e.target.value)}
             className="px-2 py-2 outline-none border border-gray-300"
-            placeholder="enter language*"
+            placeholder="Enter language*"
             id="courseLanguage"
           />
+          {errors.courseLanguage && (
+            <p className="text-red-500 text-sm">{errors.courseLanguage}</p>
+          )}
         </div>
+
+        {/* Instructor */}
         <div className="flex mt-2 flex-col gap-1">
           <label htmlFor="instructor" className="font-semibold">
             Instructor
@@ -173,34 +248,24 @@ const NewCourseAddForm = () => {
             value={instructor}
             onChange={(e) => setInstructor(e.target.value)}
             className="px-2 py-2 outline-none border border-gray-300"
-            placeholder="enter instructor name*"
+            placeholder="Enter instructor*"
             id="instructor"
           />
+          {errors.instructor && (
+            <p className="text-red-500 text-sm">{errors.instructor}</p>
+          )}
         </div>
-        <div className="flex mt-2 flex-col gap-1">
-          <label htmlFor="courseDescription" className="font-semibold">
-            Description
-          </label>
-          <textarea
-            name="courseDescription"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="enter course description*"
-            id="courseDescription"
-            className="px-2 py-2 outline-none border border-gray-300"
-          ></textarea>
-        </div>
-        <div className="mt-2">
-          <button
-            type="submit"
-            className="px-5 py-2 bg-blue-400 hover:bg-blue-700 transition-all duration-200 text-white rounded-lg"
-          >
-            {isLoading ? "Loading..." : "Submit"}
-          </button>
-        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded mt-4"
+          disabled={isLoading}
+        >
+          {isLoading ? "Submitting..." : "Submit"}
+        </button>
       </form>
     </div>
   );
-}
+};
 
-export default NewCourseAddForm
+export default NewCourseAddForm;

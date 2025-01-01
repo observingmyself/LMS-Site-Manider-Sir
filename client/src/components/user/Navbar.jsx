@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TransparentImage from "../../assets/images/Transparent-logo.png";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAuth } from "../../store/auth-slice";
 
 const Navbar = () => {
@@ -10,12 +10,13 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation(); // Hook to get current location
-  const {isAuthenticated} = useSelector(state=>state.auth)
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const [token, setToken] = useState(false);
   const dispatch = useDispatch();
-  useEffect(()=>{
-    setToken(isAuthenticated)
-  },[isAuthenticated])
+  
+  useEffect(() => {
+    setToken(isAuthenticated);
+  }, [isAuthenticated]);
 
   const navbarToggler = () => {
     setMenuOpen((prevState) => !prevState);
@@ -36,17 +37,20 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    try{
-      dispatch(logoutAuth()).then(()=>toast('Logged out'))
-    }catch(err){
-      console.log(err)
+    try {
+      dispatch(logoutAuth()).then(() => {toast("Logged out"); navigate('/login')});
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   // Scroll to top when the location changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location]);
+
+  // Function to check if the link is active
+  const isActive = (path) => location.pathname === path;
 
   return (
     <>
@@ -87,7 +91,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/"
-                className="mx-4 px-2 rounded bg-[#F2EFF2] text-[#FE0000] py-1 text-[16px]"
+                className={`mx-4 px-2 rounded py-1 text-[16px] ${isActive("/") ? "bg-[#F2EFF2] text-[#FE0000]" : "text-[#FE0000]"}`}
               >
                 Home
               </NavLink>
@@ -95,7 +99,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/about"
-                className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                className={`mx-4 px-2 rounded py-1 text-[16px] ${isActive("/about") ? "bg-[#F2EFF2] text-[#FE0000]" : "text-slate-600"}`}
               >
                 About
               </NavLink>
@@ -103,7 +107,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/courses"
-                className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                className={`mx-4 px-2 rounded py-1 text-[16px] ${isActive("/courses") ? "bg-[#F2EFF2] text-[#FE0000]" : "text-slate-600"}`}
               >
                 Courses
               </NavLink>
@@ -111,7 +115,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/blog"
-                className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                className={`mx-4 px-2 rounded py-1 text-[16px] ${isActive("/blog") ? "bg-[#F2EFF2] text-[#FE0000]" : "text-slate-600"}`}
               >
                 Blog
               </NavLink>
@@ -119,7 +123,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/contact"
-                className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                className={`mx-4 px-2 rounded py-1 text-[16px] ${isActive("/contact") ? "bg-[#F2EFF2] text-[#FE0000]" : "text-slate-600"}`}
               >
                 Contact
               </NavLink>
@@ -137,14 +141,14 @@ const Navbar = () => {
                   <NavLink
                     to="/login"
                     onClick={() => setMenuOpen(false)}
-                    className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                    className="mx-4 px-2 rounded py-1 text-slate-600 text-[16px] hover:bg-[#F2EFF2] hover:text-[#FE0000]"
                   >
                     Login
                   </NavLink>
                   <NavLink
                     to="/register"
                     onClick={() => setMenuOpen(false)}
-                    className="mx-4 px-2 rounded hover:bg-[#F2EFF2] hover:text-[#FE0000] py-1 text-slate-600 text-[16px]"
+                    className="mx-4 px-2 rounded py-1 text-slate-600 text-[16px] hover:bg-[#F2EFF2] hover:text-[#FE0000]"
                   >
                     Register
                   </NavLink>
@@ -157,7 +161,7 @@ const Navbar = () => {
 
       {/* Navbar toggler menu */}
       <div
-        className={`navbar-toggler py-[16px] fixed top-16 z-10 transition-all duration-500 lg:hidden bg-white w-full ${
+        className={`navbar-toggler py-[16px] fixed top-16 z-20 transition-all duration-500 lg:hidden bg-white w-full ${
           menuOpen ? "block" : "hidden"
         }`}
       >
@@ -166,7 +170,7 @@ const Navbar = () => {
             <NavLink
               to="/"
               onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+              className={`text-slate-600 text-[16px] ${isActive("/")  ? "text-[#FE0000]" : ""}`}
             >
               Home
             </NavLink>
@@ -175,7 +179,7 @@ const Navbar = () => {
             <NavLink
               to="/about"
               onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+              className={`text-slate-600 text-[16px] ${isActive("/about") ? "text-[#FE0000]" : ""}`}
             >
               About
             </NavLink>
@@ -184,7 +188,7 @@ const Navbar = () => {
             <NavLink
               to="/courses"
               onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+              className={`text-slate-600 text-[16px] ${isActive("/courses") ? "text-[#FE0000]" : ""}`}
             >
               Courses
             </NavLink>
@@ -193,7 +197,7 @@ const Navbar = () => {
             <NavLink
               to="/blog"
               onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+              className={`text-slate-600 text-[16px] ${isActive("/blog") ? "text-[#FE0000]" : ""}`}
             >
               Blog
             </NavLink>
@@ -202,7 +206,7 @@ const Navbar = () => {
             <NavLink
               to="/contact"
               onClick={() => setMenuOpen(false)}
-              className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+              className={`text-slate-600 text-[16px] ${isActive("/contact") ? "text-[#FE0000]" : ""}`}
             >
               Contact
             </NavLink>
@@ -219,21 +223,19 @@ const Navbar = () => {
               <>
                 <ul className="flex gap-4 mt-1 flex-col justify-evenly items-center w-full">
                   <li>
-                    {" "}
                     <NavLink
                       to="/login"
                       onClick={() => setMenuOpen(false)}
-                      className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+                      className={`text-slate-600 text-[16px] ${isActive("/login") ? "text-[#FE0000]" : ""}`}
                     >
                       Login
                     </NavLink>
                   </li>
                   <li>
-                    {" "}
                     <NavLink
                       to="/register"
                       onClick={() => setMenuOpen(false)}
-                      className="text-slate-600 hover:text-[#FE0000] text-[16px]"
+                      className={`text-slate-600 text-[16px] ${isActive("/register") ? "text-[#FE0000]" : ""}`}
                     >
                       Register
                     </NavLink>

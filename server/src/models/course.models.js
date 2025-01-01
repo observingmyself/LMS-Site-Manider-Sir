@@ -23,7 +23,8 @@ const courseSchema = new mongoose.Schema({
   },
   subTitle: {
     type: String,
-    trim: true
+    required: true,
+    trim: true,
   },
   description: {
     type: String,

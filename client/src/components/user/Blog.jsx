@@ -40,7 +40,7 @@ const Blog = () => {
                 <div className="w-full h-auto">
                   <img
                     src={blog.BlogUrl}
-                    className="h-auto w-full"
+                    className="h-64 w-full"
                     alt="blogurl"
                   />
                 </div>

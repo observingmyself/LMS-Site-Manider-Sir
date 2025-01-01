@@ -29,27 +29,26 @@ export const userLogin = createAsyncThunk("/login", async (formData) => {
   }
 });
 
-
 export const googleLogin = createAsyncThunk(
   "/google-login",
   async (authResult) => {
     try {
       if (authResult["code"]) {
         const result = await googleAuth(authResult["code"]);
+        console.log(result)
         return result.data;
       }
     } catch (error) {
       console.error("ERROR in googleLogin", error);
     }
-  }
-);
+  });
 
-export const checkAuth = createAsyncThunk("/checkauth", async (token) => {
+export const checkAuth = createAsyncThunk("/checkauth", async () => {
   try {
     const response = await axios.get("/api/v1/user/profile");
     return response.data;
   } catch (error) {
-    console.error("checkAuth error", error);
+    console.log("checkAuth error", error);
   }
 });
 
@@ -118,8 +117,8 @@ const authSlice = createSlice({
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.success ? action.payload.data : null;
-        state.isAuthenticated = action.payload.success;
+        state.user = action.payload?.success ? action.payload.data : null;
+        state.isAuthenticated = action.payload?.success;
       })
       .addCase(checkAuth.rejected, (state) => {
         state.isLoading = false;

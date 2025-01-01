@@ -148,6 +148,18 @@ const getSingleCertificate = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, data, "Successfully fetch data"))
 })
 
+const getCertificateById = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    throw new ApiError(400, "Please provide Id")
+  }
+  const data = await Certificate.findById(id);
+  if (!data) {
+    throw new ApiError(404, "Certificate not found!!")
+  }
+  return res.status(200).json(new ApiResponse(200, data, "Successfully fetch data"))
+})
+
 export {
   createCertificate,
   getCertificate,
@@ -155,4 +167,5 @@ export {
   editCertificateImg,
   deleteCertificate,
   getSingleCertificate,
+  getCertificateById
 }

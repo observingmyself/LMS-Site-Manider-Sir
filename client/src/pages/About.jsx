@@ -28,7 +28,7 @@ const About = () => {
     try{
       const data = await axios.get('/api/v1/team')
       if(data.data.success){
-        console.log(data.data)
+        // console.log(data.data)
         setTeamMembers(data.data.data)
       }
       else{
@@ -216,7 +216,7 @@ const About = () => {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-[40vh] object-cover object-top"
+                    className="w-full h-[50vh] md:h-[40vh] object-cover object-top"
                   />
                   <div className="absolute bg-white bottom-0 left-0 right-0 bg-gradient-to-t to-transparent p-4">
                     <h3 className="text-black group-hover:text-[#fd0c0c] font-bold text-lg">
