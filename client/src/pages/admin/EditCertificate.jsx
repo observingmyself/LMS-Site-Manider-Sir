@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -14,6 +14,21 @@ const EditCertificate = () => {
 
     const {id} = useParams();
     // console.log(id)
+    const getSingleCourse = async () => {
+      try{
+        const data = await axios.get(`/api/v1/certificate/single-certificate/${id}`)
+        if(data.data.success){
+          setCourse(data.data.data.course)
+          setName(data.data.data.name)
+          setDob(data.data.data.DOB)
+        }
+      }catch(e){
+        console.log('err in getting single course',e)
+      }
+    }    
+    useEffect(()=>{
+      getSingleCourse();
+    },[])
 
     const handleImageUpdate = async (e) => {
         e.preventDefault();
@@ -37,8 +52,24 @@ const EditCertificate = () => {
         }
     }
 
-    const handleContentUpdate = () => {
-
+    const handleContentUpdate = async (e) => {
+      e.preventDefault();
+      setIsContentLoading(true);
+      try{
+      const data = await axios.patch(`/api/v1/certificate/update/${id}`,{
+        name : name,
+        DOB : dob,
+        course : course
+      });
+      if(data.data.success){
+        toast.success('Certificate Content Updated')
+      }
+        
+      }catch(e){
+        console.log('err in updating course',e)
+      }finally{
+        setIsContentLoading(false)
+      }
     }
 
     const handleFileChange = (e) => {
@@ -105,10 +136,26 @@ const EditCertificate = () => {
               Update DOB
             </label>
             <input
-              type="text"
+              type="date"
               id="memberposition"
               value={dob}
               onChange={(e) => setDob(e.target.value)}
+              placeholder="Enter DOB"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="course"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Update DOB
+            </label>
+            <input
+              type="text"
+              id="course"
+              value={course}
+              onChange={(e) => setCourse(e.target.value)}
               placeholder="Enter DOB"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />

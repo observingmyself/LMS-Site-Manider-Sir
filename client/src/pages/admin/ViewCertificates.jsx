@@ -12,7 +12,7 @@ const ViewCertificates = () => {
       const data = await axios.get("/api/v1/certificate");
       if (data) {
         setCertificates(data.data.data.data);
-        console.log(data.data.data.data)
+        // console.log(data.data.data.data)
     }
     } catch (e) {
       console.log("Error in getting certificates", e);

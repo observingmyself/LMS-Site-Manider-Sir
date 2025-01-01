@@ -156,14 +156,30 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p onClick={()=>navigate('/admin/dashboard/allCourses')} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p
+                  onClick={() => navigate("/admin/dashboard/allCourses")}
+                  className="cursor-pointer hover:text-blue-600 flex items-center justify-left"
+                >
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Courses
                 </p>
-                <p onClick={()=>navigate('/admin/dashboard/add-course')} className="cursor-pointer hover:text-blue-600 mt-2">
+                <p
+                  onClick={() => navigate("/admin/dashboard/add-course")}
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                >
                   {" "}
                   <i className="fa-solid  fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   Insert New Courses
+                </p>
+                <p
+                  onClick={() =>
+                    navigate("/admin/dashboard/purchased-transaction")
+                  }
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                >
+                  {" "}
+                  <i className="fa-solid  fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
+                  Purchased Transactions
                 </p>
               </div>
             </div>
@@ -232,11 +248,19 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p onClick={()=>navigate('/admin/dashboard/upload-certificate')} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p
+                  onClick={() =>
+                    navigate("/admin/dashboard/upload-certificate")
+                  }
+                  className="cursor-pointer hover:text-blue-600 flex items-center justify-left"
+                >
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   Upload Certificate
                 </p>
-                <p onClick={()=>navigate('/admin/dashboard/view-certificate')} className="cursor-pointer hover:text-blue-600 mt-2">
+                <p
+                  onClick={() => navigate("/admin/dashboard/view-certificate")}
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                >
                   {" "}
                   <i className="fa-solid  fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Certificates
@@ -271,7 +295,10 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p onClick={()=>navigate('/admin/dashboard/allUsers')} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p
+                  onClick={() => navigate("/admin/dashboard/allUsers")}
+                  className="cursor-pointer hover:text-blue-600 flex items-center justify-left"
+                >
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Registration
                 </p>
@@ -339,7 +366,10 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p onClick={()=>navigate('/admin/dashboard/contact')} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p
+                  onClick={() => navigate("/admin/dashboard/contact")}
+                  className="cursor-pointer hover:text-blue-600 flex items-center justify-left"
+                >
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Contacts
                 </p>
@@ -407,11 +437,17 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p onClick={()=>navigate('/admin/dashboard/blog')} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p
+                  onClick={() => navigate("/admin/dashboard/blog")}
+                  className="cursor-pointer hover:text-blue-600 flex items-center justify-left"
+                >
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Blogs
                 </p>
-                <p onClick={()=>navigate('/admin/dashboard/add-blog')} className="cursor-pointer hover:text-blue-600 mt-2">
+                <p
+                  onClick={() => navigate("/admin/dashboard/add-blog")}
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                >
                   {" "}
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   Insert New Blogs
@@ -453,7 +489,10 @@ const AdminSidebar = ({ isSidebarOpen }) => {
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Posts
                 </p>
-                <p className="cursor-pointer hover:text-blue-600 mt-2" onClick={()=>navigate('/admin/dashboard/news-form')}>
+                <p
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                  onClick={() => navigate("/admin/dashboard/news-form")}
+                >
                   {" "}
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   Insert New Posts
@@ -488,11 +527,17 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p onClick={()=>navigate('/admin/dashboard/team-members')} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p
+                  onClick={() => navigate("/admin/dashboard/team-members")}
+                  className="cursor-pointer hover:text-blue-600 flex items-center justify-left"
+                >
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Team Members
                 </p>
-                <p onClick={()=>navigate('/admin/dashboard/add-member')} className="cursor-pointer hover:text-blue-600 mt-2">
+                <p
+                  onClick={() => navigate("/admin/dashboard/add-member")}
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                >
                   {" "}
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   Insert New Team Member
