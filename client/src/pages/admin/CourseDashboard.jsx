@@ -5,15 +5,20 @@ import { useNavigate } from "react-router";
 const CourseDashboard = () => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const getAllCourses = async () => {
+  const getAllCourses = async (page = 1) => {
     try {
-      const data = await axios.get("/api/v1/course/courses");
+      const data = await axios.get(`/api/v1/course/courses?page=${page}`);
       if (data.data.success) {
+        console.log(data)
         setCourses(data.data.data.data);
+        setPages(data.data.data.Pages);
+        setCurrentPage(page);
       }
     } catch (e) {
-      console.log("err in getting courses", e);
+      console.log("Error in getting courses", e);
     }
   };
 
@@ -27,10 +32,10 @@ const CourseDashboard = () => {
         `/api/v1/course/togglePublish/${id}?publish=${!publish}`
       );
       if (data) {
-        getAllCourses();
+        getAllCourses(currentPage); // Refresh current page after toggling publish
       }
     } catch (e) {
-      console.log("err in publishing", e);
+      console.log("Error in publishing", e);
     }
   };
 
@@ -87,7 +92,12 @@ const CourseDashboard = () => {
                     )}
                   </td>
                   <td className="p-2 sm:p-4 border border-gray-300">
-                    <button onClick={()=>navigate(`/admin/dashboard/update-course/${course._id}`)} className="text-blue-500 hover:text-blue-700 transition text-xs sm:text-sm">
+                    <button
+                      onClick={() =>
+                        navigate(`/admin/dashboard/update-course/${course._id}`)
+                      }
+                      className="text-blue-500 hover:text-blue-700 transition text-xs sm:text-sm"
+                    >
                       Edit
                     </button>
                   </td>
@@ -95,6 +105,27 @@ const CourseDashboard = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination Buttons */}
+        <div className="flex justify-center mt-6">
+          <nav>
+            <ul className="flex list-none">
+              {Array.from({ length: pages }, (_, index) => (
+                <li
+                  key={index + 1}
+                  className={`mx-1 px-3 py-1 border rounded-md cursor-pointer ${
+                    currentPage === index + 1
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-800"
+                  }`}
+                  onClick={() => getAllCourses(index + 1)}
+                >
+                  {index + 1}
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
