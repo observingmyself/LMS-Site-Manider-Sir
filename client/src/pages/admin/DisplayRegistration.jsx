@@ -4,12 +4,15 @@ import { toast } from "react-toastify";
 
 const DisplayRegistration = () => {
   const [registrations, setRegistrations] = useState([]);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const getRegistration = async () => {
+  const getRegistration = async (page = 1) => {
     try {
-      const { data } = await axios.post("/api/v1/register/getData");
+      const { data } = await axios.post("/api/v1/register/getData", { page });
       if (data) {
-        setRegistrations(data.data.data);
+        setRegistrations(data.data.data); // Assuming the data structure
+        setPages(data.data.pages); // Assuming the pagination details
       }
     } catch (err) {
       console.log(err);
@@ -21,14 +24,14 @@ const DisplayRegistration = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    try{
-      const data = await axios.delete(`/api/v1/register/${id}`)
+    try {
+      const data = await axios.delete(`/api/v1/register/${id}`);
       getRegistration();
-      toast.success("Registration deleted")
-    }catch(err){
-      console.log(err)
+      toast.success("Registration deleted");
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   return (
     <div className="px-4 lg:px-8 h-screen w-screen ">
@@ -103,6 +106,30 @@ const DisplayRegistration = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Buttons */}
+      <div className="flex justify-center mt-6">
+        <nav>
+          <ul className="flex list-none">
+            {Array.from({ length: pages }, (_, index) => (
+              <li
+                key={index + 1}
+                className={`mx-1 px-3 py-1 border rounded-md cursor-pointer ${
+                  currentPage === index + 1
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+                onClick={() => {
+                  setCurrentPage(index + 1);
+                  getRegistration(index + 1);
+                }}
+              >
+                {index + 1}
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   );

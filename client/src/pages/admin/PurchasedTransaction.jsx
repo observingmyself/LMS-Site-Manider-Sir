@@ -1,24 +1,28 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const PurchasedTransaction = () => {
+  const [payments, setPayments] = useState([]);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
-    const [payments,setPayments] = useState();
-    
-    const getTransaction = async () => {
-        try{
-            const data = await axios.get('/api/v1/payment')
-            if(data){
-                console.log(data.data.data)
-                setPayments(data.data.data)
-            }
-        }catch(e){
-            console.log('err in getting transaction',e)
-        }
+  const getTransaction = async (page = 1) => {
+    try {
+      const data = await axios.get(`/api/v1/payment?page=${page}`);
+      if (data.data.success) {
+        console.log(data)
+        setPayments(data.data.data.data); // Assuming the data structure
+        setPages(data.data.data.pages); // Assuming the pagination details
+        setCurrentPage(page);
+      }
+    } catch (e) {
+      console.log("Error in getting transaction", e);
     }
-    useEffect(()=>{
-        getTransaction();
-    },[])
+  };
+
+  useEffect(() => {
+    getTransaction();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 sm:p-6">
@@ -60,16 +64,39 @@ const PurchasedTransaction = () => {
                     </span>
                   </td>
                   <td className="p-2 sm:p-4 border border-gray-300">
-                    <span className='text-gray-700 text-xs md:text-sm'> {course.paymentId}</span>
+                    <span className="text-gray-700 text-xs md:text-sm">
+                      {course.paymentId}
+                    </span>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
+        {/* Pagination Buttons */}
+        <div className="flex justify-center mt-6">
+          <nav>
+            <ul className="flex list-none">
+              {Array.from({ length: pages }, (_, index) => (
+                <li
+                  key={index + 1}
+                  className={`mx-1 px-3 py-1 border rounded-md cursor-pointer ${
+                    currentPage === index + 1
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-800"
+                  }`}
+                  onClick={() => getTransaction(index + 1)}
+                >
+                  {index + 1}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   );
-}
+};
 
-export default PurchasedTransaction
+export default PurchasedTransaction;
