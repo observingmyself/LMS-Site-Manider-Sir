@@ -38,13 +38,14 @@ const getCertificate = asyncHandler(async (req, res) => {
   const sortBy = req.query.sortBy || "createdAt";
   const order = req.query.order === "asc" ? 1 : -1;
   const skip = (page - 1) * limit;
+  const totalCount = await Certificate.countDocuments();
   const data = await Certificate.find().sort({ [sortBy]: order }).skip(skip).limit(limit);
   if (!data) {
     throw new ApiError(404, "No courses found")
   }
   // const totalCount = await Certificate.countDocuments();
   return res.status(200)
-    .json(new ApiResponse(200, { data, currentPage: page }, "successfully fetch data"));
+    .json(new ApiResponse(200, { data, currentPage: page, Pages: Math.ceil(totalCount / limit) }, "successfully fetch data"));
 })
 
 const editCertificate = asyncHandler(async (req, res) => {

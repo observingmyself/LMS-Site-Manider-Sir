@@ -20,11 +20,16 @@ const registerForm = asyncHandler(async (req, res) => {
 })
 
 const getRegisterData = asyncHandler(async (req, res) => {
-  const data = await register.find();
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 10;
+  const sortBy = req.query.sortBy || "createdAt";
+  const order = req.query.order === "asc" ? 1 : -1;
+  const skip = (page - 1) * limit;
   const totalCount = await register.countDocuments;
+  const data = await register.find().sort({ [sortBy]: order }).skip(skip).limit(limit);
   return res
     .status(200)
-    .json(new ApiResponse(200, { data, totalCount }, "Data Fetched"))
+    .json(new ApiResponse(200, { data, currentPage: page, Pages: Math.ceil(totalCount / limit) }, "Data Fetched"))
 })
 
 const deleteRegisterData = asyncHandler(async (req, res) => {

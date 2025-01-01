@@ -48,7 +48,7 @@ const getCourse = asyncHandler(async (req, res) => {
   }
   const totalCount = await Course.countDocuments();
   return res.status(200)
-    .json(new ApiResponse(200, { data, currentPage: page, totalCount: Math.ceil(totalCount / limit) }, "successfully fetch data"));
+    .json(new ApiResponse(200, { data, currentPage: page, Pages: Math.ceil(totalCount / limit) }, "successfully fetch data"));
 })
 
 const getSingleCourse = asyncHandler(async (req, res) => {
@@ -373,11 +373,18 @@ const deleteCourse = asyncHandler(async (req, res) => {
 
 // Show Publish Course 
 const getPublishCourse = asyncHandler(async (req, res) => {
-  const courses = await Course.find({ isPublish: true })
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 12;
+  const sortBy = req.query.sortBy || "createdAt";
+  const order = req.query.order === "asc" ? 1 : -1;
+  const skip = (page - 1) * limit;
+  const totalCount = await Course.find({ isPublish: true });
+  const courses = await Course.find({ isPublish: true }).sort({ [sortBy]: order }).skip(skip).limit(limit);
   if (courses.length === 0) {
     throw new ApiError(404, "No Publish Course Found")
   }
-  return res.status(200).json(new ApiResponse(200, courses, "fetch Publish course"))
+
+  return res.status(200).json(new ApiResponse(200, { courses, currentPage: page, Pages: Math.ceil(totalCount / limit) }, "fetch Publish course"))
 })
 
 // Publish and unPublish toogle Button

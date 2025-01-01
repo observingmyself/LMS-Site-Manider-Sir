@@ -69,7 +69,7 @@ const getLatestNews = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, { news, totalCount, currentPage: page, totalPages: Math.ceil(totalCount / limit) }, "fecth news scuccessfully"))
+    .json(new ApiResponse(200, { news, totalCount, currentPage: page, Pages: Math.ceil(totalCount / limit) }, "fecth news scuccessfully"))
 })
 
 // Read Single News

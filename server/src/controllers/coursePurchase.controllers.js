@@ -134,11 +134,17 @@ const getCourseDetailWithStatusSuccess = asyncHandler(async (req, res) => {
 })
 
 const getAllPurchaseCourse = asyncHandler(async (req, res) => {
-  const data = await CoursePurchase.find({ paymentStatus: "Completed" }).populate("courseId")
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 20;
+  const skip = (page - 1) * limit;
+  const sortBy = req.query.sortBy || "createdAt";
+  const order = req.query.order === "asc" ? 1 : -1;
+  const data = await CoursePurchase.find({ paymentStatus: "Completed" }).sort({ [sortBy]: order }).skip(skip).limit(limit).populate("courseId")
   if (data.length === 0) {
     throw new ApiError(404, "No Purchase course found")
   }
-  return res.status(200).json(new ApiResponse(200, data, "purchased data fetch"))
+  const totalCount = await CoursePurchase.countDocuments({ paymentStatus: "Completed" });
+  return res.status(200).json(new ApiResponse(200, { data, pages: Math.ceil(totalCount / limit), currentPage: page }, "purchased data fetch"))
 })
 
 export {

@@ -51,7 +51,7 @@ const getForm = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {
       contacts,
       currentPage: page,
-      totalPage: Math.ceil(totalCount / limit)
+      Pages: Math.ceil(totalCount / limit)
     }, "fetch form successfully"))
 })
 

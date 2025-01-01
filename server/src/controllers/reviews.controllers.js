@@ -40,7 +40,7 @@ const getReview = asyncHandler(async (req, res) => {
   const totalCount = await Review.countDocuments();
   return res
     .status(200)
-    .json(new ApiResponse(200, { data, currentPage: page, totalPage: Math.ceil(totalCount / limit) }, "Successfully fetch data"))
+    .json(new ApiResponse(200, { data, currentPage: page, Pages: Math.ceil(totalCount / limit) }, "Successfully fetch data"))
 })
 
 const deleteReview = asyncHandler(async (req, res) => {

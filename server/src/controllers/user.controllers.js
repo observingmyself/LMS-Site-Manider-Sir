@@ -199,12 +199,12 @@ const getAllUser = asyncHandler(async (req, res) => {
   const sortBy = req.query.sortBy || "createdAt";
   const order = req.query.order === "desc" ? -1 : 1;
   const skip = (page - 1) * limit;
-  const totalcount = Math.ceil(await User.countDocuments() / limit);
+  const totalcount = await User.countDocuments();
   const users = await User.find().sort({ [sortBy]: order }).skip(skip).limit(limit);
   if (!users) {
     throw new ApiError(404, "No User found");
   }
-  return res.status(200).json(new ApiResponse(200, { users, pages: totalcount }, "fetch all users"));
+  return res.status(200).json(new ApiResponse(200, { users, currentPage: page, Pages: Math.ceil(totalcount / limit) }, "fetch all users"));
 });
 
 const updateProfile = asyncHandler(async (req, res) => {
