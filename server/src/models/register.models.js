@@ -53,6 +53,6 @@ const registerSchema = new mongoose.Schema({
     trim: true,
     required: true,
   }
-})
+}, { timestamps: true })
 
 export const register = mongoose.model("register", registerSchema);
