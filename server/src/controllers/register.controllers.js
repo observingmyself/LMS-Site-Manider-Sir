@@ -26,7 +26,7 @@ const getRegisterData = asyncHandler(async (req, res) => {
   const sortBy = req.query.sortBy || "createdAt";
   const order = req.query.order === "asc" ? 1 : -1;
   const skip = (page - 1) * limit;
-  const totalCount = await register.countDocuments;
+  const totalCount = await register.countDocuments();
   const data = await register.find().sort({ [sortBy]: order }).skip(skip).limit(limit);
   return res
     .status(200)
