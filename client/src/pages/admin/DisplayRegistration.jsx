@@ -9,10 +9,11 @@ const DisplayRegistration = () => {
 
   const getRegistration = async (page = 1) => {
     try {
-      const { data } = await axios.post("/api/v1/register/getData", { page });
+      const { data } = await axios.post(`/api/v1/register/getData?page=${page}`);
       if (data) {
+        console.log(data)
         setRegistrations(data.data.data); // Assuming the data structure
-        setPages(data.data.pages); // Assuming the pagination details
+        setPages(data.data.Pages); // Assuming the pagination details
       }
     } catch (err) {
       console.log(err);
@@ -55,6 +56,7 @@ const DisplayRegistration = () => {
               <th className="px-4 py-3 border">Address</th>
               <th className="px-4 py-3 border">City</th>
               <th className="px-4 py-3 border">State</th>
+              <th className="px-4 py-3 border">RegisteredOn</th>
               <th className="px-4 py-3 border">Delete</th>
             </tr>
           </thead>
