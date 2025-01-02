@@ -36,7 +36,7 @@ import UpdateTeamMemberForm from "./pages/admin/UpdateTeamMemberForm";
 import TeamMemberAddForm from "./pages/admin/TeamMemberAddForm";
 import CheckoutPayment from "./components/payment/Checkout";
 import CourseDetail from "./pages/CourseDetail";
-import CoursePage from './pages/CoursePage'
+import CoursePage from "./pages/CoursePage";
 import DisplayRegisterUser from "./pages/admin/DisplayRegisterUser";
 import ForgetPasswordPage from "./components/user/ForgetPasswordPage";
 import ResetPassword from "./components/user/ResetPassword";
@@ -46,6 +46,8 @@ import UploadCertificate from "./pages/admin/UploadCertificate";
 import ViewCertificates from "./pages/admin/ViewCertificates";
 import EditCertificate from "./pages/admin/EditCertificate";
 import PurchasedTransaction from "./pages/admin/PurchasedTransaction";
+import Profile from "./pages/Profile";
+import ChangePasswordPage from "./pages/ChaangePasswordPage";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -90,8 +92,8 @@ function App() {
           >
             <Route path="" element={<HeroSection />} />
             <Route path="login" element={<GoogleAuthWrapper />} />
-            <Route path="forget-password" element={<ForgetPasswordPage/>} />
-            <Route path="reset-password/:token" element={<ResetPassword/>} />
+            <Route path="forget-password" element={<ForgetPasswordPage />} />
+            <Route path="reset-password/:token" element={<ResetPassword />} />
             <Route path="register" element={<Register />} />
             <Route path="news/:id" element={<SinglePageLatestNews />} />
             <Route path="blog" element={<Blog />} />
@@ -102,6 +104,8 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="registration-form" element={<RegistrationForm />} />
             <Route path="payment" element={<CheckoutPayment />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="change-password" element={<ChangePasswordPage />} />
           </Route>
 
           {/* Admin Dashboard and Nested Routes */}
@@ -139,23 +143,25 @@ function App() {
             <Route path="contact" element={<DisplayContact />} />
 
             {/* Courses routes */}
-            <Route path="add-course" element={<NewCourseAddForm/>} />
-            <Route path="allCourses" element={<CourseDashboard/>} />
-            <Route path="update-course/:id" element={<UpdateCourse/>} />
-            <Route path="purchased-transaction" element={<PurchasedTransaction/>} />
+            <Route path="add-course" element={<NewCourseAddForm />} />
+            <Route path="allCourses" element={<CourseDashboard />} />
+            <Route path="update-course/:id" element={<UpdateCourse />} />
+            <Route
+              path="purchased-transaction"
+              element={<PurchasedTransaction />}
+            />
 
             {/* certificate routes */}
-            <Route path="upload-certificate" element={<UploadCertificate/>} />
-            <Route path="view-certificate" element={<ViewCertificates/>} />
-            <Route path="edit-certificate/:id" element={<EditCertificate/>} />
+            <Route path="upload-certificate" element={<UploadCertificate />} />
+            <Route path="view-certificate" element={<ViewCertificates />} />
+            <Route path="edit-certificate/:id" element={<EditCertificate />} />
 
             {/* Register user */}
-            <Route path="allUsers" element={<DisplayRegisterUser/>} />
+            <Route path="allUsers" element={<DisplayRegisterUser />} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
         </Routes>
         <ScrollToTopButton />
-        
       </div>
     </>
   );
