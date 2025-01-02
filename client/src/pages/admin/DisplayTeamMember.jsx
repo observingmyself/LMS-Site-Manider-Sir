@@ -64,11 +64,7 @@ const DisplayTeamMember = () => {
               >
                 <td className="px-4 py-2 border text-center">{index + 1}</td>
                 <td className="px-4 py-2 border">
-                  <img
-                    src={member.image}
-                    alt=""
-                    className="mx-auto h-[90px]"
-                  />
+                  <img src={member.image} alt="" className="mx-auto h-[90px]" />
                 </td>
                 <td claxssName="px-4 py-2 border">{member.name}</td>
                 <td claxssName="px-4 py-2 border">{member.position}</td>
@@ -99,12 +95,12 @@ const DisplayTeamMember = () => {
                 </td>
                 <td className="px-4 py-2 border">
                   <button
-                    className="px-2 py-2 bg-blue-500 hover:bg-blue-700 text-white mx-auto rounded-sm"
+                    className="px-2 py-2 flex items-center justify-center hover:scale-150 transition-all duration-100 text-white mx-auto rounded-sm"
                     onClick={() =>
                       navigate(`/admin/dashboard/updateTeam/${member._id}`)
                     }
                   >
-                    Update
+                    <box-icon name="edit-alt"></box-icon>
                   </button>
                 </td>
               </tr>

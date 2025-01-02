@@ -67,7 +67,6 @@ const HeroSection = () => {
       <Review />
       <NumberingCounter />
       <Banner />
-      <SubscriptionEmailAcceptor />
     </>
   );
 };

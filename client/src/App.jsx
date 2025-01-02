@@ -48,6 +48,10 @@ import EditCertificate from "./pages/admin/EditCertificate";
 import PurchasedTransaction from "./pages/admin/PurchasedTransaction";
 import Profile from "./pages/Profile";
 import ChangePasswordPage from "./pages/ChaangePasswordPage";
+import AddSyllabus from "./pages/admin/coursefiles/AddSyllabus";
+import AddEbook from "./pages/admin/coursefiles/AddEbook";
+import AddPPT from "./pages/admin/coursefiles/AddPPT";
+import CertificateAuthentication from "./pages/CertificateAuthentication";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -97,6 +101,10 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="news/:id" element={<SinglePageLatestNews />} />
             <Route path="blog" element={<Blog />} />
+            <Route
+              path="certificate-authentication"
+              element={<CertificateAuthentication />}
+            />
             <Route path="blog/:id" element={<BlogSingle />} />
             <Route path="contact" element={<ContactUs />} />
             <Route path="courses" element={<CoursePage />} />
@@ -150,6 +158,16 @@ function App() {
               path="purchased-transaction"
               element={<PurchasedTransaction />}
             />
+            <Route path="add-course" element={<NewCourseAddForm />} />
+            <Route path="allCourses" element={<CourseDashboard />} />
+            <Route path="update-course/:id" element={<UpdateCourse />} />
+            <Route
+              path="purchased-transaction"
+              element={<PurchasedTransaction />}
+            />
+            <Route path="add-syllabus" element={<AddSyllabus />} />
+            <Route path="add-ebook" element={<AddEbook />} />
+            <Route path="add-ppt" element={<AddPPT />} />
 
             {/* certificate routes */}
             <Route path="upload-certificate" element={<UploadCertificate />} />

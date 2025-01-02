@@ -87,6 +87,13 @@ const DisplayRegistration = () => {
                 <td className="px-4 py-2 border">{registration.city}</td>
                 <td className="px-4 py-2 border">{registration.State}</td>
                 <td className="px-4 py-2 border">
+                  {new Date(registration.createdAt).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
+                </td>
+                <td className="px-4 py-2 border">
                   <button
                     onClick={() => handleDelete(registration._id)}
                     className="flex items-center justify-center group text-white mx-auto rounded-sm"

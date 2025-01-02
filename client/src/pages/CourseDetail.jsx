@@ -8,6 +8,11 @@ function CourseDetail() {
   const [singleCourse, setSingleCourse] = useState({});
   const [enrolledStudent, setEnrolledStudent] = useState([]);
   const [purchased, setPurchased] = useState(false);
+  const [ppts,setPpts] = useState([])
+  const [ebooks,setEbooks] = useState([])
+  const [isSyllabusOpen, setSyllabusOpen] = useState(false);
+  const [isLectureNotesOpen, setLectureNotesOpen] = useState(false);
+  const [isEbookOpen, setEbookOpen] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -16,7 +21,7 @@ function CourseDetail() {
     try {
       const data = await axios.get(`/api/v1/course/singlecourse/${id}`);
       if (data.data.success) {
-        console.log(data.data.data);
+        // console.log(data.data.data);
         setSingleCourse(data.data.data);
         setEnrolledStudent(data.data.data.enrolledStudent);
       }
@@ -37,6 +42,35 @@ function CourseDetail() {
       }
     });
   });
+
+
+  // get ppts 
+  const getPpts = async () => {
+    try{
+      const data = await axios.get(`/api/v1/course/ppt/${id}`)
+      if(data){
+        setPpts(data.data.data.ppt)
+        // console.log(data)
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
+  const getEbooks = async () => {
+    try{
+      const data = await axios.get(`/api/v1/course/Ebook/${id}`)
+      if(data){
+        setEbooks(data.data.data.ebooks)
+        // console.log(data)
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
+  useEffect(()=>{
+    getPpts();
+    getEbooks();
+  },[id])
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -231,46 +265,94 @@ function CourseDetail() {
             </>
           ) : (
             <>
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                  Download Resources
-                </h2>
-                <ul className="space-y-4">
-                  <li className="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-md">
-                    <span className="font-semibold text-gray-800">
-                      Course Syllabus
-                    </span>
-                    <a
-                      href="#"
-                      className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
-                      download
-                    >
-                      Download
-                    </a>
-                  </li>
-                  <li className="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-md">
-                    <span className="font-semibold text-gray-800">
-                      Lecture Notes (PDF)
-                    </span>
-                    <a
-                      href="#"
-                      className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
-                      download
-                    >
-                      Download
-                    </a>
-                  </li>
-                  <li className="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-md">
-                    <span className="font-semibold text-gray-800">eBook</span>
-                    <a
-                      href="#"
-                      className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
-                      download
-                    >
-                      Download
-                    </a>
-                  </li>
-                </ul>
+              <div className="space-y-4">
+                <div
+                  className="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-md cursor-pointer"
+                  onClick={() => setSyllabusOpen(!isSyllabusOpen)}
+                >
+                  <span className="font-semibold text-gray-800">
+                    Course Syllabus
+                  </span>
+                  <span>{isSyllabusOpen ? "-" : "+"}</span>
+                </div>
+                {isSyllabusOpen && (
+                  <ul className="space-y-2 mt-2 pl-6">
+                    {singleCourse.syllabus.map((sy) => (
+                      <li className="flex items-center justify-between bg-gray-200 p-2 rounded-lg">
+                        <span className="text-gray-800">{sy.fileName}</span>
+                        <a
+                          href={sy.fileUrl}
+                          className="bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-600 transition duration-300"
+                          download
+                        >
+                          Download
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Lecture Notes Dropdown */}
+              <div className="space-y-4 mt-4">
+                <div
+                  className="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-md cursor-pointer"
+                  onClick={() => setLectureNotesOpen(!isLectureNotesOpen)}
+                >
+                  <span className="font-semibold text-gray-800">
+                    Lecture Notes (PDF)
+                  </span>
+                  <span>{isLectureNotesOpen ? "-" : "+"}</span>
+                </div>
+                {isLectureNotesOpen && (
+                  <ul className="space-y-2 mt-2 pl-6">
+                    {ebooks?.map((ebook) => (
+                      <li
+                        key={ebook._id}
+                        className="flex items-center justify-between bg-gray-200 p-2 rounded-lg"
+                      >
+                        <span className="text-gray-800">{ebook.title}</span>
+                        <a
+                          href={ebook.ebookUrl}
+                          className="bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-600 transition duration-300"
+                          download
+                        >
+                          Download
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* eBook Dropdown */}
+              <div className="space-y-4 mt-4">
+                <div
+                  className="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-md cursor-pointer"
+                  onClick={() => setEbookOpen(!isEbookOpen)}
+                >
+                  <span className="font-semibold text-gray-800">eBook</span>
+                  <span>{isEbookOpen ? "-" : "+"}</span>
+                </div>
+                {isEbookOpen && (
+                  <ul className="space-y-2 mt-2 pl-6">
+                    {ppts?.map((ppt) => (
+                      <li
+                        key={ppt._id}
+                        className="flex items-center justify-between bg-gray-200 p-2 rounded-lg"
+                      >
+                        <span className="text-gray-800">{ppt.title}</span>
+                        <a
+                          href={ppt.pptUrl}
+                          className="bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-600 transition duration-300"
+                          download
+                        >
+                          Download
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </>
           )}

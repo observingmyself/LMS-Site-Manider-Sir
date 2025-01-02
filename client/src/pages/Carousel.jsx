@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-
-import "slick-carousel/slick/slick-theme.css";
-import CarouselImage from "../assets/images/htmlcssjs.jpg";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 
 const Carousel = () => {
   const [courses, setCourses] = useState([]);
@@ -13,15 +12,15 @@ const Carousel = () => {
 
   const getAllCourses = async () => {
     try {
-      const data = await axios.get("/api/v1/course");
-      console.log(data.data.data.courses);
-      if (data.data.success) {
-        setCourses(data.data.data.courses);
+      const response = await axios.get("/api/v1/course");
+      if (response.data.success) {
+        setCourses(response.data.data.courses);
       }
-    } catch (e) {
-      console.log("err in gettting courses", e);
+    } catch (error) {
+      console.error("Error in getting courses:", error);
     }
   };
+
   useEffect(() => {
     getAllCourses();
   }, []);
@@ -30,26 +29,17 @@ const Carousel = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 3, // You can adjust this number as needed
     slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    cssEase: "ease-in-out",
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1024, // Tablet screen
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 600,
+        breakpoint: 600, // Mobile screen
         settings: {
           slidesToShow: 1,
         },
@@ -58,20 +48,20 @@ const Carousel = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-10 my-10">
+    <div className="relative max-w-7xl mx-auto py-10 my-10">
       <h2 className="text-center text-4xl text-[#1D2027] font-semibold">
         Featured Courses
       </h2>
       <p className="text-center w-full my-4 text-slate-600 px-10">
-        Our courses have been designed by experts to help you develop a
-        different set of skills to your competition, to sharpen your focus,
-        build confidence, establish communication skills, and develop a unique
-        network of contacts. Our courses are compatible with industry – many
-        schools and colleges simply do not do this.
+        Our courses are designed by experts to help you sharpen your focus,
+        build confidence, and develop essential skills to stay ahead in the
+        industry.
       </p>
+
+      {/* Slick Carousel Wrapper */}
       <Slider {...settings}>
-        {courses?.map((course) => (
-          <div key={course._id} className="p-5">
+        {courses.map((course) => (
+          <div key={course._id} className="px-5" style={{ flex: "0 0 auto" }}>
             <div className="bg-white shadow-lg hover:shadow-2xl transition-all duration-300 rounded-lg overflow-hidden relative">
               {/* Image Section */}
               <div className="w-full h-56">
@@ -89,23 +79,23 @@ const Carousel = () => {
 
               {/* Course Info */}
               <div className="p-5">
-                {/* Category Tag */}
                 <p className="text-xs p-2 rounded-full text-[#DF5E7E] ml-3 bg-[#FCDFE4] inline">
                   {course.category}
                 </p>
-                {/* Course Title */}
-                <h3 className="text-xl mt-3 font-semibold text-[#1D2027] hover:text-[#FE0000] cursor-pointer">
+                <h3
+                  className="text-xl mt-3 font-semibold text-[#1D2027] hover:text-[#FE0000] cursor-pointer"
+                  onClick={() => navigate(`/course-detail/${course._id}`)}
+                >
                   {course.courseTitle}
                 </h3>
-                {/* Course Stats */}
-                <div className="flex items-center gap-4 text-sm text-slate-600 mt-2">
+                <div className="flex justify-between items-center gap-4 text-sm text-slate-600 mt-2">
                   <div className="flex items-center gap-1">
-                    <i className="fa-regular fa-file text-[#FE0000]"></i>
-                    <span>21 Lessons</span>
+                    <span className="font-semibold">Instructor {">"}</span>
+                    <span>{course.instructor}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <i className="fa-solid fa-user text-[#FE0000]"></i>
-                    <span> {course.enrolledStudent.length} Student</span>
+                    <span>+{course.enrolledStudent.length > 100 ? course.enrolledStudent.length : 100} Student</span>
                   </div>
                 </div>
               </div>

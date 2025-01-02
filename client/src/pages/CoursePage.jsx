@@ -12,7 +12,7 @@ function CoursePage() {
     try {
       const data = await axios.get("/api/v1/course");
       if (data.data.success) {
-        setCourse(data.data.data);
+        setCourse(data.data.data.courses);
       }
     } catch (e) {
       console.log("Error in getting courses", e);
@@ -40,7 +40,7 @@ function CoursePage() {
                 alt={course.courseTitle}
                 className="w-full h-48 object-cover rounded-lg mb-4 transition-all duration-300 hover:opacity-80"
               />
-              <div className="absolute bottom-4 left-4 bg-white text-[#FE0000] text-sm font-semibold p-2 rounded-lg">
+              <div className="absolute bottom-4 left-4 bg-[#DF5E7E] text-[#fff] text-sm font-semibold p-2 rounded-lg">
                 {course.category}
               </div>
             </div>

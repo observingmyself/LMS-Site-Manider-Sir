@@ -1,45 +1,46 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
 const DisplayContact = () => {
-  
-    const [contact,setContact] = useState([])
+  const [contacts, setContacts] = useState([]);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
-    const getContact = async() => {
-        try{    
-            const data = await axios.post('/api/v1/contact')
-            if(data){
-                setContact(data.data.data.contacts)
-                // console.log(data)
-            }
-        }catch(err){
-            console.log(err)
-        }
+  const getContacts = async (page = 1) => {
+    try {
+      const data = await axios.post(`/api/v1/contact?page=${page}`);
+      if (data) {
+        setContacts(data.data.data.contacts);
+        setPages(data.data.data.Pages);
+        setCurrentPage(page);
+      }
+    } catch (err) {
+      console.log(err);
     }
-    useEffect(()=>{
-        getContact();
-    },[])
+  };
 
+  useEffect(() => {
+    getContacts();
+  }, []);
 
-    const handleDelete = async (id) => {
-        try{
-            const data = await axios.delete(`/api/v1/contact/${id}`)
-            if(data){
-                getContact();
-                toast.success('Query Deleted')
-            }
-        }catch(err){
-            console.log(err)
-        }
+  const handleDelete = async (id) => {
+    try {
+      const data = await axios.delete(`/api/v1/contact/${id}`);
+      if (data) {
+        getContacts(currentPage);
+        toast.success("Query Deleted");
+      }
+    } catch (err) {
+      console.log(err);
     }
+  };
+
   return (
     <div className="px-4 lg:px-8 h-screen w-screen">
       <h4 className="text-2xl lg:text-3xl font-semibold text-center mb-6 text-gray-800">
-        Post Table
+        Contact Table
       </h4>
-      {/* Wrapper with overflow-x-auto */}
       <div className="overflow-x-auto border rounded-lg shadow-lg">
         <table className="table-auto w-full bg-white border-collapse min-w-[800px]">
           <thead className="bg-blue-500 text-white">
@@ -54,18 +55,20 @@ const DisplayContact = () => {
             </tr>
           </thead>
           <tbody>
-            {contact.map((cr, index) => (
+            {contacts.map((cr, index) => (
               <tr
                 key={cr._id}
                 className={`${
                   index % 2 === 0 ? "bg-gray-50" : "bg-white"
                 } hover:bg-gray-100`}
               >
-                <td className="px-4 py-2 border text-center">{index + 1}</td>
-                <td claxssName="px-4 py-2 border">{cr.name}</td>
-                <td claxssName="px-4 py-2 border">{cr.email}</td>
-                <td claxssName="px-4 py-2 border">{cr.subject}</td>
-                <td claxssName="px-4 py-2 border">{cr.message}</td>
+                <td className="px-4 py-2 border text-center">
+                  {(currentPage - 1) * 10 + index + 1}
+                </td>
+                <td className="px-4 py-2 border">{cr.name}</td>
+                <td className="px-4 py-2 border">{cr.email}</td>
+                <td className="px-4 py-2 border">{cr.subject}</td>
+                <td className="px-4 py-2 border">{cr.message}</td>
                 <td className="px-4 py-2 border">
                   {new Date(cr.createdAt).toLocaleDateString("en-IN", {
                     day: "2-digit",
@@ -95,6 +98,27 @@ const DisplayContact = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Buttons */}
+      <div className="flex justify-center mt-6">
+        <nav>
+          <ul className="flex list-none">
+            {Array.from({ length: pages }, (_, index) => (
+              <li
+                key={index + 1}
+                className={`mx-1 px-3 py-1 border rounded-md cursor-pointer ${
+                  currentPage === index + 1
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+                onClick={() => getContacts(index + 1)}
+              >
+                {index + 1}
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   );

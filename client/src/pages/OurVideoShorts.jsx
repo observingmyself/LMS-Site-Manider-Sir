@@ -10,7 +10,7 @@ const OurVideoShorts = () => {
         problems.
       </p>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mt-20">
-        <div className="card shadow-xl p-8">
+        <div className="card shadow-xl hover:scale-110 rounded-lg transition-all duration-300 p-8">
           <iframe
             width="300"
             height="150"
@@ -26,7 +26,7 @@ const OurVideoShorts = () => {
           </h4>
           <p className="text-[#6A625A] text-center mt-3">Delete Blank Pages</p>
         </div>
-        <div className="card shadow-xl p-10">
+        <div className="card shadow-xl hover:scale-110 rounded-lg transition-all duration-300 p-10">
           <iframe
             width="300"
             height="150"
@@ -45,7 +45,7 @@ const OurVideoShorts = () => {
             Signature your name|
           </p>
         </div>
-        <div className="card shadow-xl p-10">
+        <div className="card shadow-xl hover:scale-110 rounded-lg transition-all duration-300 p-10">
           <iframe
             width="300"
             height="150"
