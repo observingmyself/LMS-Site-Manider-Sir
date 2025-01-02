@@ -12,7 +12,7 @@ const CourseDashboard = () => {
     try {
       const data = await axios.get(`/api/v1/course/courses?page=${page}`);
       if (data.data.success) {
-        console.log(data)
+        // console.log(data)
         setCourses(data.data.data.data);
         setPages(data.data.data.Pages);
         setCurrentPage(page);

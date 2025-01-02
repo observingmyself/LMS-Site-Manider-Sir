@@ -4,45 +4,47 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
 const DisplayBlog = () => {
-  const [blog, setBlog] = useState([]);
+  const [blogs, setBlogs] = useState([]);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
-  const getBlog = async () => {
-    try{
-        const data = await axios.get('/api/v1/blog')
-        if(data){
-            // console.log(data)
-            setBlog(data.data.data.data)
-        }
-    }catch(err){
-        console.log(err)
+  const getAllBlogs = async (page = 1) => {
+    try {
+      const data = await axios.get(`/api/v1/blog?page=${page}`);
+      if (data) {
+        setBlogs(data.data.data.data);
+        setPages(data.data.data.Pages);
+        setCurrentPage(page);
+      }
+    } catch (err) {
+      console.log("Error in getting blogs", err);
     }
-  }
- useEffect(()=>{
-    getBlog();
- },[])
+  };
 
- const handleDelete = async (id) => {
-    try{
-        const data = await axios.delete(`/api/v1/blog/${id}`)
-        if(data){
-            getBlog();
-            toast.success('Blog deleted')
-        }
-    }catch(err){
-        console.log(err)
+  useEffect(() => {
+    getAllBlogs();
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      const data = await axios.delete(`/api/v1/blog/${id}`);
+      if (data) {
+        getAllBlogs(currentPage);
+        toast.success("Blog deleted");
+      }
+    } catch (err) {
+      console.log("Error in deleting blog", err);
     }
- }
-
+  };
 
   return (
-    <div className="px-4 lg:px-8 h-screen w-screen ">
+    <div className="px-4 lg:px-8 h-screen w-screen">
       <h4 className="text-2xl lg:text-3xl font-semibold text-center mb-6 text-gray-800">
         Blogs
       </h4>
-      {/* Wrapper with overflow-x-auto */}
       <div className="overflow-x-auto border rounded-lg shadow-lg">
-        <table className="table-auto w-screen bg-white border-collapse min-w-[800px]">
+        <table className="table-auto w-full bg-white border-collapse min-w-[800px]">
           <thead className="bg-blue-500 text-white">
             <tr>
               <th className="px-4 py-3 border">S.No.</th>
@@ -57,16 +59,18 @@ const DisplayBlog = () => {
             </tr>
           </thead>
           <tbody>
-            {blog.map((blog, index) => (
+            {blogs.map((blog, index) => (
               <tr
-                key={index}
+                key={blog._id}
                 className={`${
                   index % 2 === 0 ? "bg-gray-50" : "bg-white"
                 } hover:bg-gray-100`}
               >
-                <td className="px-4 py-2 border text-center">{index + 1}</td>
+                <td className="px-4 py-2 border text-center">
+                  {index + 1 + (currentPage - 1) * 10}
+                </td>
                 <td className="px-4 py-2 border">
-                  <img src={blog.BlogUrl} className="w-[90px]" alt="" />
+                  <img src={blog.BlogUrl} className="w-[90px]" alt="Blog" />
                 </td>
                 <td className="px-4 py-2 border">{blog.BlogTitle}</td>
                 <td className="px-4 py-2 border">{blog.BlogType}</td>
@@ -100,7 +104,12 @@ const DisplayBlog = () => {
                   </button>
                 </td>
                 <td className="px-4 py-2 border">
-                  <button onClick={()=>navigate(`/admin/dashboard/update-blog/${blog._id}`)} className="px-5 py-2 bg-blue-500 text-white hover:bg-blue-700">
+                  <button
+                    onClick={() =>
+                      navigate(`/admin/dashboard/update-blog/${blog._id}`)
+                    }
+                    className="px-5 py-2 bg-blue-500 text-white hover:bg-blue-700"
+                  >
                     Update
                   </button>
                 </td>
@@ -108,6 +117,27 @@ const DisplayBlog = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Buttons */}
+      <div className="flex justify-center mt-6">
+        <nav>
+          <ul className="flex list-none">
+            {Array.from({ length: pages }, (_, index) => (
+              <li
+                key={index + 1}
+                className={`mx-1 px-3 py-1 border rounded-md cursor-pointer ${
+                  currentPage === index + 1
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+                onClick={() => getAllBlogs(index + 1)}
+              >
+                {index + 1}
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   );

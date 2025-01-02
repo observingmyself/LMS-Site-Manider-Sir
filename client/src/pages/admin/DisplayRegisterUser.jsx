@@ -11,7 +11,7 @@ const DisplayRegisterUser = () => {
       const data = await axios.post(`/api/v1/user?page=${page}`);
       if (data) {
         setUsers(data.data.data.users);
-        setPages(data.data.data.pages);
+        setPages(data.data.data.Pages);
         setCurrentPage(page);
       }
     } catch (e) {

@@ -5,15 +5,18 @@ import { toast } from "react-toastify";
 
 const ViewCertificates = () => {
   const [certificates, setCertificates] = useState([]);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
-  const getAllCertificates = async () => {
+  const getAllCertificates = async (page = 1) => {
     try {
-      const data = await axios.get("/api/v1/certificate");
+      const data = await axios.get(`/api/v1/certificate?page=${page}`);
       if (data) {
         setCertificates(data.data.data.data);
-        // console.log(data.data.data.data)
-    }
+        setPages(data.data.data.Pages);
+        setCurrentPage(page);
+      }
     } catch (e) {
       console.log("Error in getting certificates", e);
     }
@@ -24,19 +27,19 @@ const ViewCertificates = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    try{
-        const data = await axios.delete(`/api/v1/certificate/${id}`)
-        if(data.data.success){
-            toast.success(data.data.data)
-            getAllCertificates();
-        }
-    }catch(e){
-        console.log("Error in deleting certificate", e);
+    try {
+      const data = await axios.delete(`/api/v1/certificate/${id}`);
+      if (data.data.success) {
+        toast.success(data.data.data);
+        getAllCertificates(currentPage);
+      }
+    } catch (e) {
+      console.log("Error in deleting certificate", e);
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen w-screen bg-gray-100 p-6">
       <div className="container mx-auto bg-white shadow-md rounded-lg p-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">
           View Certificates
@@ -99,17 +102,47 @@ const ViewCertificates = () => {
                     </button>
                   </td>
                   <td className="px-4 flex items-center justify-center py-2 border">
-                    <button onClick={()=>navigate(`/admin/dashboard/edit-certificate/${certificate._id}`)} className="">
-                      <box-icon
-                        type="solid"
-                        name="message-rounded-edit"
-                      ></box-icon>
+                    <button
+                      onClick={() =>
+                        navigate(
+                          `/admin/dashboard/edit-certificate/${certificate._id}`
+                        )
+                      }
+                      className="flex items-center justify-center text-white mx-auto rounded-sm group"
+                    >
+                      <span>
+                        <box-icon
+                          type="solid"
+                          name="message-rounded-edit"
+                        ></box-icon>
+                      </span>
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination Buttons */}
+        <div className="flex justify-center mt-6">
+          <nav>
+            <ul className="flex list-none">
+              {Array.from({ length: pages }, (_, index) => (
+                <li
+                  key={index + 1}
+                  className={`mx-1 px-3 py-1 border rounded-md cursor-pointer ${
+                    currentPage === index + 1
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-800"
+                  }`}
+                  onClick={() => getAllCertificates(index + 1)}
+                >
+                  {index + 1}
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </div>

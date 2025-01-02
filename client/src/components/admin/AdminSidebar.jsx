@@ -181,6 +181,36 @@ const AdminSidebar = ({ isSidebarOpen }) => {
                   <i className="fa-solid  fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   Purchased Transactions
                 </p>
+                <p
+                  onClick={() =>
+                    navigate("/admin/dashboard/add-syllabus")
+                  }
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                >
+                  {" "}
+                  <i className="fa-solid  fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
+                  Add Syllabus
+                </p>
+                <p
+                  onClick={() =>
+                    navigate("/admin/dashboard/add-ebook")
+                  }
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                >
+                  {" "}
+                  <i className="fa-solid  fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
+                  Add EBook
+                </p>
+                <p
+                  onClick={() =>
+                    navigate("/admin/dashboard/add-ppt")
+                  }
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                >
+                  {" "}
+                  <i className="fa-solid  fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
+                  Add PPT
+                </p>
               </div>
             </div>
           </div>
@@ -372,40 +402,6 @@ const AdminSidebar = ({ isSidebarOpen }) => {
                 >
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Contacts
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Subscription Table */}
-          <div className="mt-5">
-            <div
-              className="flex items-center justify-between gap-2 cursor-pointer"
-              onClick={toggleSubscriptionsDropdown}
-            >
-              <div className="flex gap-2 items-center">
-                <i className="fa-solid fa-star hihi text-[12px] px-2 py-2 rounded-sm text-white bg-[#E67E22]"></i>
-                <p className="text-sm">Subscription Table</p>
-              </div>
-              <i
-                className={`fa-solid fa-chevron-down text-sm transition-transform ${
-                  isSubscriptionsOpen ? "rotate-180" : ""
-                }`}
-              ></i>
-            </div>
-            <div
-              ref={subscriptionContentRef}
-              className="overflow-hidden transition-all duration-300"
-              style={{
-                maxHeight: isSubscriptionsOpen
-                  ? `${subscriptionContentRef.current.scrollHeight}px`
-                  : "0",
-              }}
-            >
-              <div className="ml-8 mt-3 text-sm">
-                <p className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
-                  <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
-                  View Subscribers
                 </p>
               </div>
             </div>
