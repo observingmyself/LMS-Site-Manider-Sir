@@ -183,11 +183,13 @@ const deleteSyllabus = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Syllabus not found")
   }
   await deleteFileFromGoogleDrive(fieldId.fileId)
-  await Course.updateOne({
-    $pull: {
-      syllabus: { _id: syllabusId }
-    }
-  })
+  await Course.updateOne(
+    { _id: id },
+    {
+      $pull: {
+        syllabus: { _id: syllabusId }
+      }
+    })
   return res.status(200)
     .json(new ApiResponse(200, "Successfully delete Syllabus"))
 })
