@@ -45,7 +45,7 @@ const getForm = asyncHandler(async (req, res) => {
   if (!contacts) {
     throw new ApiError(404, "No contacts found")
   }
-  const totalCount = await Contact.countDocuments;
+  const totalCount = await Contact.countDocuments();
   return res
     .status(200)
     .json(new ApiResponse(200, {
