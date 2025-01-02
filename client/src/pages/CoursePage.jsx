@@ -28,7 +28,7 @@ function CoursePage() {
       <h1 className="text-3xl font-bold text-center mb-8 text-[#FE0000]">
         Our Courses
       </h1>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:px-10">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 md:px-10">
         {course.map((course) => (
           <div
             key={course._id}

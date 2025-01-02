@@ -52,6 +52,7 @@ import AddSyllabus from "./pages/admin/coursefiles/AddSyllabus";
 import AddEbook from "./pages/admin/coursefiles/AddEbook";
 import AddPPT from "./pages/admin/coursefiles/AddPPT";
 import CertificateAuthentication from "./pages/CertificateAuthentication";
+import MyLearningPage from "./pages/MyLearningPage";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -114,6 +115,7 @@ function App() {
             <Route path="payment" element={<CheckoutPayment />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePasswordPage />} />
+            <Route path="myLearning" element={<MyLearningPage />} />
           </Route>
 
           {/* Admin Dashboard and Nested Routes */}

@@ -1,8 +1,10 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const ChangePasswordPage = () => {
   const [formData, setFormData] = useState({
-    currentPassword: "",
+    oldPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
@@ -16,7 +18,7 @@ const ChangePasswordPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.newPassword !== formData.confirmPassword) {
@@ -24,21 +26,20 @@ const ChangePasswordPage = () => {
       return;
     }
 
-    if (formData.newPassword.length < 6) {
+    if (formData.newPassword.length < 5) {
       setError("New Password must be at least 6 characters long.");
       return;
     }
-
-    setError("");
-    console.log("Password Change Request:", formData);
-
-    // Proceed with password change logic (API call, etc.)
-    alert("Password changed successfully!");
-    setFormData({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
+    try {
+      const data = await axios.patch("/api/v1/user/updatePassword", formData);
+      if (data) {
+        toast.success(data.data.data);
+        setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });
+      }
+    } catch (error) {
+      console.log("Error in change Password ", error);
+      toast.error("Failed to change Password");
+    }
   };
 
   return (
@@ -52,16 +53,16 @@ const ChangePasswordPage = () => {
           {/* Current Password */}
           <div>
             <label
-              htmlFor="currentPassword"
+              htmlFor="oldPassword"
               className="block text-gray-700 font-medium"
             >
               Current Password
             </label>
             <input
               type="password"
-              id="currentPassword"
-              name="currentPassword"
-              value={formData.currentPassword}
+              id="oldPassword"
+              name="oldPassword"
+              value={formData.oldPassword}
               onChange={handleInputChange}
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
               placeholder="Enter current password"
