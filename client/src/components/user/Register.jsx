@@ -1,62 +1,84 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import {useDispatch} from 'react-redux'
+import { useDispatch } from "react-redux";
 import { userRegister } from "../../store/auth-slice";
+
 const Register = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  function handleSubmit(e){
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("userName",userName)
-    formData.append("email",email)
-    formData.append("mobileNo",mobileNo)
-    formData.append("password",password)
-    // console.log(formData)
-   if(password === confirmPassword){
-     dispatch(userRegister(formData)).then((data) => {
-       if (data?.payload?.success) {
-         navigate("/login");
-         toast.success("Registration Successfull");
-         setUserName("");
-         setEmail("");
-         setPassword("");
-         setConfirmPassword("");
-         setMobileNo("");
-       }
-     });
-   }
-   else{
-     toast.error("Passwords do not match");
-     setPassword("");
-     setConfirmPassword("");
-   }
-  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const mobileRegex = /^[6-9]\d{9}$/; // Valid for Indian mobile numbers
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/; // At least 8 chars, 1 uppercase, 1 number
 
+  const validateFields = () => {
+    const validationErrors = {};
+
+    if (!emailRegex.test(email)) {
+      validationErrors.email = "Invalid email address.";
+    }
+
+    if (!mobileRegex.test(mobileNo)) {
+      validationErrors.mobileNo = "Invalid mobile number. Must have 10 digits.";
+    }
+
+    if (!passwordRegex.test(password)) {
+      validationErrors.password =
+        "Password must be at least 8 characters, include 1 uppercase letter and 1 number.";
+    }
+
+    if (password !== confirmPassword) {
+      validationErrors.confirmPassword = "Passwords do not match.";
+    }
+
+    return validationErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateFields();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({}); // Clear errors if no validation errors
+    const formData = new FormData();
+    formData.append("userName", userName);
+    formData.append("email", email);
+    formData.append("mobileNo", mobileNo);
+    formData.append("password", password);
+
+    dispatch(userRegister(formData)).then((data) => {
+      if (data?.payload?.success) {
+        navigate("/login");
+        toast.success("Registration Successful");
+        setUserName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setMobileNo("");
+      }
+    });
+  };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-[#F8FAFC]">
-      {/* <h1 className="text-center  mt-28 text-3xl mb-8 font-bold p-7 w-full bg-[#d8e3f2]">
-        Register
-      </h1> */}
-
       <div className="bg-white mt-28 mb-10 w-92 md:w-96 p-8 shadow-lg rounded-lg">
         <h2 className="text-2xl font-bold text-[#FE0000] text-center mb-6">
           Sign up now
         </h2>
-        <form
-          onSubmit={(e) => handleSubmit(e)}
-        >
+        <form onSubmit={handleSubmit}>
           {/* Name Field */}
           <div className="mb-4">
             <label
@@ -69,9 +91,7 @@ const Register = () => {
               type="text"
               id="name"
               value={userName}
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
+              onChange={(e) => setUserName(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FE0000]"
               placeholder="Enter your name"
             />
@@ -89,12 +109,15 @@ const Register = () => {
               type="email"
               id="email"
               value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FE0000]"
+              onChange={(e) => setEmail(e.target.value)}
+              className={`w-full px-4 py-2 border ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FE0000]`}
               placeholder="Enter your email"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           {/* Mobile Phone Field */}
@@ -109,67 +132,81 @@ const Register = () => {
               type="tel"
               id="mobile"
               value={mobileNo}
-              onChange={(e) => {
-                setMobileNo(e.target.value);
-              }}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FE0000]"
+              onChange={(e) => setMobileNo(e.target.value)}
+              className={`w-full px-4 py-2 border ${
+                errors.mobileNo ? "border-red-500" : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FE0000]`}
               placeholder="Enter your mobile phone number"
             />
+            {errors.mobileNo && (
+              <p className="text-red-500 text-sm mt-1">{errors.mobileNo}</p>
+            )}
           </div>
 
           {/* Password Field */}
-          <div className="mb-4 relative">
+          <div className="mb-4">
             <label
-              className="block text-gray-700 font-medium mb-2"
               htmlFor="password"
+              className="block text-gray-700 font-medium mb-2"
             >
               Password
             </label>
             <div className="relative">
               <input
-                type={showPassword ? "text" : "password"} // Toggle input type
+                type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                className={`w-full px-4 py-2 border ${
+                  errors.password ? "border-red-500" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FE0000]`}
                 placeholder="Enter your password"
               />
-              {/* Eye icon */}
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                onClick={() => setShowPassword(!showPassword)}
                 className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500 hover:text-gray-700"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
 
-          <div className="mb-4 relative">
+          {/* Confirm Password Field */}
+          <div className="mb-4">
             <label
+              htmlFor="confirmPassword"
               className="block text-gray-700 font-medium mb-2"
-              htmlFor="confirmpassword"
             >
               Confirm Password
             </label>
             <div className="relative">
               <input
-                type={showPassword ? "text" : "password"} // Toggle input type
-                id="confirmpassword"
+                type={showPassword ? "text" : "password"}
+                id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
-                placeholder="Enter your password"
+                className={`w-full px-4 py-2 border ${
+                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FE0000]`}
+                placeholder="Re-enter your password"
               />
-              {/* Eye icon */}
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                onClick={() => setShowPassword(!showPassword)}
                 className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500 hover:text-gray-700"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.confirmPassword}
+              </p>
+            )}
           </div>
 
           {/* Signup Button */}
