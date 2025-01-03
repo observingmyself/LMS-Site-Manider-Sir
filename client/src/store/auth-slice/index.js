@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { googleAuth } from "../../login with google/api";
 const initialState = {
@@ -25,7 +26,9 @@ export const userLogin = createAsyncThunk("/login", async (formData) => {
     const response = await axios.post("/api/v1/user/login", formData);
     return response.data;
   } catch (error) {
-    console.error("ERROR in userLogin", error);
+    toast.error(error.response.data.message)
+    // console.log(error.response.data)
+    // console.error("ERROR in userLogin", error);
   }
 });
 

@@ -20,7 +20,7 @@ const Login = () => {
     dispatch(googleLogin(authResult)).then((data) => {
       // console.log(data);
       if (data?.payload?.success) {
-        toast.success("Logged in with Google successfully!");
+        toast.success(data?.payload?.message);
         navigate("/");
       } else {
         toast.error("Google login failed!");
@@ -117,7 +117,10 @@ const Login = () => {
               </span>
             )}
           </div>
-          <div onClick={()=>navigate('/forget-password')} className="my-2 flex text-[#e56a6a] hover:text-[#fd0c0c] hover:underline justify-end">
+          <div
+            onClick={() => navigate("/forget-password")}
+            className="my-2 flex text-[#e56a6a] hover:text-[#fd0c0c] hover:underline justify-end"
+          >
             Forget Password?
           </div>
           <button
