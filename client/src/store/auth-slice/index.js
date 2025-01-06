@@ -11,10 +11,7 @@ const initialState = {
 
 export const userRegister = createAsyncThunk("/register", async (formData) => {
   try {
-    const response = await axios.post(
-      "/api/v1/user/register",
-      formData
-    );
+    const response = await axios.post("/api/v1/user/register", formData);
     return response.data;
   } catch (error) {
     console.error("ERROR in userRegister", error);
@@ -26,7 +23,7 @@ export const userLogin = createAsyncThunk("/login", async (formData) => {
     const response = await axios.post("/api/v1/user/login", formData);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message)
+    toast.error(error.response.data.message);
     // console.log(error.response.data)
     // console.error("ERROR in userLogin", error);
   }
@@ -38,13 +35,15 @@ export const googleLogin = createAsyncThunk(
     try {
       if (authResult["code"]) {
         const result = await googleAuth(authResult["code"]);
-        console.log(result)
+        // console.log(result);
         return result.data;
       }
     } catch (error) {
+      toast.error(error.response.data.message);
       console.error("ERROR in googleLogin", error);
     }
-  });
+  }
+);
 
 export const checkAuth = createAsyncThunk("/checkauth", async () => {
   try {
@@ -104,15 +103,22 @@ const authSlice = createSlice({
       .addCase(googleLogin.pending, (state) => {
         state.isLoading = true;
       })
+
       .addCase(googleLogin.fulfilled, (state, action) => {
         state.isLoading = false;
+
         state.user = action.payload?.data?.user || null;
+
         state.token = action.payload?.data?.accessToken;
+
         state.isAuthenticated = !!action.payload?.success;
       })
+
       .addCase(googleLogin.rejected, (state) => {
         state.isLoading = false;
+
         state.user = null;
+
         state.isAuthenticated = false;
       })
       .addCase(checkAuth.pending, (state) => {
@@ -145,4 +151,4 @@ const authSlice = createSlice({
 });
 
 export const { addUser } = authSlice.actions;
-export default authSlice.reducer; 
+export default authSlice.reducer;

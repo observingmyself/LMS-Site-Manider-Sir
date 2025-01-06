@@ -278,7 +278,7 @@ function CourseDetail() {
                 {isSyllabusOpen && (
                   <ul className="space-y-2 mt-2 pl-6">
                     {singleCourse.syllabus.map((sy) => (
-                      <li className="flex items-center justify-between bg-gray-200 p-2 rounded-lg">
+                      <li key={sy._id} className="flex items-center justify-between bg-gray-200 p-2 rounded-lg">
                         <span className="text-gray-800">{sy.fileName}</span>
                         <a
                           href={sy.fileUrl}

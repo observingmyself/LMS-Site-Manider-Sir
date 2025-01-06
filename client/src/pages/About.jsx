@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import T1 from "../assets/images/t1.jpg";
 import S3 from "../assets/images/s3.jpg";
 import VideoThumbnail from "../assets/images/1640x624.png";
-import Video from "../assets/video/coding.mp4";
-import Ankita from "../assets/images/WhatsApp Image 2023-09-08 at 10.00.15 (1).jpeg";
-import Maninder from '../assets/images/team.jpg'
-import Prachi from '../assets/images/team4.jpeg'
+import Video from "../assets/video/about.mp4";
 import { useNavigate } from "react-router";
 import axios from "axios";
 

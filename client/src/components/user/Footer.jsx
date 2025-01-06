@@ -3,7 +3,7 @@ import TransparentLogo from "../../assets/images/Transparent-logo.png";
 import Winter from "../../assets/images/WINTER.jpg";
 import CertificateBadge from "../../assets/images/certificate-1356.png";
 import "../../index.css";
-import { Link, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import axios from "axios";
 import CertificateModal from "./CertificateModal";
 
@@ -87,10 +87,10 @@ const Footer = () => {
           <div className="flex">
             <ul className="w-1/2 mt-3 flex flex-col gap-3 text-sm">
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
-                Home
+                <NavLink to={`/`}>Home</NavLink>
               </li>
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
-                About Us
+                <NavLink to={`/about`}> About Us</NavLink>
               </li>
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
                 Cancellation and Refund Policy
@@ -105,10 +105,15 @@ const Footer = () => {
                 Privacy Policy
               </li>
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
-                Contact Us
+                <NavLink to={`/contact`}>Contact Us</NavLink>
               </li>
             </ul>
-            <img onClick={()=>setIsModalOpen(true)} src={CertificateBadge} alt="" className="mt-1 h-10 cursor-pointer" />
+            <img
+              onClick={() => setIsModalOpen(true)}
+              src={CertificateBadge}
+              alt=""
+              className="mt-1 h-10 cursor-pointer"
+            />
           </div>
         </div>
       </div>
@@ -144,7 +149,10 @@ const Footer = () => {
           </h1>
         </div>
       </div>
-      <CertificateModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+      <CertificateModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 };
