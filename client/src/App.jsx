@@ -53,6 +53,7 @@ import AddEbook from "./pages/admin/coursefiles/AddEbook";
 import AddPPT from "./pages/admin/coursefiles/AddPPT";
 import CertificateAuthentication from "./pages/CertificateAuthentication";
 import MyLearningPage from "./pages/MyLearningPage";
+import EditProfilePage from "./pages/EditProfilePage";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -114,6 +115,7 @@ function App() {
             <Route path="registration-form" element={<RegistrationForm />} />
             <Route path="payment" element={<CheckoutPayment />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="edit-profile/:id" element={<EditProfilePage/>} />
             <Route path="change-password" element={<ChangePasswordPage />} />
             <Route path="myLearning" element={<MyLearningPage />} />
           </Route>

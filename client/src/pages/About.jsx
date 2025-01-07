@@ -55,7 +55,7 @@ const About = () => {
       </div>
 
       {/* First Section */}
-      <div className="p-5 flex flex-col lg:flex-row my-5 md:my-20 gap-8 md:mx-20 lg:mx-60">
+      <div className="p-5 flex flex-col justify-center lg:flex-row my-5 md:my-20 gap-8 md:mx-20 lg:mx-30">
         <div>
           <h3 className="text-3xl mb-2 font-semibold">Who we are?</h3>
           <p className="text-[14px] leading-6 max-w-xl text-slate-600">
@@ -100,7 +100,7 @@ const About = () => {
       </div>
 
       {/* Second Section */}
-      <div className="p-5 flex flex-col my-5 md:my-20 gap-8 md:mx-20 lg:mx-60">
+      <div className="p-5 flex flex-col my-5 md:my-20 gap-8 md:mx-20 lg:mx-60 justify-center">
         {/* Mission Section */}
         <div>
           <h4 className="text-2xl font-semibold">Our Mission</h4>
