@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import T1 from "../assets/images/t1.jpg";
 import S3 from "../assets/images/s3.jpg";
 import VideoThumbnail from "../assets/images/1640x624.png";
-import Video from "../assets/video/coding.mp4";
-import Ankita from "../assets/images/WhatsApp Image 2023-09-08 at 10.00.15 (1).jpeg";
-import Maninder from '../assets/images/team.jpg'
-import Prachi from '../assets/images/team4.jpeg'
+import Video from "../assets/video/about.mp4";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -58,7 +55,7 @@ const About = () => {
       </div>
 
       {/* First Section */}
-      <div className="p-5 flex flex-col lg:flex-row my-5 md:my-20 gap-8 md:mx-20 lg:mx-60">
+      <div className="p-5 flex flex-col justify-center lg:flex-row my-5 md:my-20 gap-8 md:mx-20 lg:mx-30">
         <div>
           <h3 className="text-3xl mb-2 font-semibold">Who we are?</h3>
           <p className="text-[14px] leading-6 max-w-xl text-slate-600">
@@ -103,7 +100,7 @@ const About = () => {
       </div>
 
       {/* Second Section */}
-      <div className="p-5 flex flex-col my-5 md:my-20 gap-8 md:mx-20 lg:mx-60">
+      <div className="p-5 flex flex-col my-5 md:my-20 gap-8 md:mx-20 lg:mx-60 justify-center">
         {/* Mission Section */}
         <div>
           <h4 className="text-2xl font-semibold">Our Mission</h4>

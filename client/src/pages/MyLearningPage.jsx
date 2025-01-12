@@ -61,7 +61,7 @@ const MyLearningPage = () => {
                 <div className="flex justify-center text-center">
                   <button
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-                    onClick={() => navigate(`/course/${course._id}`)}
+                    onClick={() => navigate(`/course-detail/${course._id}`)}
                   >
                     Go to Course
                   </button>

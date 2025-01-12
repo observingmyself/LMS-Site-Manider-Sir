@@ -15,24 +15,24 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const responseGoogle = async (authResult) => {
-    // console.log(authResult)
-    dispatch(googleLogin(authResult)).then((data) => {
-      // console.log(data);
-      if (data?.payload?.success) {
-        toast.success(data?.payload?.message);
-        navigate("/");
-      } else {
-        toast.error("Google login failed!");
-      }
-    });
-  };
-
-  const googleAuthLogin = useGoogleLogin({
-    onSuccess: responseGoogle,
-    onError: responseGoogle,
-    flow: "auth-code",
+const responseGoogle = async (authResult) => {
+  // console.log(authResult)
+  dispatch(googleLogin(authResult)).then((data) => {
+    // console.log(data);
+    if (data?.payload?.success) {
+      toast.success(data?.payload?.message);
+      navigate("/");
+    } else {
+      toast.error("Google login failed!");
+    }
   });
+};
+
+const googleAuthLogin = useGoogleLogin({
+  onSuccess: responseGoogle,
+  onError: responseGoogle,
+  flow: "auth-code",
+});
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -65,7 +65,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
-      <div className="w-92 sm:w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+      <div className="w-92 mt-10 sm:w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-[#FE0000] text-center mb-6">
           Login to your Account
         </h2>
