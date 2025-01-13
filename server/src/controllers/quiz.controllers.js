@@ -176,6 +176,22 @@ const fetchQuiz = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, quiz, "fetch Quiz"))
 })
 
+const fetchQuestion = asyncHandler(async (req, res) => {
+  const { quizId, questionId } = req.params;
+  if (!quizId || !questionId) {
+    throw new ApiError(400, "Please provide Id");
+  }
+  const data = await Quiz.findById(quizId);
+  if (!data) {
+    throw new ApiError(404, "Quiz not found");
+  }
+  const question = data.questions.id(questionId);
+  if (!question) {
+    throw new ApiError(404, "Question not found");
+  }
+  return res.status(200).json(new ApiResponse(200, question, "fetch specific question"))
+})
+
 const editQuestion = asyncHandler(async (req, res) => {
   const { quizId, questionId } = req.params;
   const { question, options, explanation, timeLimit } = req.body;
@@ -264,10 +280,10 @@ const updateQuestionImg = asyncHandler(async (req, res) => {
   }
   const url = data.questions.id(questionId);
   if (!url) {
-    throw new ApiError(404, "no img found")
+    throw new ApiError(404, "no question found")
   }
-  if (url) {
-    const publicId = url.split("/").pop().split(".")[0];
+  if (url?.questionUrl !== "") {
+    const publicId = url?.questionUrl.split("/").pop().split(".")[0];
     await deleteMediaFromCloudinary(publicId)
   }
   const localFilePath = req.file?.path;
@@ -275,11 +291,17 @@ const updateQuestionImg = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Please provide Img")
   }
   const result = await uploadOnCloudinary(localFilePath);
-  await Quiz.updateOne(quizId, {
+  const resultdata = await Quiz.findOneAndUpdate({
+    _id: quizId,
+    "questions._id": questionId,
+  }, {
     $set: {
       "questions.$.questionUrl": result?.url
     }
-  })
+  }, { new: true })
+  if (!resultdata) {
+    throw new ApiError(500, "Something not found");
+  }
   return res.status(200).json(new ApiResponse(200, "update Img"))
 })
 
@@ -293,15 +315,21 @@ const deleteQuestionImg = asyncHandler(async (req, res) => {
   if (!url) {
     throw new ApiError(404, "no img found")
   }
-  if (url) {
-    const publicId = url.split("/").pop().split(".")[0];
+  if (url?.questionUrl !== "") {
+    const publicId = url?.questionUrl.split("/").pop().split(".")[0];
     await deleteMediaFromCloudinary(publicId)
   }
-  await Quiz.updateOne(quizId, {
+  const resultdata = await Quiz.findOneAndUpdate({
+    _id: quizId,
+    "questions._id": questionId,
+  }, {
     $set: {
-      "questions.$.questionUrl": "",
+      "questions.$.questionUrl": ''
     }
-  })
+  }, { new: true })
+  if (!resultdata) {
+    throw new ApiError(500, "Something not found");
+  }
   return res.status(200).json(new ApiResponse(200, "Delete Img"))
 })
 
@@ -367,6 +395,7 @@ export {
   addBulkquestionsFromExcelSheet,
   fetchQuizzes,
   fetchQuiz,
+  fetchQuestion,
   editQuestion,
   deleteQuestion,
   togglePublish,

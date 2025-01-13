@@ -13,7 +13,6 @@ const createCertificate = asyncHandler(async (req, res) => {
   }
 
   const localPath = req.file?.path;
-  console.log(localPath)
   if (!localPath) {
     throw new ApiError(400, "Please upload a certificate file");
   }
@@ -22,7 +21,6 @@ const createCertificate = asyncHandler(async (req, res) => {
   if (!data) {
     throw new ApiError(500, "Failed to upload to Google Drive");
   }
-  console.log(data)
   const certificate = await Certificate.create({ name, DOB, course, certificateImg: data.fileUrl, fileId: data.fileId })
   if (!certificate) {
     throw new ApiError(500, "Something went wrong while to create a certificate");
