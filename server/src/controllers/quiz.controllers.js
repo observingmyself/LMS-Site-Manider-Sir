@@ -2,7 +2,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiErrorHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { Quiz } from "../models/quiz.models.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { UserAttempt } from "../models/userAttempt.models.js";
+import { uploadOnCloudinary, deleteMediaFromCloudinary } from "../utils/cloudinary.js";
 import xlsx from "xlsx";
 import fs from "fs"
 
@@ -140,6 +141,7 @@ const fetchQuizzes = asyncHandler(async (req, res) => {
   }
   return res.status(200).json(new ApiResponse(200, quizzes, "fetch All Quiz"))
 })
+
 const fetchPublishQuiz = asyncHandler(async (req, res) => {
   const page = req.query.page || 1;
   const limit = req.query.limit || 10;
@@ -209,9 +211,14 @@ const deleteQuestion = asyncHandler(async (req, res) => {
   }
 
   const data = await Quiz.findById(quizId);
-
   if (!data) {
     throw new ApiError(404, "Quiz not found");
+  }
+
+  const url = data.questions.id(questionId);
+  if (url.length > 0) {
+    const publicId = url.split("/").pop().split(".")[0];
+    await deleteMediaFromCloudinary(publicId)
   }
 
   const deleteQs = await Quiz.findByIdAndUpdate(
@@ -225,7 +232,6 @@ const deleteQuestion = asyncHandler(async (req, res) => {
     },
     { new: true }
   );
-  console.log(deleteQs)
   if (!deleteQs) {
     throw new ApiError(404, "question not found")
   }
@@ -250,6 +256,110 @@ const togglePublish = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, `Quiz is ${sendMessage}`));
 })
 
+const updateQuestionImg = asyncHandler(async (req, res) => {
+  const { quizId, questionId } = req.params;
+  const data = await Quiz.findById(quizId);
+  if (!data) {
+    throw new ApiError(404, "Quiz not found");
+  }
+  const url = data.questions.id(questionId);
+  if (!url) {
+    throw new ApiError(404, "no img found")
+  }
+  if (url) {
+    const publicId = url.split("/").pop().split(".")[0];
+    await deleteMediaFromCloudinary(publicId)
+  }
+  const localFilePath = req.file?.path;
+  if (!localFilePath) {
+    throw new ApiError(400, "Please provide Img")
+  }
+  const result = await uploadOnCloudinary(localFilePath);
+  await Quiz.updateOne(quizId, {
+    $set: {
+      "questions.$.questionUrl": result?.url
+    }
+  })
+  return res.status(200).json(new ApiResponse(200, "update Img"))
+})
+
+const deleteQuestionImg = asyncHandler(async (req, res) => {
+  const { quizId, questionId } = req.params;
+  const data = await Quiz.findById(quizId);
+  if (!data) {
+    throw new ApiError(404, "Quiz not found");
+  }
+  const url = data.questions.id(questionId);
+  if (!url) {
+    throw new ApiError(404, "no img found")
+  }
+  if (url) {
+    const publicId = url.split("/").pop().split(".")[0];
+    await deleteMediaFromCloudinary(publicId)
+  }
+  await Quiz.updateOne(quizId, {
+    $set: {
+      "questions.$.questionUrl": "",
+    }
+  })
+  return res.status(200).json(new ApiResponse(200, "Delete Img"))
+})
+
+
+// Controller for User Attempt Operations
+const createAttempt = asyncHandler(async (req, res) => {
+  try {
+    const { quizId, answers, timeTaken } = req.body;
+    const userId = req.user?._id; // Assuming req.user contains authenticated user's info
+    if (userId) {
+      throw new ApiError(401, "unauthorized person")
+    }
+    const quiz = await Quiz.findById(quizId);
+    if (!quiz) {
+      throw new ApiError(404, "Quiz not found!")
+    }
+
+    // Calculate score
+    let score = 0;
+    answers.forEach((answer) => {
+      const question = quiz.questions.id(answer.questionId);
+      if (question) {
+        const selectedOption = question.options.id(answer.selectedOption);
+        if (selectedOption && selectedOption.isCorrect) {
+          score += 1;
+        }
+      }
+    });
+
+    const attempt = new UserAttempt({
+      user: userId,
+      quiz: quizId,
+      answers,
+      score,
+      timeTaken,
+    });
+
+    const savedAttempt = await attempt.save();
+    return res.status(201).json(new ApiResponse(201, { attemps: savedAttempt }, "Attempted questions"));
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to record attempt", error: error.message });
+  }
+})
+
+const getUserAttempts = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const attempts = await UserAttempt.find({ user: userId }).populate("quiz", "title category")
+  return res.status(200).json(new ApiResponse(200, attempts, "fetch user Attempts"))
+})
+
+const getSpecificAttempt = asyncHandler(async (req, res) => {
+  const { attemptId } = req.params;
+  const attempt = await UserAttempt.findById(attemptId).populate("quiz");
+  if (!attempt) {
+    throw new ApiError(404, "No result found")
+  }
+  return res.status(200).json(new ApiResponse(200, attempt, "fetch specific attempt"))
+})
 
 export {
   createQuiz,
@@ -260,78 +370,10 @@ export {
   editQuestion,
   deleteQuestion,
   togglePublish,
-  fetchPublishQuiz
+  fetchPublishQuiz,
+  updateQuestionImg,
+  deleteQuestionImg,
+  createAttempt,
+  getUserAttempts,
+  getSpecificAttempt
 }
-
-
-
-// // Controller for User Attempt Operations
-// const userAttemptController = {
-//   // Record a user's quiz attempt
-//   createAttempt: async (req, res) => {
-//     try {
-//       const { quizId, answers, timeTaken } = req.body;
-//       const userId = req.user.id; // Assuming req.user contains authenticated user's info
-
-//       const quiz = await Quiz.findById(quizId);
-//       if (!quiz) {
-//         return res.status(404).json({ success: false, message: "Quiz not found" });
-//       }
-
-//       // Calculate score
-//       let score = 0;
-//       answers.forEach((answer) => {
-//         const question = quiz.questions.id(answer.questionId);
-//         if (question) {
-//           const selectedOption = question.options.id(answer.selectedOption);
-//           if (selectedOption && selectedOption.isCorrect) {
-//             score += 1;
-//           }
-//         }
-//       });
-
-//       const attempt = new UserAttempt({
-//         user: userId,
-//         quiz: quizId,
-//         answers,
-//         score,
-//         timeTaken,
-//       });
-
-//       const savedAttempt = await attempt.save();
-//       res.status(201).json({ success: true, message: "Attempt recorded successfully", attempt: savedAttempt });
-//     } catch (error) {
-//       res.status(500).json({ success: false, message: "Failed to record attempt", error: error.message });
-//     }
-//   },
-
-//   // Get user attempts
-//   getUserAttempts: async (req, res) => {
-//     try {
-//       const userId = req.user.id; // Assuming req.user contains authenticated user's info
-
-//       const attempts = await UserAttempt.find({ user: userId }).populate("quiz", "title category");
-//       res.status(200).json({ success: true, attempts });
-//     } catch (error) {
-//       res.status(500).json({ success: false, message: "Failed to fetch attempts", error: error.message });
-//     }
-//   },
-
-//   // Get a specific attempt
-//   getAttemptById: async (req, res) => {
-//     try {
-//       const { id } = req.params;
-
-//       const attempt = await UserAttempt.findById(id).populate("quiz", "title category");
-//       if (!attempt) {
-//         return res.status(404).json({ success: false, message: "Attempt not found" });
-//       }
-
-//       res.status(200).json({ success: true, attempt });
-//     } catch (error) {
-//       res.status(500).json({ success: false, message: "Failed to fetch attempt", error: error.message });
-//     }
-//   },
-// };
-
-// module.exports = { quizController, userAttemptController };
