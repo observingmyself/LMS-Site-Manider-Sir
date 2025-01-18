@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const { token } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -15,24 +15,26 @@ const ResetPassword = () => {
       alert("Passwords do not match!");
       return;
     }
-    try{
-        const data = await axios.post(`/api/v1/user/reset-password/${token}`,{newPassword : password})
-        if(data.data.success){
-            console.log(data);
-            toast.success("Resetted Your Password")
-            setPassword('')
-            setConfirmPassword('')
-            navigate('/login')
-        }
-    }catch(err){
-        console.log("err in changing password",err)
+    try {
+      const data = await axios.post(`/api/v1/user/reset-password/${token}`, {
+        newPassword: password,
+      });
+      if (data.data.success) {
+        console.log(data);
+        toast.success("Resetted Your Password");
+        setPassword("");
+        setConfirmPassword("");
+        navigate("/login");
+      }
+    } catch (err) {
+      console.log("err in changing password", err);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+        <h2 className="text-2xl font-semibold text-gray-900 text-center mb-4">
           Reset Password
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">

@@ -54,6 +54,10 @@ import AddPPT from "./pages/admin/coursefiles/AddPPT";
 import CertificateAuthentication from "./pages/CertificateAuthentication";
 import MyLearningPage from "./pages/MyLearningPage";
 import EditProfilePage from "./pages/EditProfilePage";
+import ShipingAndDelivery from "./pages/ShipingAndDelivery";
+import Terms_Cond from "./pages/Terms_Cond";
+import CancellationPolicy from "./pages/CancellationPolicy";
+import Privacy from "./pages/Privacy";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -103,6 +107,10 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="news/:id" element={<SinglePageLatestNews />} />
             <Route path="blog" element={<Blog />} />
+            <Route path="shipping" element={<ShipingAndDelivery />} />
+            <Route path="TermandCondition" element={<Terms_Cond />} />
+            <Route path="refund" element={<CancellationPolicy />} />
+            <Route path="PrivacyPolicy" element={<Privacy />} />
             <Route
               path="certificate-authentication"
               element={<CertificateAuthentication />}
@@ -115,7 +123,7 @@ function App() {
             <Route path="registration-form" element={<RegistrationForm />} />
             <Route path="payment" element={<CheckoutPayment />} />
             <Route path="profile" element={<Profile />} />
-            <Route path="edit-profile/:id" element={<EditProfilePage/>} />
+            <Route path="edit-profile/:id" element={<EditProfilePage />} />
             <Route path="change-password" element={<ChangePasswordPage />} />
             <Route path="myLearning" element={<MyLearningPage />} />
           </Route>

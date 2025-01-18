@@ -7,7 +7,22 @@ const AddSyllabus = () => {
   const [courseId, setCourseId] = useState("");
   const [syllabusFile, setSyllabusFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({
+    courseId: false,
+    syllabusFile: false,
+  });
 
+  // Function to validate fields
+  const validateFields = () => {
+    const errorState = {
+      courseId: !courseId,
+      syllabusFile: !syllabusFile,
+    };
+    setErrors(errorState);
+    return !Object.values(errorState).includes(true); // returns true if no errors
+  };
+
+  // Fetch the courses data
   const getCourses = async () => {
     try {
       const data = await axios.get(`/api/v1/course/courses`);
@@ -25,6 +40,10 @@ const AddSyllabus = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate fields before submission
+    if (!validateFields()) return;
+
     setIsLoading(true);
 
     const formData = new FormData();
@@ -79,6 +98,7 @@ const AddSyllabus = () => {
           Add Syllabus
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Select Course */}
           <div>
             <label
               htmlFor="selectSubject"
@@ -100,8 +120,12 @@ const AddSyllabus = () => {
                 </option>
               ))}
             </select>
+            {errors.courseId && (
+              <p className="text-red-500 text-sm mt-1">Course is required</p>
+            )}
           </div>
 
+          {/* File Upload Input */}
           <div>
             <label
               htmlFor="fileUpload"
@@ -116,12 +140,16 @@ const AddSyllabus = () => {
               name="fileUpload"
               className="w-full mt-2 p-2 border border-gray-300 rounded"
             />
+            {errors.syllabusFile && (
+              <p className="text-red-500 text-sm mt-1">File is required</p>
+            )}
           </div>
 
+          {/* Submit Button */}
           <div className="text-center">
             <button
               type="submit"
-              className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
+              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
             >
               {isLoading ? "Loading..." : "Submit"}
             </button>

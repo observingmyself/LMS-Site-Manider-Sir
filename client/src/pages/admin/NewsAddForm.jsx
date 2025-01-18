@@ -7,14 +7,27 @@ const NewsAddForm = () => {
   const [newsHeadline, setNewsHeadline] = useState("");
   const [newsDescription, setNewsDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [errors, setErrors] = useState({
+    newsImage: "",
+    newsHeadline: "",
+    newsDescription: "",
+  });
+
+  const validation = () => {
+    let formErrors = {
+      newsImage: newsImage ? "" : "Upload Image",
+      newsHeadline: newsHeadline.trim() ? "" : "Enter Headline", // Trim spaces before validating
+      newsDescription: newsDescription.trim() ? "" : "Enter Description", // Trim spaces before validating
+    };
+    setErrors(formErrors);
+    return !Object.values(formErrors).some((error) => error !== "");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!newsImage) {
-      toast.warn("Please upload an image.");
-      return;
-    }
+    // Validate form fields
+    if (!validation()) return;
 
     const formData = new FormData();
     formData.append("newsImage", newsImage);
@@ -30,7 +43,6 @@ const NewsAddForm = () => {
       });
 
       if (data) {
-        console.log(data);
         toast.success("News created successfully");
         setNewsImage(null);
         setNewsHeadline("");
@@ -77,6 +89,9 @@ const NewsAddForm = () => {
             onChange={handleFileChange}
             className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded file:border file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
+          {errors.newsImage && (
+            <p className="text-red-500 text-sm mt-1">{errors.newsImage}</p>
+          )}
         </div>
 
         {/* News Headline */}
@@ -95,6 +110,9 @@ const NewsAddForm = () => {
             placeholder="Enter headline"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+          {errors.newsHeadline && (
+            <p className="text-red-500 text-sm mt-1">{errors.newsHeadline}</p>
+          )}
         </div>
 
         {/* News Description */}
@@ -113,6 +131,11 @@ const NewsAddForm = () => {
             rows="4"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+          {errors.newsDescription && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.newsDescription}
+            </p>
+          )}
         </div>
 
         {/* Submit Button */}

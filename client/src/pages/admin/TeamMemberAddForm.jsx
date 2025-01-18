@@ -1,44 +1,73 @@
-import axios from 'axios';
-import React,{useState} from 'react'
-import { toast } from 'react-toastify';
+import axios from "axios";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const TeamMemberAddForm = () => {
-      const [isLoading, setIsLoading] = useState(false);
-      const [memberName, setMemberName] = useState('');
-      const [memberPosition, setMemberPosition] = useState('');
-      const [memberImage, setMemberImage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [memberName, setMemberName] = useState("");
+  const [memberPosition, setMemberPosition] = useState("");
+  const [memberImage, setMemberImage] = useState("");
+  const [errors, setErrors] = useState({
+    memberName: "",
+    memberPosition: "",
+    memberImage: "",
+  });
 
+  const validate = () => {
+    let formErrors = {
+      memberName: memberName.trim() ? "" : "Member name is required.",
+      memberPosition: memberPosition.trim()
+        ? ""
+        : "Member position is required.",
+      memberImage: memberImage ? "" : "Member image is required.",
+    };
 
-      const handleSubmit = async(e) => {
-        e.preventDefault();
-        setIsLoading(true);
-        const formData = new FormData();
-        formData.append("name",memberName)
-        formData.append("position",memberPosition)
-        formData.append("image",memberImage)
-        try{
-            const data = await axios.post('/api/v1/team/create',formData,{
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                }
-            })
-            if(data.data.success){
-                toast.success(data.data.message)
-            }
-            else{
-                toast.error(data.data.message)
-            }
-        }catch(err){
-            console.log("err in creating team member",err)
-        }finally{
-            setIsLoading(false);
-        }
+    setErrors(formErrors);
+    return !Object.values(formErrors).some((error) => error !== "");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate form fields
+    if (!validate()) return;
+
+    setIsLoading(true);
+
+    const formData = new FormData();
+    formData.append("name", memberName);
+    formData.append("position", memberPosition);
+    formData.append("image", memberImage);
+
+    try {
+      const { data } = await axios.post("/api/v1/team/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (data.success) {
+        toast.success(data.message);
+        // Reset form fields after successful submission
+        setMemberName("");
+        setMemberPosition("");
+        setMemberImage("");
+      } else {
+        toast.error(data.message);
       }
+    } catch (err) {
+      console.error("Error in creating team member", err);
+      toast.error("An error occurred while creating the team member.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setMemberImage(file)
-      }
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setMemberImage(file);
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 mt-2 flex items-start justify-center">
       <form
@@ -65,9 +94,12 @@ const TeamMemberAddForm = () => {
             onChange={handleFileChange}
             className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded file:border file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
+          {errors.memberImage && (
+            <p className="text-red-500 text-sm mt-1">{errors.memberImage}</p>
+          )}
         </div>
 
-        {/* Member name */}
+        {/* Member Name */}
         <div className="mb-4">
           <label
             htmlFor="memberName"
@@ -80,12 +112,15 @@ const TeamMemberAddForm = () => {
             id="memberName"
             value={memberName}
             onChange={(e) => setMemberName(e.target.value)}
-            placeholder="Enter headline"
+            placeholder="Enter member name"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+          {errors.memberName && (
+            <p className="text-red-500 text-sm mt-1">{errors.memberName}</p>
+          )}
         </div>
 
-        {/* member position */}
+        {/* Member Position */}
         <div className="mb-4">
           <label
             htmlFor="memberPosition"
@@ -98,9 +133,12 @@ const TeamMemberAddForm = () => {
             id="memberPosition"
             value={memberPosition}
             onChange={(e) => setMemberPosition(e.target.value)}
-            placeholder="Enter headline"
+            placeholder="Enter member position"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+          {errors.memberPosition && (
+            <p className="text-red-500 text-sm mt-1">{errors.memberPosition}</p>
+          )}
         </div>
 
         {/* Submit Button */}
@@ -146,6 +184,6 @@ const TeamMemberAddForm = () => {
       </form>
     </div>
   );
-}
+};
 
-export default TeamMemberAddForm
+export default TeamMemberAddForm;

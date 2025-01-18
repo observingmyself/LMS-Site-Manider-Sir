@@ -15,24 +15,24 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-const responseGoogle = async (authResult) => {
-  // console.log(authResult)
-  dispatch(googleLogin(authResult)).then((data) => {
-    // console.log(data);
-    if (data?.payload?.success) {
-      toast.success(data?.payload?.message);
-      navigate("/");
-    } else {
-      toast.error("Google login failed!");
-    }
-  });
-};
+  const responseGoogle = async (authResult) => {
+    // console.log(authResult)
+    dispatch(googleLogin(authResult)).then((data) => {
+      // console.log(data);
+      if (data?.payload?.success) {
+        toast.success(data?.payload?.message);
+        navigate("/");
+      } else {
+        toast.error("Google login failed!");
+      }
+    });
+  };
 
-const googleAuthLogin = useGoogleLogin({
-  onSuccess: responseGoogle,
-  onError: responseGoogle,
-  flow: "auth-code",
-});
+  const googleAuthLogin = useGoogleLogin({
+    onSuccess: responseGoogle,
+    onError: responseGoogle,
+    flow: "auth-code",
+  });
 
   const handleLogin = async (event) => {
     event.preventDefault();
