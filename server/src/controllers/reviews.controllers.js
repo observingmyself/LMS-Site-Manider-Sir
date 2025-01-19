@@ -1,22 +1,17 @@
 import { Review } from "../models/reviews.models.js";
 import { ApiError } from "../utils/apiErrorHandler.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 const createReview = asyncHandler(async (req, res) => {
-  const { name, message } = req.body;
+  const { name, message, reviewImage } = req.body;
   if ((!name || !message)) {
     throw new ApiError(400, "Please fill name and message filled");
   }
-  let imageLocalPath = req.files?.reviewImage?.path;
-  let imgUrl;
-  if (imageLocalPath) {
-    imgUrl = await uploadOnCloudinary(imageLocalPath);
-  }
+
   const data = await Review.create({
     name,
     message,
-    reviewImage: imgUrl?.url || ""
+    reviewImage: reviewImage || ""
   })
   if (!data) {
     throw new ApiError(500, "Something went wrong while creating a review");
