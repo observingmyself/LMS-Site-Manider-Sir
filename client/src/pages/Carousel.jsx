@@ -82,7 +82,7 @@ const Carousel = () => {
 
               {/* Course Info */}
               <div className="p-5">
-                <p className="text-xs p-2 rounded-full text-[#DF5E7E] ml-3 bg-[#FCDFE4] inline">
+                <p className="text-xs p-2 rounded-md text-[#DF5E7E] bg-[#FCDFE4] inline">
                   {course.category}
                 </p>
                 <h3
@@ -93,7 +93,7 @@ const Carousel = () => {
                 </h3>
                 <div className="flex justify-between items-center gap-4 text-sm text-slate-600 mt-2">
                   <div className="flex items-center gap-1">
-                    <span className="font-semibold">Instructor {">"}</span>
+                    <span className="font-semibold">Instructor {"•"}</span>
                     <span>{course.instructor}</span>
                   </div>
                   <div className="flex items-center gap-1">

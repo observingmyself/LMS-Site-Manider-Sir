@@ -155,8 +155,8 @@ const ContactUs = () => {
       </div>
 
       {/* Map Section */}
-      <div className="flex flex-col items-center px-4 lg:px-52 py-10">
-        <h3 className="text-3xl font-semibold mb-2">Visit Us</h3>
+      <div className="flex flex-col items-center px-4 lg:px-52 pb-10">
+        <h3 className="text-3xl font-semibold mb-4  italic">Visit Us</h3>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9291.547666706108!2d75.86723002504294!3d30.372156330594635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39105b3744d53903%3A0x888d9223bdc9e8f0!2sAdvance%20coding%20centre%20%7C%7C%20Best%20Computer%20Institute%2C%20Professional%20Computer%20Courses%2C%20Web%20Designing%20And%20Developing%20Courses!5e0!3m2!1sen!2sin!4v1733326448735!5m2!1sen!2sin"
           width="100%"

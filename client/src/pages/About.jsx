@@ -170,6 +170,7 @@ const About = () => {
               alt="Video Thumbnail"
             />
             <i
+              title="Play"
               onClick={handleOpenPopUp}
               className="fa-solid fa-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:scale-110 bg-opacity-50 transition-all duration-200 px-5 py-5 bg-black rounded-full text-white rays"
             ></i>
@@ -207,7 +208,7 @@ const About = () => {
           <h4 className="text-4xl font-semibold text-center mb-14">
             Meet Our Skilled Team Member's
           </h4>
-          <div className="cards grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+          <div className="cards grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {teamMembers?.map((member) => (
               <div
                 key={member._id}
