@@ -25,7 +25,7 @@ const MyLearningPage = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen p-6 mt-20">
-      <h1 className="text-2xl font-bold text-center mb-8">
+      <h1 className="text-2xl font-bold text-center mb-8 text-gray-900">
         My Purchased Courses
       </h1>
       <div className=" relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">

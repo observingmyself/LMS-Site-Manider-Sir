@@ -8,37 +8,37 @@ import axios from "axios";
 import CertificateModal from "./CertificateModal";
 
 const Footer = () => {
-  const [news,setNews] = useState({})
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [news, setNews] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const getLatestNews = async () => {
-    try{
-      const data = await axios.get('/api/v1/news')
-      if(data){
-        setNews(data.data.data.news)
+    try {
+      const data = await axios.get("/api/v1/news");
+      if (data) {
+        setNews(data.data.data.news);
         // console.log(data)
       }
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
-  useEffect(()=>{
-    getLatestNews()
-  },[])
- 
+  };
+  useEffect(() => {
+    getLatestNews();
+  }, []);
+
   return (
     <div className="main">
       {/* Footer Main Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-5 md:px-20 lg:px-32">
         {/* Section 1 */}
         <div className="flex flex-col justify-start gap-5 mt-5">
-          <div className="flex items-center">
+          <Link className="flex items-center" to="/">
             <img src={TransparentLogo} alt="" className="w-[80px] h-[80px]" />
             <h4 className="text-[#FD0C0C] font-semibold">
               Advance Computer Centre
             </h4>
-          </div>
+          </Link>
           <h4>Learning Computer Programming Languages!</h4>
           <div className="hover:text-[#fd0c0c] hover:underline">
             <i className="fa-solid fa-phone text-[#FD0C0C]"></i> +91 8556917707
@@ -91,19 +91,22 @@ const Footer = () => {
                 <NavLink to={`/`}>Home</NavLink>
               </li>
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
-                <NavLink to={`/about`}> About Us</NavLink>
+                <NavLink to={`/about`}>About Us</NavLink>
               </li>
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
-                Cancellation and Refund Policy
+                <NavLink to={`/refund`}>
+                  {" "}
+                  Cancellation and Refund Policy
+                </NavLink>
               </li>
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
-                Shipping and Delivery Policy
+                <NavLink to={`/shipping`}>Shipping & Delivery Policy</NavLink>
               </li>
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
-                Terms and Conditions
+                <NavLink to={`/TermandCondition`}>Terms and Conditions</NavLink>
               </li>
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
-                Privacy Policy
+                <NavLink to={`/PrivacyPolicy`}>Privacy Policy</NavLink>
               </li>
               <li className="hover:text-[#fd0c0c] text-slate-600 cursor-pointer">
                 <NavLink to={`/contact`}>Contact Us</NavLink>

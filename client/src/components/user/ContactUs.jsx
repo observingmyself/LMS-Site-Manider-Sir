@@ -1,61 +1,60 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 
 const ContactUs = () => {
-  const [name,setName] = useState('')
-  const [email,setEmail] = useState('')
-  const [subject,setSubject] = useState('')
-  const [message,setMessage] = useState('')
-  const [errors,setErrors] = useState({})
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errors = {}
+    const errors = {};
 
-    if(!name.trim()) errors.name = "Name is required."
-    if(!email.trim()) errors.email = "Email is required."
-    if(!subject.trim()) errors.subject = "Subject is required."
-    if(!message.trim()) errors.message = "Message is required."
+    if (!name.trim()) errors.name = "Name is required.";
+    if (!email.trim()) errors.email = "Email is required.";
+    if (!subject.trim()) errors.subject = "Subject is required.";
+    if (!message.trim()) errors.message = "Message is required.";
 
-    if(Object.keys(errors).length > 0){
-      setErrors(errors)
-      return
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
     }
-    
-    setErrors({})
 
-    try{  
-      const data = await axios.post('/api/v1/contact/create',{
-        name : name,
-        email : email,
-        subject : subject,
-        message : message
-      })
-      if(data){
+    setErrors({});
+
+    try {
+      const data = await axios.post("/api/v1/contact/create", {
+        name: name,
+        email: email,
+        subject: subject,
+        message: message,
+      });
+      if (data) {
         // console.log(data)
-        toast.success('Query Delivered')
-        setName('')
-        setEmail('')
-        setSubject('')
-        setMessage('')
+        toast.success("Query Delivered");
+        setName("");
+        setEmail("");
+        setSubject("");
+        setMessage("");
+      } else {
+        console.log("Failed to send message.");
       }
-      else{
-        console.log('Failed to send message.')
-      }
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
-  
+  };
+
   return (
     <div className="mt-24">
       {/* Page Heading */}
       <div className="bg-[#EEF4FC] py-4">
         {" "}
-        <h2 className="flex justify-center items-center text-4xl font-semibold">
+        <h2 className="flex justify-center items-center text-4xl text-gray-900 font-semibold">
           Contact Us
         </h2>
         <p className="text-center mt-4 flex items-center justify-center gap-2">

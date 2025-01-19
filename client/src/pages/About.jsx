@@ -8,7 +8,7 @@ import axios from "axios";
 
 const About = () => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
-  const [teamMembers,setTeamMembers] = useState([])
+  const [teamMembers, setTeamMembers] = useState([]);
   const navigate = useNavigate();
 
   const handleOpenPopUp = () => {
@@ -22,27 +22,28 @@ const About = () => {
   };
 
   const getTeamMembers = async () => {
-    try{
-      const data = await axios.get('/api/v1/team')
-      if(data.data.success){
+    try {
+      const data = await axios.get("/api/v1/team");
+      if (data.data.success) {
         // console.log(data.data)
-        setTeamMembers(data.data.data)
+        setTeamMembers(data.data.data);
+      } else {
+        console.log("Err in getting team member");
       }
-      else{
-        console.log("Err in getting team member")
-      }
-    }catch(err){
-      console.log("err in getting team member",err)
+    } catch (err) {
+      console.log("err in getting team member", err);
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     getTeamMembers();
-  },[])
+  }, []);
   return (
     <div className="">
       <div className="bg-[#EEF4FC] py-4  mt-24">
         {" "}
-        <h3 className="text-4xl text-center font-semibold ">About Us</h3>
+        <h3 className="text-4xl text-center font-semibold text-gray-900 ">
+          About Us
+        </h3>
         <p className="text-center mt-4 flex items-center justify-center gap-2">
           <span
             className="text-[#fd0c0c] hover:underline"
@@ -209,7 +210,10 @@ const About = () => {
           </h4>
           <div className="cards grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {teamMembers?.map((member) => (
-              <div key={member._id} className="card hover:-translate-y-2 hover:shadow-lg transition-all duration-200 bg-white rounded-lg overflow-hidden shadow-md">
+              <div
+                key={member._id}
+                className="card hover:-translate-y-2 hover:shadow-lg transition-all duration-200 bg-white rounded-lg overflow-hidden shadow-md"
+              >
                 <div className="relative group">
                   <img
                     src={member.image}
@@ -220,9 +224,7 @@ const About = () => {
                     <h3 className="text-black group-hover:text-[#fd0c0c] font-bold text-lg">
                       {member.name}
                     </h3>
-                    <p className="text-slate-600 text-sm">
-                      {member.position}
-                    </p>
+                    <p className="text-slate-600 text-sm">{member.position}</p>
                   </div>
                 </div>
               </div>
@@ -231,7 +233,9 @@ const About = () => {
         </div>
         {/* last div */}
         <div className="flex flex-col justify-center items-center mt-20">
-          <h4 className="text-4xl font-semibold">Ready to get started ?</h4>
+          <h4 className="text-4xl font-semibold text-center">
+            Ready to get started ?
+          </h4>
           <p className="text-center w-3/4 text-slate-600 mt-3">
             We love conversations, and would love to have one with you! Whether
             you’re looking for a speaker, an awesome career, or want to get

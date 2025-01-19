@@ -57,7 +57,7 @@ const getSingleCourse = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Please provide course id")
   }
   const singleData = await Course.findById(id)
-  console.log(singleData)
+  // console.log(singleData)
   if (!singleData) {
     throw new ApiError(404, "course not found")
   }

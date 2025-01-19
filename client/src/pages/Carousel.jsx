@@ -5,7 +5,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
 const Carousel = () => {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
@@ -61,7 +60,11 @@ const Carousel = () => {
       {/* Slick Carousel Wrapper */}
       <Slider {...settings}>
         {courses.map((course) => (
-          <div key={course._id} className="px-5" style={{ flex: "0 0 auto" }}>
+          <div
+            key={course._id}
+            className="px-5 py-4"
+            style={{ flex: "0 0 auto" }}
+          >
             <div className="bg-white shadow-lg hover:shadow-2xl transition-all duration-300 rounded-lg overflow-hidden relative">
               {/* Image Section */}
               <div className="w-full h-56">
@@ -95,7 +98,13 @@ const Carousel = () => {
                   </div>
                   <div className="flex items-center gap-1">
                     <i className="fa-solid fa-user text-[#FE0000]"></i>
-                    <span>+{course.enrolledStudent.length > 100 ? course.enrolledStudent.length : 100} Student</span>
+                    <span>
+                      +
+                      {course.enrolledStudent.length > 100
+                        ? course.enrolledStudent.length
+                        : 100}{" "}
+                      Student
+                    </span>
                   </div>
                 </div>
               </div>

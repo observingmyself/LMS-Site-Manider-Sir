@@ -50,6 +50,7 @@ const getSingleMember = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, team, "Team Member Details"))
 })
+
 const updateTeamMember = asyncHandler(async (req, res) => {
   const { name, position } = req.body;
   const id = req.params.id;

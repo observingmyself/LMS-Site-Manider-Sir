@@ -8,8 +8,8 @@ function CourseDetail() {
   const [singleCourse, setSingleCourse] = useState({});
   const [enrolledStudent, setEnrolledStudent] = useState([]);
   const [purchased, setPurchased] = useState(false);
-  const [ppts,setPpts] = useState([])
-  const [ebooks,setEbooks] = useState([])
+  const [ppts, setPpts] = useState([]);
+  const [ebooks, setEbooks] = useState([]);
   const [isSyllabusOpen, setSyllabusOpen] = useState(false);
   const [isLectureNotesOpen, setLectureNotesOpen] = useState(false);
   const [isEbookOpen, setEbookOpen] = useState(false);
@@ -43,34 +43,33 @@ function CourseDetail() {
     });
   });
 
-
-  // get ppts 
+  // get ppts
   const getPpts = async () => {
-    try{
-      const data = await axios.get(`/api/v1/course/ppt/${id}`)
-      if(data){
-        setPpts(data.data.data.ppt)
+    try {
+      const data = await axios.get(`/api/v1/course/ppt/${id}`);
+      if (data) {
+        setPpts(data.data.data.ppt);
         // console.log(data)
       }
-    }catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
   const getEbooks = async () => {
-    try{
-      const data = await axios.get(`/api/v1/course/Ebook/${id}`)
-      if(data){
-        setEbooks(data.data.data.ebooks)
+    try {
+      const data = await axios.get(`/api/v1/course/Ebook/${id}`);
+      if (data) {
+        setEbooks(data.data.data.ebooks);
         // console.log(data)
       }
-    }catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     getPpts();
     getEbooks();
-  },[id])
+  }, [id]);
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -169,7 +168,7 @@ function CourseDetail() {
           <>
             <button
               onClick={() => payPayment(singleCourse._id)}
-              className="bg-yellow-500 text-gray-900 font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-yellow-400 transition duration-300"
+              className="bg-amber-300 text-gray-900 font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-yellow-400 transition duration-300"
             >
               Purchase Now - ₹ {singleCourse.coursePrice}
             </button>
@@ -278,7 +277,10 @@ function CourseDetail() {
                 {isSyllabusOpen && (
                   <ul className="space-y-2 mt-2 pl-6">
                     {singleCourse.syllabus.map((sy) => (
-                      <li key={sy._id} className="flex items-center justify-between bg-gray-200 p-2 rounded-lg">
+                      <li
+                        key={sy._id}
+                        className="flex items-center justify-between bg-gray-200 p-2 rounded-lg"
+                      >
                         <span className="text-gray-800">{sy.fileName}</span>
                         <a
                           href={sy.fileUrl}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TransparentImage from "../../assets/images/Transparent-logo.png";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, useNavigate, useLocation, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAuth } from "../../store/auth-slice";
@@ -40,6 +40,7 @@ const Navbar = () => {
   const handleLogout = () => {
     try {
       dispatch(logoutAuth()).then(() => toast("Logged out"));
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }
@@ -72,17 +73,20 @@ const Navbar = () => {
       >
         {/* Navbar left */}
         <div className="w-3/4 lg:w-1/4 flex items-center">
-          <img
-            src={TransparentImage}
-            alt="Logo"
-            className={`${
-              isScrolled ? "w-[60px] h-[60px]" : "w-[70px] h-[70px]"
-            } transition-all duration-300`}
-          />
-          <h4 className="text-[#FD0C0C] font-semibold">
-            Advance Computer Centre
-          </h4>
+          <Link className="flex items-center" to="/">
+            <img
+              src={TransparentImage}
+              alt="Logo"
+              className={`${
+                isScrolled ? "w-[60px] h-[60px]" : "w-[70px] h-[70px]"
+              } transition-all duration-300`}
+            />
+            <h4 className="text-[#FD0C0C] font-semibold">
+              Advance Computer Centre
+            </h4>
+          </Link>
         </div>
+
         {/* Profile Toggle */}
         {token ? (
           <>

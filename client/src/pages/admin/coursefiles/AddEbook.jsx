@@ -10,6 +10,21 @@ const AddEbook = () => {
   const [ebookFile, setEbookFile] = useState(null);
   const [ebooks, setEbooks] = useState([]); // To store eBooks of the selected course
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({
+    courseId: false,
+    title: false,
+    ebookFile: false,
+  });
+
+  const validation = () => {
+    const errorState = {
+      courseId: !courseId,
+      title: !title,
+      ebookFile: !ebookFile,
+    };
+    setErrors(errorState);
+    return !Object.values(errorState).includes(true); // returns true if no errors
+  };
 
   const getCourses = async () => {
     try {
@@ -28,6 +43,10 @@ const AddEbook = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate before submission
+    if (!validation()) return;
+
     setIsLoading(true);
 
     const formData = new FormData();
@@ -77,7 +96,6 @@ const AddEbook = () => {
         );
         if (data) {
           setEbooks(data.data.data.ebooks); // Assuming the API response contains the eBooks
-        //   console.log(data)
         }
       } catch (e) {
         console.log("Error fetching eBooks:", e);
@@ -85,41 +103,40 @@ const AddEbook = () => {
       }
     };
 
-    fetchEbooks()
+    fetchEbooks();
   }, [courseIdForCourse]);
 
-
   const handleDelete = async (ebookId) => {
-    try{
-        const data = await axios.delete(`/api/v1/course/removeEbook/${ebookId}`);
-        if(data){
-            // console.log(data)
-            toast.success(`Ebook Deleted`)
-            const fetchEbooks = async () => {
-              if (!courseIdForCourse) {
-                setEbooks([]); 
-                return;
-              }
-              try {
-                const data = await axios.get(
-                  `/api/v1/course/Ebook/${courseIdForCourse}`
-                );
-                if (data) {
-                  setEbooks(data.data.data.ebooks); // Assuming the API response contains the eBooks
-                //   console.log(data);
-                }
-              } catch (e) {
-                console.log("Error fetching eBooks:", e);
-                toast.error("Failed to fetch eBooks");
-              }
-            };
+    try {
+      const data = await axios.delete(`/api/v1/course/removeEbook/${ebookId}`);
+      if (data) {
+        toast.success("Ebook Deleted");
+        // Refresh the list of eBooks
+        const fetchEbooks = async () => {
+          if (!courseIdForCourse) {
+            setEbooks([]);
+            return;
+          }
+          try {
+            const data = await axios.get(
+              `/api/v1/course/Ebook/${courseIdForCourse}`
+            );
+            if (data) {
+              setEbooks(data.data.data.ebooks);
+            }
+          } catch (e) {
+            console.log("Error fetching eBooks:", e);
+            toast.error("Failed to fetch eBooks");
+          }
+        };
 
-            fetchEbooks()
-        }
-    }catch(e){
-        console.log('err in deleting',e)
+        fetchEbooks();
+      }
+    } catch (e) {
+      console.log("Error deleting ebook:", e);
     }
-  } 
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg mb-8">
@@ -146,6 +163,9 @@ const AddEbook = () => {
                 </option>
               ))}
             </select>
+            {errors.courseId && (
+              <p className="text-red-500 text-sm mt-1">Course is required</p>
+            )}
           </div>
 
           <div>
@@ -163,6 +183,9 @@ const AddEbook = () => {
               placeholder="Enter name of eBook"
               className="w-full mt-2 p-2 border border-gray-300 rounded"
             />
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-1">Title is required</p>
+            )}
           </div>
 
           <div>
@@ -179,6 +202,9 @@ const AddEbook = () => {
               name="fileUpload"
               className="w-full mt-2 p-2 border border-gray-300 rounded"
             />
+            {errors.ebookFile && (
+              <p className="text-red-500 text-sm mt-1">File is required</p>
+            )}
           </div>
 
           <button
@@ -220,11 +246,18 @@ const AddEbook = () => {
           {ebooks.length > 0 ? (
             <ul className="space-y-2">
               {ebooks.map((ebook) => (
-                <li key={ebook._id} className="p-3 border rounded flex justify-between items-center">
+                <li
+                  key={ebook._id}
+                  className="p-3 border rounded flex justify-between items-center"
+                >
                   <span title="name of ebook" className="font-semibold">
-                {ebook.title}
+                    {ebook.title}
                   </span>
-                  <span title="delete ebook" className="cursor-pointer" onClick={()=>handleDelete(ebook._id)}>
+                  <span
+                    title="delete ebook"
+                    className="cursor-pointer"
+                    onClick={() => handleDelete(ebook._id)}
+                  >
                     <box-icon name="trash" color="#ff0000"></box-icon>
                   </span>
                 </li>

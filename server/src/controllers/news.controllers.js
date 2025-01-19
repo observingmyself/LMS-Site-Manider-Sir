@@ -100,7 +100,7 @@ const updatenewImage = asyncHandler(async (req, res) => {
   if (!data) {
     throw new ApiError(404, "No News found")
   }
-  console.log(data.newsImage)
+  // console.log(data.newsImage)
 
   if (data.newsImage) {
     const publicId = data.newsImage.split("/").pop().split(".")[0];
@@ -136,7 +136,7 @@ const deleteNews = asyncHandler(async (req, res) => {
   if (!data) {
     throw new ApiError(404, "No News found")
   }
-  console.log(data.newsImage)
+  // console.log(data.newsImage)
 
   if (data.newsImage) {
     const publicId = data.newsImage.split("/").pop().split(".")[0];

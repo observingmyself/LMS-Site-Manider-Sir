@@ -25,7 +25,7 @@ function CoursePage() {
 
   return (
     <div className="container mx-auto px-4 py-12 mt-14">
-      <h1 className="text-3xl font-bold text-center mb-8 text-[#FE0000]">
+      <h1 className="text-3xl font-bold text-center mb-8 text-gray-900">
         Our Courses
       </h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 md:px-10">
