@@ -10,7 +10,7 @@ const NumberingCounter = () => {
       onEnter={() => setCounterOn(true)}
       onExit={() => setCounterOn(false)}
     >
-      <div className="mx-5 md:mx-24 lg:mx-40 mt-20 mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+      <div className="mx-5 md:mx-24 lg:mx-40 mt-10 mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
         <div className="bg-white p-5 shadow-md transition-all duration-200 hover:shadow-lg">
           <h3 className="text-4xl font-semibold text-[#fd0c0c] mb-1">
             {counterOn && <CountUp start={0} end={1058} duration={2} />}

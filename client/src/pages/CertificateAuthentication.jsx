@@ -26,7 +26,7 @@ const CertificateAuthentication = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-20 py-10 px-4">
+    <div className="max-w-md mx-auto mt-40 bg-white py-10 px-10">
       <h2 className="text-center text-2xl font-semibold mb-5">
         Certificate Authentication
       </h2>
@@ -44,7 +44,7 @@ const CertificateAuthentication = () => {
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             placeholder="Enter student name"
-            className="mt-2 p-2 w-full border border-gray-300 rounded-md"
+            className="mt-2 p-2 w-full border border-gray-300 rounded-md outline-none"
             required
           />
         </div>
@@ -52,7 +52,7 @@ const CertificateAuthentication = () => {
         <div>
           <label
             htmlFor="dob"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 "
           >
             Date of Birth
           </label>
@@ -61,7 +61,7 @@ const CertificateAuthentication = () => {
             id="dob"
             value={dob}
             onChange={(e) => setDob(e.target.value)}
-            className="mt-2 p-2 w-full border border-gray-300 rounded-md"
+            className="mt-2 p-2 w-full border border-gray-300 rounded-md outline-none"
             required
           />
         </div>

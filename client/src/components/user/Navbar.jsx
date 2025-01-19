@@ -64,7 +64,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`w-screen px-[15px] fixed top-0 left-0 z-20 lg:px-[80px] ${
+        className={`w-screen px-[25px] fixed top-0 left-0 z-20 lg:px-[40px] xl:px-[60px] ${
           isScrolled ? "h-[80px] bg-white" : "h-[90px] bg-transparent"
         } flex justify-between lg:justify-between items-center transition-all duration-300 gap-2 ${
           menuOpen ? "bg-white" : ""
@@ -230,7 +230,7 @@ const Navbar = () => {
                   {/* Dropdown Menu */}
                   {isMenuOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200">
-                      <ul className="py-1">
+                      <ul className="py-1 flex">
                         <li>
                           <button
                             className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"

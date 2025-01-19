@@ -56,7 +56,8 @@ const Footer = () => {
             {Array.isArray(news) &&
               news.map((item) => (
                 <div
-                  className="flex gap-2"
+                  className="cursor-pointer flex gap-2"
+
                   onClick={() => navigate(`/news/${item._id}`)}
                   key={item._id}
                 >
