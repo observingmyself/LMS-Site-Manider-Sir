@@ -48,7 +48,7 @@ const getCourse = asyncHandler(async (req, res) => {
   }
   const totalCount = await Course.countDocuments();
   return res.status(200)
-    .json(new ApiResponse(200, { data, currentPage: page, Pages: Math.ceil(totalCount / limit) }, "successfully fetch data"));
+    .json(new ApiResponse(200, { data, currentPage: page, Pages: Math.ceil(totalCount / limit), totalCount: totalCount }, "successfully fetch data"));
 })
 
 const getSingleCourse = asyncHandler(async (req, res) => {
