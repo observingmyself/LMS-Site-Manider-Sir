@@ -17,6 +17,7 @@ const AdminSidebar = ({ isSidebarOpen }) => {
   const [isBlogsOpen, setIsBlogsOpen] = useState(false);
   const [isPostsOpen, setIsPostsOpen] = useState(false);
   const [isTeamOpen, setIsTeamOpen] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,6 +34,7 @@ const AdminSidebar = ({ isSidebarOpen }) => {
   const postContentRef = useRef(null);
   const teamContentRef = useRef(null);
   const logoutContentRef = useRef(null);
+  const adminContentRef = useRef(null);
 
     const toggleLogoutOpen = () => {
       setIsLogoutOpen((prev) => !prev);
@@ -77,6 +79,10 @@ const AdminSidebar = ({ isSidebarOpen }) => {
   const toggleTeamDropdown = () => {
     setIsTeamOpen((prev) => !prev);
   };
+  const toggleAdminDropdown = () => {
+    setAdmin((prev) => !prev);
+  };
+
   const handleLogout = () => {
     dispatch(logoutAuth()).then(()=>toast("Logged out"))
   }
@@ -362,7 +368,7 @@ const AdminSidebar = ({ isSidebarOpen }) => {
               }}
             >
               <div className="ml-8 mt-3 text-sm">
-                <p className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
+                <p onClick={()=>navigate(`/admin/dashboard/review`)} className="cursor-pointer hover:text-blue-600 flex items-center justify-left">
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   View Reviews
                 </p>
@@ -498,7 +504,7 @@ const AdminSidebar = ({ isSidebarOpen }) => {
           </div>
 
           {/* Team Table */}
-          <div className="mt-5 mb-20">
+          <div className="mt-5">
             <div
               className="flex items-center justify-between gap-2 cursor-pointer"
               onClick={toggleTeamDropdown}
@@ -537,6 +543,43 @@ const AdminSidebar = ({ isSidebarOpen }) => {
                   {" "}
                   <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
                   Insert New Team Member
+                </p>
+              </div>
+            </div>
+          </div>
+          {/* Create admin */}
+          <div className="mt-5 mb-20">
+            <div
+              className="flex items-center justify-between gap-2 cursor-pointer"
+              onClick={toggleAdminDropdown}
+            >
+              <div className="flex gap-2 items-center">
+                <i className="fa-solid fa-star hihi text-[12px] px-2 py-2 rounded-sm text-white bg-[pink]"></i>
+                <p className="text-sm">Create Admin</p>
+              </div>
+              <i
+                className={`fa-solid fa-chevron-down text-sm transition-transform ${
+                  admin ? "rotate-180" : ""
+                }`}
+              ></i>
+            </div>
+            <div
+              ref={adminContentRef}
+              className="overflow-hidden transition-all duration-300"
+              style={{
+                maxHeight: admin
+                  ? `${adminContentRef.current.scrollHeight}px`
+                  : "0",
+              }}
+            >
+              <div className="ml-8 mt-3 text-sm">
+                <p
+                  onClick={() => navigate("/admin/dashboard/create-admin")}
+                  className="cursor-pointer hover:text-blue-600 mt-2"
+                >
+                  {" "}
+                  <i className="fa-solid fa-chevron-down mr-2 text-[10px] -rotate-90"></i>
+                  add New Admin
                 </p>
               </div>
             </div>

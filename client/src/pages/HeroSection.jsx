@@ -11,6 +11,7 @@ import Background1 from "../assets/images/banner.jpg";
 import Background2 from "../assets/images/banner2.jpg";
 import Background3 from "../assets/images/banner3.jpg";
 import SubscriptionEmailAcceptor from "../components/user/SubscriptionEmailAcceptor";
+import { Link } from "react-router";
 
 const HeroSection = () => {
   const images = [Background1, Background2, Background3];
@@ -52,11 +53,11 @@ const HeroSection = () => {
               Start one of our 1000 high quality courses from the world’s
               leading experts today! Registration Here
             </p>
-            <a href="/registration-form">
+            <Link to="/registration-form">
               <button className="mt-10 px-10 bg-[#FE0000] hover:bg-[#581F27] transition-all duration-200 py-5 text-white rounded">
                 Registration Now!
               </button>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

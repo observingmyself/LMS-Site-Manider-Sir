@@ -11,7 +11,7 @@ const Footer = () => {
   const [news, setNews] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-
+  const phoneNumber = 8556917707;
   const getLatestNews = async () => {
     try {
       const data = await axios.get("/api/v1/news");
@@ -28,9 +28,9 @@ const Footer = () => {
   }, []);
 
   return (
-    <div className="main">
+    <div className="main bg-white">
       {/* Footer Main Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-5 md:px-20 lg:px-32">
+      <div className="grid grid-cols-1 pt-2 md:pt-10  md:grid-cols-2 lg:grid-cols-3 px-5 md:px-20 lg:px-32">
         {/* Section 1 */}
         <div className="flex flex-col justify-start gap-5 mt-5">
           <Link className="flex items-center" to="/">
@@ -41,7 +41,9 @@ const Footer = () => {
           </Link>
           <h4>Learning Computer Programming Languages!</h4>
           <div className="hover:text-[#fd0c0c] hover:underline">
-            <i className="fa-solid fa-phone text-[#FD0C0C]"></i> +91 8556917707
+            <a href={`tel:${phoneNumber}`}>
+              <i className="fa-solid fa-phone text-[#FD0C0C]"></i> +91 {phoneNumber}
+           </a>
           </div>
           <div>
             <i className="fa-regular fa-clock text-[#FD0C0C]"></i> Mon - Sat
@@ -123,7 +125,7 @@ const Footer = () => {
       </div>
 
       {/* Social Links Section */}
-      <div className="w-full mt-10 lg:mt-20 clear-both">
+      <div className="w-full mt-10 lg:mt-10 clear-both">
         <div className="flex gap-6 justify-center items-center h-20">
           <Link to={""}>
             <i className="fa-brands fa-facebook-f text-[#5A5A5A] hover:text-[#fd0c0c] p-3 rounded-full"></i>

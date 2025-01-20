@@ -5,6 +5,7 @@ import VideoThumbnail from "../assets/images/1640x624.png";
 import Video from "../assets/video/about.mp4";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import GetStarted from "./GetStarted";
 
 const About = () => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
@@ -20,7 +21,9 @@ const About = () => {
     setIsPopUpVisible(false);
     document.body.style.overflow = "auto";
   };
-
+  const handleWhatsAppGroup = () => {
+    window.open("https://chat.whatsapp.com/Hd5vk5fZo4392rJHF2jIAG");
+  };
   const getTeamMembers = async () => {
     try {
       const data = await axios.get("/api/v1/team");
@@ -101,7 +104,7 @@ const About = () => {
       </div>
 
       {/* Second Section */}
-      <div className="p-5 flex flex-col my-5 md:my-20 gap-8 md:mx-20 lg:mx-60 justify-center">
+      <div className="p-5 flex flex-col my-5 md:my-20 gap-8 md:mx-20 lg:mx-44 justify-center">
         {/* Mission Section */}
         <div>
           <h4 className="text-2xl font-semibold">Our Mission</h4>
@@ -134,15 +137,15 @@ const About = () => {
         </div>
         {/* Call to Action Section */}
         <div className="flex flex-col lg:flex-row items-center gap-8 my-10">
-          <div>
+          <div className="max-w-md lg:max-w-lg">
             <h4 className="text-3xl font-semibold max-w-lg">
               Start Growing With Community & Experience Endless Possibilities
             </h4>
             <p className="text-[15px] max-w-md mt-4 text-slate-600">
               Get started with a free 1-month trial for your business.
             </p>
-            <button className="px-4 py-4 bg-[#fd0c0c] text-sm mt-6 text-white rounded-md">
-              Join Us
+            <button onClick={handleWhatsAppGroup} className="px-4 py-4 bg-[#fd0c0c] text-sm mt-6 text-white rounded-md">
+              Join `Us
             </button>
           </div>
           <div className="lg:px-20 max-w-md lg:max-w-lg">
@@ -208,7 +211,7 @@ const About = () => {
           <h4 className="text-4xl font-semibold text-center mb-14">
             Meet Our Skilled Team Member's
           </h4>
-          <div className="cards grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+          <div className="cards grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {teamMembers?.map((member) => (
               <div
                 key={member._id}
@@ -218,7 +221,7 @@ const About = () => {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-[50vh] md:h-[40vh] object-cover object-top"
+                    className="w-full h-[50vh] sm:h-[60vh] md:h-[50vh] lg:h-[40vh] object-cover object-top"
                   />
                   <div className="absolute bg-white bottom-0 left-0 right-0 bg-gradient-to-t to-transparent p-4">
                     <h3 className="text-black group-hover:text-[#fd0c0c] font-bold text-lg">
@@ -232,24 +235,7 @@ const About = () => {
           </div>
         </div>
         {/* last div */}
-        <div className="flex flex-col justify-center items-center mt-20">
-          <h4 className="text-4xl font-semibold text-center">
-            Ready to get started ?
-          </h4>
-          <p className="text-center w-3/4 text-slate-600 mt-3">
-            We love conversations, and would love to have one with you! Whether
-            you’re looking for a speaker, an awesome career, or want to get
-            started with a rewards program, we would love <br /> hear from you.
-          </p>
-          <div className="flex gap-4 mt-12">
-            <button className="px-3 text-[#fd0c0c] rounded-sm hover:text-white hover:bg-[#581F27] hover:border-none transition-all duration-200 bg-white border border-[#fd0c0c] py-3">
-              Book a Demo
-            </button>
-            <button className="px-3 bg-[#fd0c0c] rounded-sm hover:text-white hover:bg-[#581F27] hover:border-none transition-all duration-200 text-white py-3">
-              Get Started
-            </button>
-          </div>
-        </div>
+      <GetStarted/>
       </div>
     </div>
   );

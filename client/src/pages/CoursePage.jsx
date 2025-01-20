@@ -45,31 +45,33 @@ function CoursePage() {
               </div>
             </div>
             <div className="px-6 pb-6">
-              <h2 className="text-2xl font-semibold text-[#2C3E50] mt-4">
-                {course.courseTitle}
-              </h2>
-              <div className="flex justify-between text-sm text-gray-600 mt-2">
-                <div className="flex items-center gap-2">
-                  <box-icon
-                    type="solid"
-                    name="user"
-                    size="sm"
-                    color="#FE0000"
-                  ></box-icon>
-                  <span>{course.instructor}</span>
+              <div>
+                <h2 className="text-2xl font-semibold text-[#2C3E50] mt-4">
+                  {course.courseTitle}
+                </h2>
+                <div className="flex justify-between text-sm text-gray-600 mt-2">
+                  <div className="flex items-center gap-2">
+                    <box-icon
+                      type="solid"
+                      name="user"
+                      size="sm"
+                      color="#FE0000"
+                    ></box-icon>
+                    <span>{course.instructor}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span>
+                      +
+                      {course.enrolledStudent > 100
+                        ? course.enrolledStudent
+                        : "5000"}{" "}
+                      Students
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <span>
-                    +
-                    {course.enrolledStudent > 100
-                      ? course.enrolledStudent
-                      : "5000"}{" "}
-                    Students
-                  </span>
-                </div>
+                <p className="text-gray-600 mt-2">{(course.subTitle).slice(0,70)}...</p>
               </div>
-              <p className="text-gray-600 mt-2">{course.subTitle}</p>
-              <div className="flex justify-between items-center mt-4">
+              <div className="flex justify-between items-center bottom-2 mt-4">
                 <p className="text-xl font-semibold text-[#FE0000]">
                   {user?.enrolledCourse?.includes(course?._id)
                     ? "Enrolled"

@@ -4,21 +4,37 @@ import CountUp from "react-countup";
 
 const AdminHomepage = () => {
   const [registrations, setRegistrations] = useState("");
+  const [course, setCourse] = useState('');
 
   const getRegistration = async () => {
     try {
       const { data } = await axios.post("/api/v1/register/getData");
       if (data) {
-        setRegistrations(data.data.data);
+        setRegistrations(data.data.totalCount);
+        // console.log(data)
       }
     } catch (err) {
       console.log(err);
     }
   };
+  const getAllCourses = async () => {
+    try {
+      const data = await axios.get("/api/v1/course/courses");
+      if (data.data.success) {
+        setCourse(data.data.data.totalCount);
+        // console.log(data.data.data.totalCount)
+      }
+    } catch (e) {
+      console.log("Error in getting courses", e);
+    }
+  };
+  // console.log(course)
 
   useEffect(() => {
     getRegistration();
+    getAllCourses();
   }, []);
+
   return (
     <div className="grid w-screen lg:w-full gap-4 px-10 lg:px-32 py-10 md:grid-cols-2 lg:grid-cols-3">
       <div className="flex group shadow-lg p-3 justify-between items-center bg-white ">
@@ -30,7 +46,7 @@ const AdminHomepage = () => {
             Total Students
           </h5>
           <p className="text-right text-2xl">
-            <CountUp start={0} end={registrations.length} duration={3} />
+            <CountUp start={0} end={registrations} duration={3} />
           </p>
         </div>
       </div>
@@ -43,7 +59,7 @@ const AdminHomepage = () => {
             Total Courses
           </h5>
           <p className="text-right text-2xl">
-            <CountUp start={0} end={14} duration={6} />
+            <CountUp start={0} end={course} duration={3} />
           </p>
         </div>
       </div>
@@ -56,7 +72,7 @@ const AdminHomepage = () => {
             Total Visitors
           </h5>
           <p className="text-right text-2xl">
-            <CountUp start={0} end={87538} duration={3} />
+            <CountUp start={0} end={1000001} duration={3} />
           </p>
         </div>
       </div>

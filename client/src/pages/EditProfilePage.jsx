@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { checkAuth } from "../store/auth-slice";
 
 const EditProfilePage = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const EditProfilePage = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [profileImg, setProfileImg] = useState(null);
+  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const handleInputChange = (e) => {
@@ -64,6 +66,7 @@ const EditProfilePage = () => {
         console.log(data);
         toast.success("Profile Image Updated");
         setProfileImg(null);
+        dispatch(checkAuth())
       }
     } catch (err) {
       toast.error("Try Again Later");
