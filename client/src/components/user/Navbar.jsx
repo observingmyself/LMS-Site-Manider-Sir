@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAuth } from "../../store/auth-slice";
 import defaultImg from "../../assets/images/defaultimg.webp";
-import { use } from "react";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -234,7 +233,7 @@ const Navbar = () => {
                   {/* Dropdown Menu */}
                   {isMenuOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200">
-                      <ul className="py-1 flex">
+                      <ul className="py-1 flex flex-col">
                         <li>
                           <button
                             className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
@@ -296,11 +295,11 @@ const Navbar = () => {
         {/* Navbar toggler menu */}
 
         <div
-          className={`navbar-toggler py-[16px] fixed top-16 z-20 transition-all duration-500 lg:hidden bg-white w-full -left-0 ${
+          className={`navbar-toggler py-[16px] shadow-lg fixed top-16 z-20 transition-all duration-500 lg:hidden bg-white w-full -left-0 ${
             menuOpen ? "block" : "hidden"
           }`}
         >
-          <ul className="flex gap-4 mt-1 flex-col justify-evenly items-center w-full">
+          <ul className="flex gap-6 border-t py-[16px] border-secondary-200 mt-1 flex-col justify-evenly items-center w-full">
             <li>
               <NavLink
                 to="/"
@@ -358,10 +357,10 @@ const Navbar = () => {
             </li>
             <li>
               {token ? (
-                " "
+                ""
               ) : (
                 <>
-                  <ul className="flex gap-4 mt-1 flex-col justify-evenly items-center w-full">
+                  <ul className="flex gap-6 mt-1 flex-col justify-evenly items-center w-full">
                     <li>
                       <NavLink
                         to="/login"

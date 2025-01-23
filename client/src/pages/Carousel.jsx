@@ -66,7 +66,7 @@ const Carousel = () => {
             className="px-5 py-4"
             style={{ flex: "0 0 auto" }}
           >
-            <div className="bg-white shadow-lg hover:shadow-2xl transition-all duration-300 rounded-lg overflow-hidden relative">
+            <div className="bg-white shadow-lg transition-all duration-300 rounded-lg overflow-hidden relative">
               {/* Image Section */}
               <div className="w-full h-56">
                 <img

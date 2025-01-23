@@ -85,7 +85,6 @@ const RegistrationForm = () => {
     <div className="my-24">
       <div className="bg-[#EEF4FC] text-center py-8 font-semibold">
         <h4 className="text-4xl md:text-5xl">Register yourself</h4>
-        <p className="mt-4 text-xl md:text-2xl">{"{WINTER CODING CAMP}"}</p>
       </div>
       <form
         onSubmit={(e) => handleSubmit(e, console.log(e))}

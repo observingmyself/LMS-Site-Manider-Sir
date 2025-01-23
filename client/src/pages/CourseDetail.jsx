@@ -8,6 +8,7 @@ function CourseDetail() {
   const [singleCourse, setSingleCourse] = useState({});
   const [enrolledStudent, setEnrolledStudent] = useState([]);
   const [purchased, setPurchased] = useState(false);
+  const [review,setReview] = useState('');
   const [ppts, setPpts] = useState([]);
   const [ebooks, setEbooks] = useState([]);
   const [isSyllabusOpen, setSyllabusOpen] = useState(false);
@@ -112,6 +113,29 @@ function CourseDetail() {
     }
   };
 
+  const handleReview = async (e) => {
+    e.preventDefault();
+    if(!isAuthenticated){
+      return navigate("/login")
+    }
+    if(!review){
+      return toast.error("can't send empty review")
+    }
+    try{
+      const data = await axios.post(`/api/v1/review/create`,{
+        name : user.userName,
+        reviewImage : user.profileImg ? user.profileImg : '',
+        message : review
+      })
+      if(data){
+        toast.success('Review Placed')
+        setReview('')
+      }
+    }catch(e){
+      console.log('err in review' , e)
+    }
+  }
+
   const handlePaymentSuccess = async (response) => {
     console.log(response);
     const options = {
@@ -143,7 +167,7 @@ function CourseDetail() {
     rzpay.open();
   };
   return (
-    <div className="container mx-auto px-4 lg:px-20 py-12 mt-20">
+    <div className="container mx-auto px-4 lg:px-10 py-12 mt-20">
       {/* Course Header */}
       <div
         style={{
@@ -217,6 +241,7 @@ function CourseDetail() {
                 {new Date(singleCourse.updatedAt).toLocaleDateString()}
               </li>
             </ul>
+            
           </div>
 
           {/* Download Section */}
@@ -297,6 +322,8 @@ function CourseDetail() {
                 )}
               </div>
 
+              
+
               {/* Lecture Notes Dropdown */}
               <div className="space-y-4 mt-4">
                 <div
@@ -362,6 +389,14 @@ function CourseDetail() {
           )}
         </div>
 
+        <div className="lg:hidden shadow-lg bg-white flex flex-col gap-1 px-4 py-4 mt-3 rounded-lg">
+          <label htmlFor="review" className="font-semibold">Review</label>
+          <textarea value={review} onChange={(e) => setReview(e.target.value)} placeholder="enter your review about this course..." className="px-2 py-2 outline-none border-b w-full focus:border-[#fd0c0c]" />
+          <div className="w-full flex justify-end">
+            <button onClick={handleReview} className="px-4 rounded-lg text-white font-semibold mt-1 py-2 bg-[#fd0c0c]">Post</button>
+          </div>
+        </div>
+
         {/* Right Column on Larger Screens */}
         <div className="hidden lg:block">
           <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -391,6 +426,13 @@ function CourseDetail() {
               </li>
             </ul>
           </div>
+        <div className="bg-white shadow-lg flex flex-col gap-1 px-4 py-4 mt-3 rounded-lg">
+          <label htmlFor="review" className="font-semibold">Review</label>
+          <textarea value={review} onChange={(e)=>setReview(e.target.value)} placeholder="enter your review about this course..." className="px-2 py-2 outline-none border-b w-full focus:border-[#fd0c0c]"/>
+          <div className="w-full flex justify-end">
+            <button onClick={handleReview} className="px-4 rounded-lg text-white font-semibold mt-1 py-2 bg-[#fd0c0c]">Post</button>
+          </div>
+        </div>
         </div>
       </div>
     </div>

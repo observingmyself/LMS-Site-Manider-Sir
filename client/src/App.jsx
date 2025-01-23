@@ -58,6 +58,8 @@ import ShipingAndDelivery from "./pages/ShipingAndDelivery";
 import Terms_Cond from "./pages/Terms_Cond";
 import CancellationPolicy from "./pages/CancellationPolicy";
 import Privacy from "./pages/Privacy";
+import DisplayReview from "./pages/admin/DisplayReview";
+import CreateNewAdmin from "./pages/admin/CreateNewAdmin";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -148,6 +150,12 @@ function App() {
             <Route path="news" element={<DisplayNews />} />
             <Route path="news-form" element={<NewsAddForm />} />
             <Route path="update-news/:id" element={<NewsUpdateForm />} />
+
+            {/* review routes */}
+            <Route path="review" element={<DisplayReview/>} />
+
+            {/* add admin */}
+            <Route path="create-admin" element={<CreateNewAdmin/>} />
 
             {/* Blog Routes */}
             <Route path="blog" element={<DisplayBlog />} />
