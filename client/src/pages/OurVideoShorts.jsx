@@ -1,9 +1,13 @@
 import React from "react";
 
 // VideoCard Component
-const VideoCard = ({ videoSrc, title, description,index }) => {
+const VideoCard = ({ videoSrc, title, description, index }) => {
   return (
-    <div className={`card shadow-xl rounded-lg transition-all duration-300 p-10 ${index === 1 ? "scale-110" : ""}`}>
+    <div
+      className={`card shadow-xl rounded-lg transition-all duration-300 p-10 ${
+        index === 1 ? "xl:scale-110" : ""
+      }`}
+    >
       <iframe
         width="300"
         height="150"
