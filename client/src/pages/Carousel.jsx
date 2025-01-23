@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { baseURL } from "../constant/constant";
 
 const Carousel = () => {
   const [courses, setCourses] = useState([]);
@@ -11,7 +12,7 @@ const Carousel = () => {
 
   const getAllCourses = async () => {
     try {
-      const response = await axios.get("/api/v1/course");
+      const response = await axios.get(`${baseURL}/api/v1/course`);
       if (response.data.success) {
         setCourses(response.data.data.courses);
       }

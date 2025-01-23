@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { baseURL } from "../constant/constant";
 
 function CoursePage() {
   const [course, setCourse] = useState([]);
@@ -10,7 +11,7 @@ function CoursePage() {
 
   const getAllCourses = async () => {
     try {
-      const data = await axios.get("/api/v1/course");
+      const data = await axios.get(`${baseURL}/api/v1/course`);
       if (data.data.success) {
         setCourse(data.data.data.courses);
       }

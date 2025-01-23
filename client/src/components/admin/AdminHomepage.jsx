@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CountUp from "react-countup";
+import { baseURL } from "../../constant/constant";
 
 const AdminHomepage = () => {
   const [registrations, setRegistrations] = useState("");
 
   const getRegistration = async () => {
     try {
-      const { data } = await axios.post("/api/v1/register/getData");
+      const { data } = await axios.post(`${baseURL}/api/v1/register/getData`);
       if (data) {
         setRegistrations(data.data.data);
       }

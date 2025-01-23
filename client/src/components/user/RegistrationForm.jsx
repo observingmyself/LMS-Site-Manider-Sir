@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const RegistrationForm = () => {
   const [name, setName] = useState("");
@@ -32,7 +33,8 @@ const RegistrationForm = () => {
     if (!gender.trim()) newErrors.gender = "Gender is required.";
     if (!dob) newErrors.dob = "Date of Birth is required.";
     if (!fatherName.trim()) newErrors.fatherName = "Father Name is required.";
-    if (!contact.trim() && contact.trim() > 10 && contact.trim() < 10) newErrors.contact = "Enter valid contact number";
+    if (!contact.trim() && contact.trim() > 10 && contact.trim() < 10)
+      newErrors.contact = "Enter valid contact number";
     if (!address.trim()) newErrors.address = "Address is required.";
     if (!state.trim()) newErrors.state = "State is required.";
     if (!city.trim()) newErrors.city = "City is required.";
@@ -45,23 +47,23 @@ const RegistrationForm = () => {
     setErrors({});
 
     try {
-      const data = await axios.post("/api/v1/register", {
-       name: name,
-       classs: classs,
-       mode: mode,
-        school:school,
-       gender: gender,
-       DOB: dob,
-       fatherName: fatherName,
-       contact: contact,
-       Address: address,
-       State: state,
-       city: city,
+      const data = await axios.post(`${baseURL}/api/v1/register`, {
+        name: name,
+        classs: classs,
+        mode: mode,
+        school: school,
+        gender: gender,
+        DOB: dob,
+        fatherName: fatherName,
+        contact: contact,
+        Address: address,
+        State: state,
+        city: city,
       });
       if (data) {
         toast.success(data.data.message);
         navigate("/");
-        console.log(data)
+        console.log(data);
       }
       setName("");
       setClasss("");
@@ -86,7 +88,7 @@ const RegistrationForm = () => {
         <p className="mt-4 text-xl md:text-2xl">{"{WINTER CODING CAMP}"}</p>
       </div>
       <form
-        onSubmit={(e) => handleSubmit(e,console.log(e))}
+        onSubmit={(e) => handleSubmit(e, console.log(e))}
         className="mt-10 flex flex-col px-10 md:px-32 lg:px-52"
       >
         <div className="flex flex-col gap-2 mb-4">
@@ -266,7 +268,10 @@ const RegistrationForm = () => {
             <span className="text-red-500 text-sm">{errors.state}</span>
           )}
         </div>
-        <button type="submit"  className="bg-[#fd0c0c] hover:bg-[brown] transition-all duration-200 ease-in-out text-white py-3">
+        <button
+          type="submit"
+          className="bg-[#fd0c0c] hover:bg-[brown] transition-all duration-200 ease-in-out text-white py-3"
+        >
           Submit
         </button>
       </form>

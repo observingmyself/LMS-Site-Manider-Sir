@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const DisplayBlog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -11,7 +12,7 @@ const DisplayBlog = () => {
 
   const getAllBlogs = async (page = 1) => {
     try {
-      const data = await axios.get(`/api/v1/blog?page=${page}`);
+      const data = await axios.get(`${baseURL}/api/v1/blog?page=${page}`);
       if (data) {
         setBlogs(data.data.data.data);
         setPages(data.data.data.Pages);
@@ -28,7 +29,7 @@ const DisplayBlog = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`/api/v1/blog/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/blog/${id}`);
       if (data) {
         getAllBlogs(currentPage);
         toast.success("Blog deleted");

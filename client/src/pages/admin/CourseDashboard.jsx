@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { baseURL } from "../../constant/constant";
 
 const CourseDashboard = () => {
   const navigate = useNavigate();
@@ -10,7 +11,9 @@ const CourseDashboard = () => {
 
   const getAllCourses = async (page = 1) => {
     try {
-      const data = await axios.get(`/api/v1/course/courses?page=${page}`);
+      const data = await axios.get(
+        `${baseURL}/api/v1/course/courses?page=${page}`
+      );
       if (data.data.success) {
         // console.log(data)
         setCourses(data.data.data.data);
@@ -29,7 +32,7 @@ const CourseDashboard = () => {
   const handlePublish = async (id, publish) => {
     try {
       const data = await axios.patch(
-        `/api/v1/course/togglePublish/${id}?publish=${!publish}`
+        `${baseURL}/api/v1/course/togglePublish/${id}?publish=${!publish}`
       );
       if (data) {
         getAllCourses(currentPage); // Refresh current page after toggling publish

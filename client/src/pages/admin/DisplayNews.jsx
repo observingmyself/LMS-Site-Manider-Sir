@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const DisplayNews = () => {
   const [news, setNews] = useState([]);
@@ -11,7 +12,7 @@ const DisplayNews = () => {
 
   const getAllNews = async (page = 1) => {
     try {
-      const data = await axios.get(`/api/v1/news?page=${page}`);
+      const data = await axios.get(`${baseURL}/api/v1/news?page=${page}`);
       if (data) {
         setNews(data.data.data.news);
         setPages(data.data.data.Pages); // Assuming API returns the total pages
@@ -28,7 +29,7 @@ const DisplayNews = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`/api/v1/news/delete/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/news/delete/${id}`);
       if (data) {
         getAllNews(currentPage);
         toast.success("News Deleted");

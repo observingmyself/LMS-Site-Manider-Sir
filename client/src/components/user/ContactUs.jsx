@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-
+import { baseURL } from "../../constant/constant";
 const ContactUs = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,7 +28,7 @@ const ContactUs = () => {
     setErrors({});
 
     try {
-      const data = await axios.post("/api/v1/contact/create", {
+      const data = await axios.post(`${baseURL}/api/v1/contact/create`, {
         name: name,
         email: email,
         subject: subject,

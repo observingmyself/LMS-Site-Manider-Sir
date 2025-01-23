@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const UpdateCourse = () => {
   const { id } = useParams();
@@ -25,7 +26,9 @@ const UpdateCourse = () => {
   // getting single course data
   const getSingleCourse = async () => {
     try {
-      const data = await axios.get(`/api/v1/course/singlecourse/${id}`);
+      const data = await axios.get(
+        `${baseURL}/api/v1/course/singlecourse/${id}`
+      );
       if (data.data.success) {
         console.log(data.data.data);
         const course = data.data.data;
@@ -59,11 +62,15 @@ const UpdateCourse = () => {
     const formData = new FormData();
     formData.append("courseThumbnail", updateCourseImage);
     try {
-      const data = await axios.patch(`/api/v1/course/editImg/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const data = await axios.patch(
+        `${baseURL}/api/v1/course/editImg/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (data) {
         console.log(data);
         toast.success(data.data.data);
@@ -78,7 +85,9 @@ const UpdateCourse = () => {
   // to delete course
   const handleDeleteCourse = async () => {
     try {
-      const data = await axios.delete(`/api/v1/course/removeCourse/${id}`);
+      const data = await axios.delete(
+        `${baseURL}/api/v1/course/removeCourse/${id}`
+      );
       if (data.data.success) {
         navigate("/admin/dashboard/allCourses");
         toast.success(data.data.data);
@@ -94,7 +103,7 @@ const UpdateCourse = () => {
     e.preventDefault();
     setIsContentLoading(true);
     try {
-      const data = await axios.patch(`/api/v1/course/edit/${id}`, {
+      const data = await axios.patch(`${baseURL}/api/v1/course/edit/${id}`, {
         courseTitle,
         category,
         courseDuration,

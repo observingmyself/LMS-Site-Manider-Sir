@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const UploadCertificate = () => {
   const [studentName, setStudentName] = useState("");
@@ -41,11 +42,15 @@ const UploadCertificate = () => {
     formdata.append("certificateImg", certificate);
 
     try {
-      const data = await axios.post("/api/v1/certificate/create", formdata, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const data = await axios.post(
+        `${baseURL}/api/v1/certificate/create`,
+        formdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (data.data.success) {
         toast.success(data.data.message);
         setStudentName("");

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "../../../constant/constant";
 
 const AddSyllabus = () => {
   const [courses, setCourses] = useState([]);
@@ -25,7 +26,7 @@ const AddSyllabus = () => {
   // Fetch the courses data
   const getCourses = async () => {
     try {
-      const data = await axios.get(`/api/v1/course/courses`);
+      const data = await axios.get(`${baseURL}/api/v1/course/courses`);
       if (data) {
         setCourses(data.data.data.data);
       }
@@ -51,7 +52,7 @@ const AddSyllabus = () => {
 
     try {
       const data = await axios.post(
-        `/api/v1/course/addSyllabus/${courseId}`,
+        `${baseURL}/api/v1/course/addSyllabus/${courseId}`,
         formData,
         {
           headers: {
@@ -80,7 +81,7 @@ const AddSyllabus = () => {
   const handleDelete = async (id, syllabusId) => {
     try {
       const data = await axios.delete(
-        `/api/v1/course/removeSyllabus/${id}/${syllabusId}`
+        `${baseURL}/api/v1/course/removeSyllabus/${id}/${syllabusId}`
       );
       if (data) {
         toast.success(data.data.data);

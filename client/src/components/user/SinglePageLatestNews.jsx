@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router";
+import { baseURL } from "../../constant/constant";
 
 const SinglePageLatestNews = () => {
   const [singleNews, setSingleNews] = useState({});
@@ -8,7 +9,7 @@ const SinglePageLatestNews = () => {
 
   const getSingleNews = async () => {
     try {
-      const data = await axios.get(`/api/v1/news/${id}`);
+      const data = await axios.get(`${baseURL}/api/v1/news/${id}`);
       setSingleNews(data.data.data);
     } catch (err) {
       console.log(err);

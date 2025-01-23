@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const NewsAddForm = () => {
   const [newsImage, setNewsImage] = useState(null);
@@ -36,11 +37,15 @@ const NewsAddForm = () => {
 
     try {
       setIsLoading(true); // Set loading to true before starting upload
-      const { data } = await axios.post("/api/v1/news/createNews", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await axios.post(
+        `${baseURL}/api/v1/news/createNews`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (data) {
         toast.success("News created successfully");

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { baseURL } from "../../constant/constant";
 
 const PurchasedTransaction = () => {
   const [payments, setPayments] = useState([]);
@@ -8,9 +9,9 @@ const PurchasedTransaction = () => {
 
   const getTransaction = async (page = 1) => {
     try {
-      const data = await axios.get(`/api/v1/payment?page=${page}`);
+      const data = await axios.get(`${baseURL}/api/v1/payment?page=${page}`);
       if (data.data.success) {
-        console.log(data)
+        console.log(data);
         setPayments(data.data.data.data); // Assuming the data structure
         setPages(data.data.data.pages); // Assuming the pagination details
         setCurrentPage(page);

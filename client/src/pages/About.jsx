@@ -5,6 +5,7 @@ import VideoThumbnail from "../assets/images/1640x624.png";
 import Video from "../assets/video/about.mp4";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { baseURL } from "../constant/constant";
 
 const About = () => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
@@ -23,7 +24,7 @@ const About = () => {
 
   const getTeamMembers = async () => {
     try {
-      const data = await axios.get("/api/v1/team");
+      const data = await axios.get(`${baseURL}/api/v1/team`);
       if (data.data.success) {
         // console.log(data.data)
         setTeamMembers(data.data.data);

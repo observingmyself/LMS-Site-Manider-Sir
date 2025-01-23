@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { baseURL } from "../../constant/constant";
 
 const CheckoutPayment = () => {
   const loadScript = (src) => {
@@ -19,11 +20,9 @@ const CheckoutPayment = () => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
   }, []);
 
- 
-  
   const payPayment = async (courseId) => {
     try {
-      const res = await axios.post("/api/v1/payment/checkout", {
+      const res = await axios.post(`${baseURL}/api/v1/payment/checkout`, {
         courseId: courseId,
       });
       const data = res.data;
@@ -50,7 +49,7 @@ const CheckoutPayment = () => {
           response;
 
         axios
-          .post("/api/v1/payment/verifyPayment", {
+          .post(`${baseURL}/api/v1/payment/verifyPayment`, {
             order_id: razorpay_order_id,
             payment_id: razorpay_payment_id,
             signature: razorpay_signature,

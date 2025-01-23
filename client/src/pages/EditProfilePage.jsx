@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { baseURL } from "../constant/constant";
 
 const EditProfilePage = () => {
   const [formData, setFormData] = useState({
@@ -39,7 +40,10 @@ const EditProfilePage = () => {
         !formData.mobileNo.trim()
       )
         return toast.error("These fields are required");
-      const data = await axios.patch(`/api/v1/user/updateProfile`, formData);
+      const data = await axios.patch(
+        `${baseURL}/api/v1/user/updateProfile`,
+        formData
+      );
       if (data) {
         toast.success("Profile Updated");
       }
@@ -59,7 +63,10 @@ const EditProfilePage = () => {
     const formdata = new FormData();
     formdata.append("profileImg", profileImg);
     try {
-      const data = await axios.patch(`/api/v1/user/updateImg`, formdata);
+      const data = await axios.patch(
+        `${baseURL}/api/v1/user/updateImg`,
+        formdata
+      );
       if (data) {
         console.log(data);
         toast.success("Profile Image Updated");

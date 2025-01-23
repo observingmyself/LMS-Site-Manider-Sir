@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const TeamMemberAddForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,11 +41,15 @@ const TeamMemberAddForm = () => {
     formData.append("image", memberImage);
 
     try {
-      const { data } = await axios.post("/api/v1/team/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await axios.post(
+        `${baseURL}/api/v1/team/create`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (data.success) {
         toast.success(data.message);

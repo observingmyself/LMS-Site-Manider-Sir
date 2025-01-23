@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const NewCourseAddForm = () => {
   const [courseTitle, setCourseTitle] = useState("");
@@ -52,11 +53,15 @@ const NewCourseAddForm = () => {
       formData.append("instructor", instructor);
       formData.append("courseThumbnail", courseImage);
 
-      const { data } = await axios.post("/api/v1/course/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await axios.post(
+        `${baseURL}/api/v1/course/create`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (data) {
         toast.success("Course created successfully");

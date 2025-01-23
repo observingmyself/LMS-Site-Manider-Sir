@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
-
+import { baseURL } from "../constant/constant";
 function CourseDetail() {
   const [singleCourse, setSingleCourse] = useState({});
   const [enrolledStudent, setEnrolledStudent] = useState([]);
@@ -19,7 +19,9 @@ function CourseDetail() {
 
   const getSingleCourse = async () => {
     try {
-      const data = await axios.get(`/api/v1/course/singlecourse/${id}`);
+      const data = await axios.get(
+        `${baseURL}/api/v1/course/singlecourse/${id}`
+      );
       if (data.data.success) {
         // console.log(data.data.data);
         setSingleCourse(data.data.data);

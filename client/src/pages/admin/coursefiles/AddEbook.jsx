@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { baseURL } from "../../../constant/constant";
 
 const AddEbook = () => {
   const [courses, setCourses] = useState([]);
@@ -28,7 +29,7 @@ const AddEbook = () => {
 
   const getCourses = async () => {
     try {
-      const data = await axios.get(`/api/v1/course/courses`);
+      const data = await axios.get(`${baseURL}/api/v1/course/courses`);
       if (data) {
         setCourses(data.data.data.data);
       }
@@ -55,7 +56,7 @@ const AddEbook = () => {
 
     try {
       const data = await axios.post(
-        `/api/v1/course/addEbook/${courseId}`,
+        `${baseURL}/api/v1/course/addEbook/${courseId}`,
         formData,
         {
           headers: {
@@ -92,7 +93,7 @@ const AddEbook = () => {
       }
       try {
         const data = await axios.get(
-          `/api/v1/course/Ebook/${courseIdForCourse}`
+          `${baseURL}/api/v1/course/Ebook/${courseIdForCourse}`
         );
         if (data) {
           setEbooks(data.data.data.ebooks); // Assuming the API response contains the eBooks
@@ -108,7 +109,9 @@ const AddEbook = () => {
 
   const handleDelete = async (ebookId) => {
     try {
-      const data = await axios.delete(`/api/v1/course/removeEbook/${ebookId}`);
+      const data = await axios.delete(
+        `${baseURL}/api/v1/course/removeEbook/${ebookId}`
+      );
       if (data) {
         toast.success("Ebook Deleted");
         // Refresh the list of eBooks
@@ -119,7 +122,7 @@ const AddEbook = () => {
           }
           try {
             const data = await axios.get(
-              `/api/v1/course/Ebook/${courseIdForCourse}`
+              `${baseURL}/api/v1/course/Ebook/${courseIdForCourse}`
             );
             if (data) {
               setEbooks(data.data.data.ebooks);

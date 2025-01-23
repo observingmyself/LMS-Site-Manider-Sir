@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { baseURL } from "../../constant/constant";
 
 const Blog = () => {
   const [blog, setBlog] = useState([]);
@@ -8,7 +9,7 @@ const Blog = () => {
 
   const getBlog = async () => {
     try {
-      const data = await axios.get("/api/v1/blog");
+      const data = await axios.get(`${baseURL}/api/v1/blog`);
       if (data) {
         setBlog(data.data.data.data);
 

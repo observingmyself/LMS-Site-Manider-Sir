@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const DisplayRegistration = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -9,9 +10,11 @@ const DisplayRegistration = () => {
 
   const getRegistration = async (page = 1) => {
     try {
-      const { data } = await axios.post(`/api/v1/register/getData?page=${page}`);
+      const { data } = await axios.post(
+        `${baseURL}/api/v1/register/getData?page=${page}`
+      );
       if (data) {
-        console.log(data)
+        console.log(data);
         setRegistrations(data.data.data); // Assuming the data structure
         setPages(data.data.Pages); // Assuming the pagination details
       }
@@ -26,7 +29,7 @@ const DisplayRegistration = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`/api/v1/register/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/register/${id}`);
       getRegistration();
       toast.success("Registration deleted");
     } catch (err) {
@@ -87,11 +90,14 @@ const DisplayRegistration = () => {
                 <td className="px-4 py-2 border">{registration.city}</td>
                 <td className="px-4 py-2 border">{registration.State}</td>
                 <td className="px-4 py-2 border">
-                  {new Date(registration.createdAt).toLocaleDateString("en-IN", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                  })}
+                  {new Date(registration.createdAt).toLocaleDateString(
+                    "en-IN",
+                    {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    }
+                  )}
                 </td>
                 <td className="px-4 py-2 border">
                   <button

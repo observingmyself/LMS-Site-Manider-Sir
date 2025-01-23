@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { baseURL } from "../../constant/constant";
 
 const DisplayRegisterUser = () => {
   const [users, setUsers] = useState([]);
@@ -8,7 +9,7 @@ const DisplayRegisterUser = () => {
 
   const getAllUsers = async (page = 1) => {
     try {
-      const data = await axios.post(`/api/v1/user?page=${page}`);
+      const data = await axios.post(`${baseURL}/api/v1/user?page=${page}`);
       if (data) {
         setUsers(data.data.data.users);
         setPages(data.data.data.Pages);

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const DisplayContact = () => {
   const [contacts, setContacts] = useState([]);
@@ -9,7 +10,7 @@ const DisplayContact = () => {
 
   const getContacts = async (page = 1) => {
     try {
-      const data = await axios.post(`/api/v1/contact?page=${page}`);
+      const data = await axios.post(`${baseURL}/api/v1/contact?page=${page}`);
       if (data) {
         setContacts(data.data.data.contacts);
         setPages(data.data.data.Pages);
@@ -26,7 +27,7 @@ const DisplayContact = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`/api/v1/contact/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/contact/${id}`);
       if (data) {
         getContacts(currentPage);
         toast.success("Query Deleted");

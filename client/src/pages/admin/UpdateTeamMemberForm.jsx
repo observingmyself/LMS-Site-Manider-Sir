@@ -1,82 +1,87 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router';
-import {toast} from 'react-toastify'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const UpdateTeamMemberForm = () => {
-    const {id} = useParams();
-    const [updateMemberImage,setUpdateMemberImage] = useState(null);
-    const [updatedName,setUpdatedName] = useState('')
-    const [updatedPosition,setUpdatedPosition] = useState('')
-    const [isLoading,setIsLoading] = useState(false)
-    const [isContentLoading,setIsContentLoading] = useState(false)
-    const [singleMember,setSingleMember] = useState({})
+  const { id } = useParams();
+  const [updateMemberImage, setUpdateMemberImage] = useState(null);
+  const [updatedName, setUpdatedName] = useState("");
+  const [updatedPosition, setUpdatedPosition] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isContentLoading, setIsContentLoading] = useState(false);
+  const [singleMember, setSingleMember] = useState({});
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0]
-        setUpdateMemberImage(file)
-        // console.log(file)
-    }
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setUpdateMemberImage(file);
+    // console.log(file)
+  };
 
-    const handleImageUpdate = async (e) => {
-        e.preventDefault();
-        setIsLoading(true)
-        const formData = new FormData();
-        formData.append('image',updateMemberImage)
-        try{
-            const data = await axios.patch(`/api/v1/team/updateImage/${id}`,formData,{
-                headers: {
-                    'Content-Type':'multipart/form-data'
-                }
-            })
-            if(data.data.success){
-                toast.success('Member Image Updated')
-                // console.log(data)
-                setIsLoading(false)
-            }
-        }catch(e){
-            console.log(e)
-            toast.error('Failed to update member image.')
-            setIsLoading(false)
-            return;
+  const handleImageUpdate = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("image", updateMemberImage);
+    try {
+      const data = await axios.patch(
+        `${baseURL}/api/v1/team/updateImage/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-    }
-
-    const getSingleTeamMember = async () => {
-      try{
-        const data = await axios.get(`/api/v1/team/singleMember/${id}`)
-        if(data){
-          setUpdatedName(data.data.data.name)
-          setUpdatedPosition(data.data.data.position)
-        }
-      }catch(e){
-        console.log(e)
+      );
+      if (data.data.success) {
+        toast.success("Member Image Updated");
+        // console.log(data)
+        setIsLoading(false);
       }
-    } 
-
-    useEffect(()=>{
-      getSingleTeamMember();
-    },[id])
-    const handleContentUpdate = async (e) => {
-        e.preventDefault();
-        setIsContentLoading(true)
-        try{
-            const data = await axios.patch(`/api/v1/team/update/${id}`,{
-                name : updatedName,
-                position : updatedPosition
-            })
-            if(data){
-                toast.success('Member Content Updated')
-                console.log(data)
-                setIsContentLoading(false)
-            }
-        }catch(e){
-            console.log(e)
-            toast.error('Failed to update member content.')
-            setIsContentLoading(false)
-            return;
-        }
+    } catch (e) {
+      console.log(e);
+      toast.error("Failed to update member image.");
+      setIsLoading(false);
+      return;
     }
+  };
+
+  const getSingleTeamMember = async () => {
+    try {
+      const data = await axios.get(`${baseURL}/api/v1/team/singleMember/${id}`);
+      if (data) {
+        setUpdatedName(data.data.data.name);
+        setUpdatedPosition(data.data.data.position);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getSingleTeamMember();
+  }, [id]);
+  const handleContentUpdate = async (e) => {
+    e.preventDefault();
+    setIsContentLoading(true);
+    try {
+      const data = await axios.patch(`${baseURL}/api/v1/team/update/${id}`, {
+        name: updatedName,
+        position: updatedPosition,
+      });
+      if (data) {
+        toast.success("Member Content Updated");
+        console.log(data);
+        setIsContentLoading(false);
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error("Failed to update member content.");
+      setIsContentLoading(false);
+      return;
+    }
+  };
 
   return (
     <div className="flex flex-col  items-center justify-center gap-3">
@@ -147,14 +152,17 @@ const UpdateTeamMemberForm = () => {
             />
           </div>
           <div>
-            <button type='submit' className='px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold'>
-                {isContentLoading ? 'Loading...' : 'Update'}
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold"
+            >
+              {isContentLoading ? "Loading..." : "Update"}
             </button>
           </div>
         </form>
       </div>
     </div>
   );
-}
+};
 
-export default UpdateTeamMemberForm
+export default UpdateTeamMemberForm;

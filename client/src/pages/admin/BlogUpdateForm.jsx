@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const BlogUpdateForm = () => {
   const { id } = useParams();
@@ -13,14 +14,16 @@ const BlogUpdateForm = () => {
   const [blogType, setBlogType] = useState("");
   const [instructor, setInstructor] = useState("");
 
-
   const updateImageController = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     const form = new FormData();
     form.append("BlogUrl", updateImage);
     try {
-      const data = await axios.patch(`/api/v1/blog/updateImg/${id}`, form);
+      const data = await axios.patch(
+        `${baseURL}/api/v1/blog/updateImg/${id}`,
+        form
+      );
       if (data) {
         toast.success("Image Updated");
         console.log(data);
@@ -35,12 +38,12 @@ const BlogUpdateForm = () => {
 
   const getSingleBlog = async () => {
     try {
-      const data = await axios.get(`/api/v1/blog/${id}`);
+      const data = await axios.get(`${baseURL}/api/v1/blog/${id}`);
       if (data) {
-        setBlogTitle(data.data.data.BlogTitle)
-        setBlogDescription(data.data.data.Description)
-        setBlogType(data.data.data.BlogType)
-        setInstructor(data.data.data.Instructor)
+        setBlogTitle(data.data.data.BlogTitle);
+        setBlogDescription(data.data.data.Description);
+        setBlogType(data.data.data.BlogType);
+        setInstructor(data.data.data.Instructor);
         // console.log()
       }
     } catch (err) {
@@ -56,11 +59,11 @@ const BlogUpdateForm = () => {
     e.preventDefault();
     setContentLoading(true);
     try {
-      const data = await axios.patch(`/api/v1/blog/update/${id}`, {
-        BlogTitle : blogTitle,
-        Description : blogDescription,
-        BlogType : blogType,
-        Instructor : instructor,
+      const data = await axios.patch(`${baseURL}/api/v1/blog/update/${id}`, {
+        BlogTitle: blogTitle,
+        Description: blogDescription,
+        BlogType: blogType,
+        Instructor: instructor,
       });
       if (data) {
         toast.success("Blog Updated");
@@ -97,7 +100,7 @@ const BlogUpdateForm = () => {
             </label>
             <input
               type="file"
-              onChange={(e)=>handleFileChange(e)}
+              onChange={(e) => handleFileChange(e)}
               id="imageInput"
               name="image"
               accept="image/*"

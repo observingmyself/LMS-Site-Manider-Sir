@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "../constant/constant";
 
 const CertificateAuthentication = () => {
   const [studentName, setStudentName] = useState("");
@@ -12,16 +13,18 @@ const CertificateAuthentication = () => {
     // console.log(studentNameuppercase,dob)
     setFormSubmitted(true);
 
-    try{
-        const data = await axios.post(`/api/v1/certificate/check`, {name : studentNameuppercase , DOB : dob});
-        if(data){
-            const driveLink = `https://drive.google.com/file/d/${data.data.data.fileId}/view?usp=sharing
+    try {
+      const data = await axios.post(`${baseURL}/api/v1/certificate/check`, {
+        name: studentNameuppercase,
+        DOB: dob,
+      });
+      if (data) {
+        const driveLink = `https://drive.google.com/file/d/${data.data.data.fileId}/view?usp=sharing
 `;
-            window.location.href = driveLink;
-            
-        }
-    }catch(e){
-        toast.error(e.response.data.message)
+        window.location.href = driveLink;
+      }
+    } catch (e) {
+      toast.error(e.response.data.message);
     }
   };
 

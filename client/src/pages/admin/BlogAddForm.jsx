@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const BlogAddForm = () => {
   const [blogImage, setBlogImage] = useState(null);
@@ -44,7 +45,7 @@ const BlogAddForm = () => {
     formData.append("BlogType", blogType);
 
     try {
-      const data = await axios.post("/api/v1/blog/create", formData, {
+      const data = await axios.post(`${baseURL}/api/v1/blog/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -53,11 +54,11 @@ const BlogAddForm = () => {
         console.log(data);
         toast.success("Blog Added Successfully");
         setIsLoading(false);
-        setBlogDescription('')
-        setBlogImage(null)
-        setBlogTitle('')
-        setInstructor('')
-        setBlogType('')
+        setBlogDescription("");
+        setBlogImage(null);
+        setBlogTitle("");
+        setInstructor("");
+        setBlogType("");
       }
     } catch (err) {
       console.log(err);

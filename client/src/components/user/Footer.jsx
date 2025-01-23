@@ -6,6 +6,7 @@ import "../../index.css";
 import { Link, NavLink, useNavigate } from "react-router";
 import axios from "axios";
 import CertificateModal from "./CertificateModal";
+import { baseURL } from "../../constant/constant";
 
 const Footer = () => {
   const [news, setNews] = useState({});
@@ -14,7 +15,7 @@ const Footer = () => {
 
   const getLatestNews = async () => {
     try {
-      const data = await axios.get("/api/v1/news");
+      const data = await axios.get(`${baseURL}/api/v1/news`);
       if (data) {
         setNews(data.data.data.news);
         // console.log(data)
@@ -57,7 +58,6 @@ const Footer = () => {
               news.map((item) => (
                 <div
                   className="cursor-pointer flex gap-2"
-
                   onClick={() => navigate(`/news/${item._id}`)}
                   key={item._id}
                 >

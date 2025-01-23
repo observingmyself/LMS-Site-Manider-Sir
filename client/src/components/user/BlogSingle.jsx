@@ -1,31 +1,31 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-import IMG1 from '../../assets/images/b77.jpg'
-import IMG2 from '../../assets/images/b6.png'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import IMG1 from "../../assets/images/b77.jpg";
+import IMG2 from "../../assets/images/b6.png";
+import { baseURL } from "../../constant/constant";
 
 const BlogSingle = () => {
-    const { id } = useParams();
-    // console.log(id)
-    const [singleBlog,setSingleBlog] = useState({})
+  const { id } = useParams();
+  // console.log(id)
+  const [singleBlog, setSingleBlog] = useState({});
 
-
-    const getSingleBlog = async () => {
-        try{
-            const data = await axios.get(`/api/v1/blog/${id}`)
-            if(data){
-                // console.log(data)
-                setSingleBlog(data.data.data)
-                // console.log(data.data.data.Description)
-                // console.log(singleBlog.BlogTitle)
-            }
-        }catch(err){
-            console.log(err)
-        }
+  const getSingleBlog = async () => {
+    try {
+      const data = await axios.get(`${baseURL}/api/v1/blog/${id}`);
+      if (data) {
+        // console.log(data)
+        setSingleBlog(data.data.data);
+        // console.log(data.data.data.Description)
+        // console.log(singleBlog.BlogTitle)
+      }
+    } catch (err) {
+      console.log(err);
     }
-    useEffect(()=>{
-        getSingleBlog()
-    },[id])
+  };
+  useEffect(() => {
+    getSingleBlog();
+  }, [id]);
 
   return (
     <div className="mt-24 pb-10">
@@ -70,6 +70,6 @@ const BlogSingle = () => {
       </div>
     </div>
   );
-}
+};
 
-export default BlogSingle
+export default BlogSingle;

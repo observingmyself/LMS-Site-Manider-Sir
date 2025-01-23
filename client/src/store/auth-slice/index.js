@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { googleAuth } from "../../login with google/api";
+import { baseURL } from "../../constant/constant";
 const initialState = {
   isAuthenticated: false,
   isLoading: false,
@@ -11,7 +12,7 @@ const initialState = {
 
 export const userRegister = createAsyncThunk("/register", async (formData) => {
   try {
-    const response = await axios.post("/api/v1/user/register", formData);
+    const response = await axios.post(`${baseURL}/api/v1/user/register`, formData);
     return response.data;
   } catch (error) {
     console.error("ERROR in userRegister", error);
@@ -20,7 +21,7 @@ export const userRegister = createAsyncThunk("/register", async (formData) => {
 
 export const userLogin = createAsyncThunk("/login", async (formData) => {
   try {
-    const response = await axios.post("/api/v1/user/login", formData);
+    const response = await axios.post(`${baseURL}/api/v1/user/login`, formData);
     return response.data;
   } catch (error) {
     toast.error(error.response.data.message);
@@ -47,7 +48,7 @@ export const googleLogin = createAsyncThunk(
 
 export const checkAuth = createAsyncThunk("/checkauth", async () => {
   try {
-    const response = await axios.get("/api/v1/user/profile");
+    const response = await axios.get(`${baseURL}/api/v1/user/profile`);
     return response.data;
   } catch (error) {
     console.log("checkAuth error", error);
@@ -56,7 +57,7 @@ export const checkAuth = createAsyncThunk("/checkauth", async () => {
 
 export const logoutAuth = createAsyncThunk("/logout", async () => {
   try {
-    const response = await axios.post("/api/v1/user/logout");
+    const response = await axios.post(`${baseURL}/api/v1/user/logout`);
     return response.data;
   } catch (error) {
     console.error("logout error", error);

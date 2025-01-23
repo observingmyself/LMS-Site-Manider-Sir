@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 const DisplayTeamMember = () => {
   const [team, setTeam] = useState([]);
   const navigate = useNavigate();
   const getTeamMembers = async () => {
     try {
-      const data = await axios.get("/api/v1/team");
+      const data = await axios.get(`${baseURL}/api/v1/team`);
       if (data.data.success) {
         setTeam(data.data.data);
       } else {
@@ -22,19 +23,18 @@ const DisplayTeamMember = () => {
     getTeamMembers();
   }, []);
 
-
   const handleDelete = async (id) => {
-    try{
-      const data = await axios.delete(`/api/v1/team/delete/${id}`);
+    try {
+      const data = await axios.delete(`${baseURL}/api/v1/team/delete/${id}`);
       getTeamMembers();
-      if(data.data.success){
+      if (data.data.success) {
         console.log(data);
-        toast.success(data.data.data)
+        toast.success(data.data.data);
       }
-    }catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
   return (
     <div className="px-4 lg:px-8 h-screen w-screen">
       <h4 className="text-2xl lg:text-3xl font-semibold text-center mb-6 text-gray-800">

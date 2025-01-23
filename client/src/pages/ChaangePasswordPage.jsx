@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "../constant/constant";
 
 const ChangePasswordPage = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +32,10 @@ const ChangePasswordPage = () => {
       return;
     }
     try {
-      const data = await axios.patch("/api/v1/user/updatePassword", formData);
+      const data = await axios.patch(
+        `${baseURL}/api/v1/user/updatePassword`,
+        formData
+      );
       if (data) {
         toast.success(data.data.data);
         setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });

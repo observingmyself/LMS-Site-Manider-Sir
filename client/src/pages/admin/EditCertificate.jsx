@@ -1,81 +1,89 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-import { toast } from 'react-toastify'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const EditCertificate = () => {
-    const [certificate,setCertificate] = useState(null)
-    const [isLoading, setIsLoading] = useState(false)
-    const [isContentLoading,setIsContentLoading] = useState(false)
-    const [name,setName] = useState('')
-    const [dob,setDob] = useState('')
-    const [course,setCourse] = useState('')
+  const [certificate, setCertificate] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isContentLoading, setIsContentLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [dob, setDob] = useState("");
+  const [course, setCourse] = useState("");
 
+  const { id } = useParams();
+  // console.log(id)
+  const getSingleCourse = async () => {
+    try {
+      const data = await axios.get(
+        `${baseURL}/api/v1/certificate/single-certificate/${id}`
+      );
+      if (data.data.success) {
+        setCourse(data.data.data.course);
+        setName(data.data.data.name);
+        setDob(data.data.data.DOB);
+      }
+    } catch (e) {
+      console.log("err in getting single course", e);
+    }
+  };
+  useEffect(() => {
+    getSingleCourse();
+  }, []);
 
-    const {id} = useParams();
-    // console.log(id)
-    const getSingleCourse = async () => {
-      try{
-        const data = await axios.get(`/api/v1/certificate/single-certificate/${id}`)
-        if(data.data.success){
-          setCourse(data.data.data.course)
-          setName(data.data.data.name)
-          setDob(data.data.data.DOB)
+  const handleImageUpdate = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const formdata = new FormData();
+    formdata.append("certificateImg", certificate);
+    try {
+      const data = await axios.patch(
+        `${baseURL}/api/v1/certificate/updateImg/${id}`,
+        formdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      }catch(e){
-        console.log('err in getting single course',e)
+      );
+      if (data.data.success) {
+        toast.success(data.data.data);
+        setCertificate(null);
       }
-    }    
-    useEffect(()=>{
-      getSingleCourse();
-    },[])
+    } catch (e) {
+      console.log(e, "error updating image");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    const handleImageUpdate = async (e) => {
-        e.preventDefault();
-        setIsLoading(true)
-        const formdata = new FormData();
-        formdata.append('certificateImg',certificate)
-        try{
-            const data = await axios.patch(`/api/v1/certificate/updateImg/${id}`,formdata,{
-                headers : {
-                    'Content-Type' : 'multipart/form-data'
-                }
-            })
-            if(data.data.success){
-                toast.success(data.data.data);
-                setCertificate(null)
-            }
-        }catch(e){
-            console.log(e,'error updating image')
-        }finally{
-            setIsLoading(false)
+  const handleContentUpdate = async (e) => {
+    e.preventDefault();
+    setIsContentLoading(true);
+    try {
+      const data = await axios.patch(
+        `${baseURL}/api/v1/certificate/update/${id}`,
+        {
+          name: name,
+          DOB: dob,
+          course: course,
         }
-    }
-
-    const handleContentUpdate = async (e) => {
-      e.preventDefault();
-      setIsContentLoading(true);
-      try{
-      const data = await axios.patch(`/api/v1/certificate/update/${id}`,{
-        name : name,
-        DOB : dob,
-        course : course
-      });
-      if(data.data.success){
-        toast.success('Certificate Content Updated')
+      );
+      if (data.data.success) {
+        toast.success("Certificate Content Updated");
       }
-        
-      }catch(e){
-        console.log('err in updating course',e)
-      }finally{
-        setIsContentLoading(false)
-      }
+    } catch (e) {
+      console.log("err in updating course", e);
+    } finally {
+      setIsContentLoading(false);
     }
+  };
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0]
-        setCertificate(file)
-    }
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setCertificate(file);
+  };
   return (
     <div className="flex flex-col  items-center justify-center gap-3">
       <div className="bg-white w-96 px-5 py-5 shadow-lg">
@@ -84,7 +92,7 @@ const EditCertificate = () => {
           Update Certificate
         </h4>
         <form
-        onSubmit={(e)=>handleImageUpdate(e)}
+          onSubmit={(e) => handleImageUpdate(e)}
           className="flex gap-1 flex-col mt-5"
         >
           <div className="mb-4">
@@ -172,6 +180,6 @@ const EditCertificate = () => {
       </div>
     </div>
   );
-}
+};
 
-export default EditCertificate
+export default EditCertificate;

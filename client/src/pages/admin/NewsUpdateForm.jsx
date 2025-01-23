@@ -3,74 +3,75 @@ import React, { useEffect, useState } from "react";
 import { FaTruckMonster } from "react-icons/fa";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const NewsUpdateForm = () => {
   const { id } = useParams();
-  const [updateImage,setUpdateImage] = useState(null)
-  const [isLoading,setIsLoading] = useState(false)
-  const [contentLoading,setContentLoading] = useState(false)
-  const [newsHeadline,setNewsHeadline] = useState('')
-  const [newsDescription,setNewsDescription] = useState('')
-
+  const [updateImage, setUpdateImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [contentLoading, setContentLoading] = useState(false);
+  const [newsHeadline, setNewsHeadline] = useState("");
+  const [newsDescription, setNewsDescription] = useState("");
 
   const updateImageController = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
-    const form = new FormData()
-    form.append('newsImage',updateImage)
-    try{
-      const data = await axios.patch(`/api/v1/news/updateImage/${id}`,form)
-      if(data){
-        toast.success('Image Updated')
-        console.log(data)
-        setIsLoading(false)
+    setIsLoading(true);
+    const form = new FormData();
+    form.append("newsImage", updateImage);
+    try {
+      const data = await axios.patch(
+        `${baseURL}/api/v1/news/updateImage/${id}`,
+        form
+      );
+      if (data) {
+        toast.success("Image Updated");
+        console.log(data);
+        setIsLoading(false);
+      } else {
+        toast.error("Failed to Update Image");
       }
-      else{
-        toast.error('Failed to Update Image')
-      }
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   const getSingleNews = async () => {
-      try{
-        const data = await axios.get(`/api/v1/news/${id}`)
-        if(data){
-          setNewsHeadline(data.data.data.newsHeadline)
-          setNewsDescription(data.data.data.newsDescription)
-        }
-      }catch(err){
-        console.log(err)
+    try {
+      const data = await axios.get(`${baseURL}/api/v1/news/${id}`);
+      if (data) {
+        setNewsHeadline(data.data.data.newsHeadline);
+        setNewsDescription(data.data.data.newsDescription);
       }
-  }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     getSingleNews();
-  },[])
+  }, []);
 
   const updateContentController = async (e) => {
     e.preventDefault();
-    setContentLoading(true)
-    try{
-      const data = await axios.patch(`/api/v1/news/update/${id}`,{
-        newsHeadline : newsHeadline,
-        newsDescription : newsDescription
-      })
-      if(data){
-        toast.success('News Updated')
-        setContentLoading(false)
+    setContentLoading(true);
+    try {
+      const data = await axios.patch(`${baseURL}/api/v1/news/update/${id}`, {
+        newsHeadline: newsHeadline,
+        newsDescription: newsDescription,
+      });
+      if (data) {
+        toast.success("News Updated");
+        setContentLoading(false);
       }
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
-
+  };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0]
-    setUpdateImage(file)
-  }
+    const file = e.target.files[0];
+    setUpdateImage(file);
+  };
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 shadow-md rounded-lg">
       {/* Form 1: Update Image */}

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const ViewCertificates = () => {
   const [certificates, setCertificates] = useState([]);
@@ -11,7 +12,9 @@ const ViewCertificates = () => {
 
   const getAllCertificates = async (page = 1) => {
     try {
-      const data = await axios.get(`/api/v1/certificate?page=${page}`);
+      const data = await axios.get(
+        `${baseURL}/api/v1/certificate?page=${page}`
+      );
       if (data) {
         setCertificates(data.data.data.data);
         setPages(data.data.data.Pages);
@@ -28,7 +31,7 @@ const ViewCertificates = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`/api/v1/certificate/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/certificate/${id}`);
       if (data.data.success) {
         toast.success(data.data.data);
         getAllCertificates(currentPage);

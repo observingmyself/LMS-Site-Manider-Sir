@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Fixed 'react-router' to 'react-router-dom'
 import { toast } from "react-toastify";
+import { baseURL } from "../../constant/constant";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -11,13 +12,15 @@ const ForgotPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post(`/api/v1/user/forget-password`, { email });
+      const data = await axios.post(`${baseURL}/api/v1/user/forget-password`, {
+        email,
+      });
       if (data.data.success) {
         toast.success(data.data.data);
         setEmail("");
         setIsModalOpen(true); // Open modal on success
         setTimeout(() => {
-            navigate('/login')
+          navigate("/login");
         }, 10000);
       }
     } catch (e) {
