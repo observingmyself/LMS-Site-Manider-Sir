@@ -147,12 +147,12 @@ const Navbar = () => {
         <div>
           <div
             onClick={navbarToggler}
-            className="lg:hidden cursor-pointer bg-[#FD0C0C] text-xl px-2 py-1 rounded text-white"
+            className="lg:hidden flex justify-center items-center cursor-pointer bg-[#FD0C0C] text-xl px-2 py-1 rounded text-white"
           >
             {menuOpen ? (
-              <i className="fa-solid fa-x"></i>
+              <box-icon name='x' color='#ffffff' ></box-icon>
             ) : (
-              <i className="fa-solid fa-bars"></i>
+                <box-icon name='menu' color='#ffffff' ></box-icon>
             )}
           </div>
           <ul className="hidden lg:flex justify-evenly items-center w-1/4 lg:w-3/4">
