@@ -52,7 +52,7 @@ function CourseDetail() {
   // get ppts
   const getPpts = async () => {
     try {
-      const data = await axios.get(`/api/v1/course/ppt/${id}`, {
+      const data = await axios.get(`${baseURL}/api/v1/course/ppt/${id}`, {
         withCredentials: true,
       });
       if (data) {
@@ -65,7 +65,7 @@ function CourseDetail() {
   };
   const getEbooks = async () => {
     try {
-      const data = await axios.get(`/api/v1/course/Ebook/${id}`, {
+      const data = await axios.get(`${baseURL}/api/v1/course/Ebook/${id}`, {
         withCredentials: true,
       });
       if (data) {
@@ -167,11 +167,17 @@ function CourseDetail() {
           response;
 
         axios
-          .post(`${baseURL}/api/v1/payment/verifyPayment`, {
-            order_id: razorpay_order_id,
-            payment_id: razorpay_payment_id,
-            signature: razorpay_signature,
-          })
+          .post(
+            `${baseURL}/api/v1/payment/verifyPayment`,
+            {
+              order_id: razorpay_order_id,
+              payment_id: razorpay_payment_id,
+              signature: razorpay_signature,
+            },
+            {
+              withCredentials: true,
+            }
+          )
           .then((res) => {
             if (res?.data.success) toast.success("Payment successfull");
             window.location.reload();
