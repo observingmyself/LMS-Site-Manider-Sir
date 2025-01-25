@@ -35,11 +35,11 @@ app.get("/", (req, res) => {
 app.post("/test", upload.single("file"), async (req, res) => {
   const localfile = req.file?.path;
   if (localfile) {
-    console.log(localfile);
+    res.send(localfile);
+    return res.send("File uploaded successfully");
   } else {
-    console.log("Empty");
+    return res("Empty");
   }
-  res.send("File uploaded successfully");
 });
 
 // import Routes
