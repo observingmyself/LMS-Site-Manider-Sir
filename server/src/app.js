@@ -15,6 +15,8 @@ const corsOptions = {
       callback(new Error('CORS policy: Origin not allowed by the server'), false);
     }
   },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],  // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
   credentials: true,  // Allow cookies or authorization headers to be sent
 };
 
