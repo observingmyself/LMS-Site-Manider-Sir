@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 const app = express();
+import { upload } from "./middleware/multer.middleware.js";
+
 
 app.use(express.json({ limit: "30kb" }))
 app.use(express.urlencoded({ extended: true, limit: "30kb" }))
@@ -29,6 +31,17 @@ app.use(cookieParser());
 app.get("/", (req, res) => {
   res.send("Hello World!")
 })
+
+app.post("/test", upload.single("file"), async (req, res) => {
+  const localfile = req.file?.path;
+  if (localfile) {
+    console.log(localfile);
+  } else {
+    console.log("Empty");
+  }
+  res.send("File uploaded successfully");
+});
+
 // import Routes
 import { userRouter } from "./routes/user.routes.js";
 import { registerRouter } from "./routes/register.routes.js";
