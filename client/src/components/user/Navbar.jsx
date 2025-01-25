@@ -71,7 +71,7 @@ const Navbar = () => {
         }`}
       >
         {/* Navbar left */}
-        <div className="w-3/4 lg:w-1/4 flex items-center">
+        <div className="w-3/4 lg:w-1/4 flex z-40 items-center">
           <Link className="flex items-center" to="/">
             <img
               src={TransparentImage}
