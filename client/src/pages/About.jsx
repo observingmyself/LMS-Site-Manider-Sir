@@ -99,7 +99,7 @@ const About = () => {
         <div className="lg:px-20 max-w-md lg:max-w-lg">
           <img
             src={
-              "https://res.cloudinary.com/dypcljhng/image/upload/c_thumb,w_200,g_face/v1734201506/wdqhmfnctuqqmlvnixkm.jpg"
+              "https://res.cloudinary.com/dypcljhng/image/upload/v1734201506/wdqhmfnctuqqmlvnixkm.jpg"
             }
             alt="Who we are"
             className="w-full h-auto object-cover rounded-lg shadow-md"

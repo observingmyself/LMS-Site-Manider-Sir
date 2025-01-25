@@ -5,10 +5,22 @@ const app = express();
 
 app.use(express.json({ limit: "30kb" }))
 app.use(express.urlencoded({ extended: true, limit: "30kb" }))
-app.use(cors({
-  credentials: true,
-  origin: process.env.CORS_ORIGIN
-}));
+
+const allowedOrigins = process.env.CORS_ORIGIN.split(',');
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS policy: Origin not allowed by the server'), false);
+    }
+  },
+  credentials: true,  // Allow cookies or authorization headers to be sent
+};
+
+// Use the CORS middleware in your app
+app.use(cors(corsOptions));
+
 
 app.use(cookieParser());
 

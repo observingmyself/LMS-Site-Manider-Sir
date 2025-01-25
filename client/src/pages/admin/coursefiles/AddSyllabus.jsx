@@ -85,7 +85,6 @@ const AddSyllabus = () => {
     try {
       const data = await axios.delete(
         `${baseURL}/api/v1/course/removeSyllabus/${id}/${syllabusId}`,
-        {},
         {
           withCredentials: true,
         }
