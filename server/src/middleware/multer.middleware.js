@@ -1,11 +1,8 @@
 import multer from "multer";
-const isProduction = process.env.MULTER_DEST === 'production';
-const destinationPath = isProduction
-  ? '/home/advancecomputercentre/LMS-Site-Manider-Sir/server/public/temp' // VPS path
-  : './public/temp'; // Local path
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, destinationPath)
+    cb(null, "./public/temp")
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
