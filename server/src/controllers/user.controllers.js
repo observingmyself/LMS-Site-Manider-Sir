@@ -24,7 +24,7 @@ const generateToken = async (userId) => {
 const options = {
   httpOnly: true,
   secure: true,
-  sameSite: "lax",
+  sameSite: None,
 };
 
 const Register = asyncHandler(async (req, res) => {
