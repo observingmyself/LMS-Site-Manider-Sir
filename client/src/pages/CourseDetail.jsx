@@ -52,7 +52,9 @@ function CourseDetail() {
   // get ppts
   const getPpts = async () => {
     try {
-      const data = await axios.get(`/api/v1/course/ppt/${id}`);
+      const data = await axios.get(`/api/v1/course/ppt/${id}`, {
+        withCredentials: true,
+      });
       if (data) {
         setPpts(data.data.data.ppt);
         // console.log(data)
@@ -63,7 +65,9 @@ function CourseDetail() {
   };
   const getEbooks = async () => {
     try {
-      const data = await axios.get(`/api/v1/course/Ebook/${id}`);
+      const data = await axios.get(`/api/v1/course/Ebook/${id}`, {
+        withCredentials: true,
+      });
       if (data) {
         setEbooks(data.data.data.ebooks);
         // console.log(data)
@@ -97,9 +101,15 @@ function CourseDetail() {
   const payPayment = async (courseId) => {
     try {
       if (isAuthenticated) {
-        const res = await axios.post("/api/v1/payment/checkout", {
-          courseId: courseId,
-        });
+        const res = await axios.post(
+          `${baseURL}/api/v1/payment/checkout`,
+          {
+            courseId: courseId,
+          },
+          {
+            withCredentials: true,
+          }
+        );
         const data = res.data;
         // console.log(data);
         if (!data.success) {
@@ -125,11 +135,17 @@ function CourseDetail() {
       return toast.error("can't send empty review");
     }
     try {
-      const data = await axios.post(`/api/v1/review/create`, {
-        name: user.userName,
-        reviewImage: user.profileImg ? user.profileImg : "",
-        message: review,
-      });
+      const data = await axios.post(
+        `${baseURL}/api/v1/review/create`,
+        {
+          name: user.userName,
+          reviewImage: user.profileImg ? user.profileImg : "",
+          message: review,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         toast.success("Review Placed");
         setReview("");
@@ -151,7 +167,7 @@ function CourseDetail() {
           response;
 
         axios
-          .post("/api/v1/payment/verifyPayment", {
+          .post(`${baseURL}/api/v1/payment/verifyPayment`, {
             order_id: razorpay_order_id,
             payment_id: razorpay_payment_id,
             signature: razorpay_signature,
