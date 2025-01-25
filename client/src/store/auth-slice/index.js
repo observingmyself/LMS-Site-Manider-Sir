@@ -12,7 +12,9 @@ const initialState = {
 
 export const userRegister = createAsyncThunk("/register", async (formData) => {
   try {
-    const response = await axios.post(`${baseURL}/api/v1/user/register`, formData);
+    const response = await axios.post(`${baseURL}/api/v1/user/register`, formData, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     console.error("ERROR in userRegister", error);
@@ -21,7 +23,9 @@ export const userRegister = createAsyncThunk("/register", async (formData) => {
 
 export const userLogin = createAsyncThunk("/login", async (formData) => {
   try {
-    const response = await axios.post(`${baseURL}/api/v1/user/login`, formData);
+    const response = await axios.post(`${baseURL}/api/v1/user/login`, formData, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     toast.error(error.response.data.message);
@@ -48,7 +52,9 @@ export const googleLogin = createAsyncThunk(
 
 export const checkAuth = createAsyncThunk("/checkauth", async () => {
   try {
-    const response = await axios.get(`${baseURL}/api/v1/user/profile`);
+    const response = await axios.get(`${baseURL}/api/v1/user/profile`, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     console.log("checkAuth error", error);
@@ -57,7 +63,9 @@ export const checkAuth = createAsyncThunk("/checkauth", async () => {
 
 export const logoutAuth = createAsyncThunk("/logout", async () => {
   try {
-    const response = await axios.post(`${baseURL}/api/v1/user/logout`);
+    const response = await axios.post(`${baseURL}/api/v1/user/logout`, {}, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     console.error("logout error", error);

@@ -44,7 +44,10 @@ const EditProfilePage = () => {
         return toast.error("These fields are required");
       const data = await axios.patch(
         `${baseURL}/api/v1/user/updateProfile`,
-        formData
+        formData,
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         toast.success("Profile Updated");
@@ -67,7 +70,10 @@ const EditProfilePage = () => {
     try {
       const data = await axios.patch(
         `${baseURL}/api/v1/user/updateImg`,
-        formdata
+        formdata,
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         console.log(data);
