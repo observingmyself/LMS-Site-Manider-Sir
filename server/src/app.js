@@ -38,7 +38,7 @@ app.post("/test", upload.single("file"), async (req, res) => {
     res.send(localfile);
     return res.send("File uploaded successfully");
   } else {
-    return res("Empty");
+    return res.send("Empty");
   }
 });
 
