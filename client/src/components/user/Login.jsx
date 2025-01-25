@@ -47,7 +47,7 @@ const Login = () => {
       );
 
       // Debugging output
-      console.log("Result from login:", result);
+      // console.log("Result from login:", result);
 
       if (result?.payload?.success) {
         toast.success(result.payload.message);
