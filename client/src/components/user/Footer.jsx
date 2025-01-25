@@ -15,7 +15,9 @@ const Footer = () => {
   const phoneNumber = 8556917707;
   const getLatestNews = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/news`);
+      const data = await axios.get(`${baseURL}/api/v1/news`, {
+        withCredentials: true,
+      });
       if (data) {
         setNews(data.data.data.news);
         // console.log(data)
@@ -43,8 +45,9 @@ const Footer = () => {
           <h4>Learning Computer Programming Languages!</h4>
           <div className="hover:text-[#fd0c0c] hover:underline">
             <a href={`tel:${phoneNumber}`}>
-              <i className="fa-solid fa-phone text-[#FD0C0C]"></i> +91 {phoneNumber}
-           </a>
+              <i className="fa-solid fa-phone text-[#FD0C0C]"></i> +91{" "}
+              {phoneNumber}
+            </a>
           </div>
           <div>
             <i className="fa-regular fa-clock text-[#FD0C0C]"></i> Mon - Sat

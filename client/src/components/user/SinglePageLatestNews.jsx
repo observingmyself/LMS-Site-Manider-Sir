@@ -9,7 +9,9 @@ const SinglePageLatestNews = () => {
 
   const getSingleNews = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/news/${id}`);
+      const data = await axios.get(`${baseURL}/api/v1/news/${id}`, {
+        withCredentials: true,
+      });
       setSingleNews(data.data.data);
     } catch (err) {
       console.log(err);

@@ -32,6 +32,7 @@ const UpdateTeamMemberForm = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true,
         }
       );
       if (data.data.success) {
@@ -49,7 +50,12 @@ const UpdateTeamMemberForm = () => {
 
   const getSingleTeamMember = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/team/singleMember/${id}`);
+      const data = await axios.get(
+        `${baseURL}/api/v1/team/singleMember/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         setUpdatedName(data.data.data.name);
         setUpdatedPosition(data.data.data.position);
@@ -66,13 +72,19 @@ const UpdateTeamMemberForm = () => {
     e.preventDefault();
     setIsContentLoading(true);
     try {
-      const data = await axios.patch(`${baseURL}/api/v1/team/update/${id}`, {
-        name: updatedName,
-        position: updatedPosition,
-      });
+      const data = await axios.patch(
+        `${baseURL}/api/v1/team/update/${id}`,
+        {
+          name: updatedName,
+          position: updatedPosition,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         toast.success("Member Content Updated");
-        console.log(data);
+        // console.log(data);
         setIsContentLoading(false);
       }
     } catch (e) {

@@ -11,7 +11,9 @@ function CoursePage() {
 
   const getAllCourses = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/course`);
+      const data = await axios.get(`${baseURL}/api/v1/course`, {
+        withCredentials: true,
+      });
       if (data.data.success) {
         setCourse(data.data.data.courses);
       }
@@ -70,7 +72,9 @@ function CoursePage() {
                     </span>
                   </div>
                 </div>
-                <p className="text-gray-600 mt-2">{(course.subTitle).slice(0,70)}...</p>
+                <p className="text-gray-600 mt-2">
+                  {course.subTitle.slice(0, 70)}...
+                </p>
               </div>
               <div className="flex justify-between items-center bottom-2 mt-4">
                 <p className="text-xl font-semibold text-[#FE0000]">

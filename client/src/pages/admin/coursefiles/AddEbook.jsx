@@ -29,7 +29,9 @@ const AddEbook = () => {
 
   const getCourses = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/course/courses`);
+      const data = await axios.get(`${baseURL}/api/v1/course/courses`, {
+        withCredentials: true,
+      });
       if (data) {
         setCourses(data.data.data.data);
       }
@@ -62,6 +64,7 @@ const AddEbook = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true,
         }
       );
       if (data) {
@@ -93,7 +96,10 @@ const AddEbook = () => {
       }
       try {
         const data = await axios.get(
-          `${baseURL}/api/v1/course/Ebook/${courseIdForCourse}`
+          `${baseURL}/api/v1/course/Ebook/${courseIdForCourse}`,
+          {
+            withCredentials: true,
+          }
         );
         if (data) {
           setEbooks(data.data.data.ebooks); // Assuming the API response contains the eBooks
@@ -110,7 +116,11 @@ const AddEbook = () => {
   const handleDelete = async (ebookId) => {
     try {
       const data = await axios.delete(
-        `${baseURL}/api/v1/course/removeEbook/${ebookId}`
+        `${baseURL}/api/v1/course/removeEbook/${ebookId}`,
+        {},
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         toast.success("Ebook Deleted");
@@ -122,7 +132,10 @@ const AddEbook = () => {
           }
           try {
             const data = await axios.get(
-              `${baseURL}/api/v1/course/Ebook/${courseIdForCourse}`
+              `${baseURL}/api/v1/course/Ebook/${courseIdForCourse}`,
+              {
+                withCredentials: true,
+              }
             );
             if (data) {
               setEbooks(data.data.data.ebooks);

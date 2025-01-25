@@ -12,7 +12,10 @@ const CourseDashboard = () => {
   const getAllCourses = async (page = 1) => {
     try {
       const data = await axios.get(
-        `${baseURL}/api/v1/course/courses?page=${page}`
+        `${baseURL}/api/v1/course/courses?page=${page}`,
+        {
+          withCredentials: true,
+        }
       );
       if (data.data.success) {
         // console.log(data)
@@ -32,7 +35,11 @@ const CourseDashboard = () => {
   const handlePublish = async (id, publish) => {
     try {
       const data = await axios.patch(
-        `${baseURL}/api/v1/course/togglePublish/${id}?publish=${!publish}`
+        `${baseURL}/api/v1/course/togglePublish/${id}?publish=${!publish}`,
+        {},
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         getAllCourses(currentPage); // Refresh current page after toggling publish

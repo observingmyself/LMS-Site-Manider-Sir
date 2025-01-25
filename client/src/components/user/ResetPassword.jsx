@@ -21,6 +21,9 @@ const ResetPassword = () => {
         `${baseURL}/api/v1/user/reset-password/${token}`,
         {
           newPassword: password,
+        },
+        {
+          withCredentials: true,
         }
       );
       if (data.data.success) {

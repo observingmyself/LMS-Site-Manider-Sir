@@ -27,7 +27,10 @@ const UpdateCourse = () => {
   const getSingleCourse = async () => {
     try {
       const data = await axios.get(
-        `${baseURL}/api/v1/course/singlecourse/${id}`
+        `${baseURL}/api/v1/course/singlecourse/${id}`,
+        {
+          withCredentials: true,
+        }
       );
       if (data.data.success) {
         console.log(data.data.data);
@@ -69,10 +72,11 @@ const UpdateCourse = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true,
         }
       );
       if (data) {
-        console.log(data);
+        // console.log(data);
         toast.success(data.data.data);
       }
     } catch (e) {
@@ -86,7 +90,10 @@ const UpdateCourse = () => {
   const handleDeleteCourse = async () => {
     try {
       const data = await axios.delete(
-        `${baseURL}/api/v1/course/removeCourse/${id}`
+        `${baseURL}/api/v1/course/removeCourse/${id}`,
+        {
+          withCredentials: true,
+        }
       );
       if (data.data.success) {
         navigate("/admin/dashboard/allCourses");
@@ -103,19 +110,25 @@ const UpdateCourse = () => {
     e.preventDefault();
     setIsContentLoading(true);
     try {
-      const data = await axios.patch(`${baseURL}/api/v1/course/edit/${id}`, {
-        courseTitle,
-        category,
-        courseDuration,
-        coursePrice,
-        subTitle,
-        courseLevel,
-        courseLanguage,
-        instructor,
-        description,
-      });
+      const data = await axios.patch(
+        `${baseURL}/api/v1/course/edit/${id}`,
+        {
+          courseTitle,
+          category,
+          courseDuration,
+          coursePrice,
+          subTitle,
+          courseLevel,
+          courseLanguage,
+          instructor,
+          description,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       if (data.data.success) {
-        console.log(data);
+        // console.log(data);
         toast.success(data.data.message);
       }
     } catch (e) {

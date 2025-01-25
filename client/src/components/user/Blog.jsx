@@ -9,7 +9,9 @@ const Blog = () => {
 
   const getBlog = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/blog`);
+      const data = await axios.get(`${baseURL}/api/v1/blog`, {
+        withCredentials: true,
+      });
       if (data) {
         setBlog(data.data.data.data);
 

@@ -5,11 +5,17 @@ import { baseURL } from "../../constant/constant";
 
 const AdminHomepage = () => {
   const [registrations, setRegistrations] = useState("");
-  const [course, setCourse] = useState('');
+  const [course, setCourse] = useState("");
 
   const getRegistration = async () => {
     try {
-      const { data } = await axios.post(`${baseURL}/api/v1/register/getData`);
+      const { data } = await axios.post(
+        `${baseURL}/api/v1/register/getData`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         setRegistrations(data.data.totalCount);
         // console.log(data)
@@ -20,7 +26,9 @@ const AdminHomepage = () => {
   };
   const getAllCourses = async () => {
     try {
-      const data = await axios.get("/api/v1/course/courses");
+      const data = await axios.get(`${baseURL}/api/v1/course/courses`, {
+        withCredentials: true,
+      });
       if (data.data.success) {
         setCourse(data.data.data.totalCount);
         // console.log(data.data.data.totalCount)

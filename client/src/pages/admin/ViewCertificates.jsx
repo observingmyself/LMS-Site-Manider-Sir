@@ -13,7 +13,10 @@ const ViewCertificates = () => {
   const getAllCertificates = async (page = 1) => {
     try {
       const data = await axios.get(
-        `${baseURL}/api/v1/certificate?page=${page}`
+        `${baseURL}/api/v1/certificate?page=${page}`,
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         setCertificates(data.data.data.data);
@@ -31,7 +34,9 @@ const ViewCertificates = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`${baseURL}/api/v1/certificate/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/certificate/${id}`, {
+        withCredentials: true,
+      });
       if (data.data.success) {
         toast.success(data.data.data);
         getAllCertificates(currentPage);

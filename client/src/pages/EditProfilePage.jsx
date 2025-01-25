@@ -76,7 +76,7 @@ const EditProfilePage = () => {
         }
       );
       if (data) {
-        console.log(data);
+        // console.log(data);
         toast.success("Profile Image Updated");
         setProfileImg(null);
         dispatch(checkAuth());

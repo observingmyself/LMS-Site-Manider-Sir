@@ -12,7 +12,9 @@ const BlogSingle = () => {
 
   const getSingleBlog = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/blog/${id}`);
+      const data = await axios.get(`${baseURL}/api/v1/blog/${id}`, {
+        withCredentials: true,
+      });
       if (data) {
         // console.log(data)
         setSingleBlog(data.data.data);

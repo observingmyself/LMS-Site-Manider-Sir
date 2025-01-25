@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import T1 from "../assets/images/t1.jpg";
 import S3 from "../assets/images/s3.jpg";
 import VideoThumbnail from "../assets/images/1640x624.png";
 import Video from "../assets/video/about.mp4";
@@ -27,7 +26,9 @@ const About = () => {
   };
   const getTeamMembers = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/team`);
+      const data = await axios.get(`${baseURL}/api/v1/team`, {
+        withCredentials: true,
+      });
       if (data.data.success) {
         // console.log(data.data)
         setTeamMembers(data.data.data);
@@ -97,7 +98,9 @@ const About = () => {
         </div>
         <div className="lg:px-20 max-w-md lg:max-w-lg">
           <img
-            src={T1}
+            src={
+              "https://res.cloudinary.com/dypcljhng/image/upload/c_thumb,w_200,g_face/v1734201506/wdqhmfnctuqqmlvnixkm.jpg"
+            }
             alt="Who we are"
             className="w-full h-auto object-cover rounded-lg shadow-md"
           />

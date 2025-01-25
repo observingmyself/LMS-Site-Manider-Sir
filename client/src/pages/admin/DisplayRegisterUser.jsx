@@ -9,7 +9,13 @@ const DisplayRegisterUser = () => {
 
   const getAllUsers = async (page = 1) => {
     try {
-      const data = await axios.post(`${baseURL}/api/v1/user?page=${page}`);
+      const data = await axios.post(
+        `${baseURL}/api/v1/user?page=${page}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         setUsers(data.data.data.users);
         setPages(data.data.data.Pages);

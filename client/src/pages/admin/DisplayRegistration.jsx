@@ -11,7 +11,11 @@ const DisplayRegistration = () => {
   const getRegistration = async (page = 1) => {
     try {
       const { data } = await axios.post(
-        `${baseURL}/api/v1/register/getData?page=${page}`
+        `${baseURL}/api/v1/register/getData?page=${page}`,
+        {},
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         console.log(data);
@@ -29,7 +33,9 @@ const DisplayRegistration = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`${baseURL}/api/v1/register/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/register/${id}`, {
+        withCredentials: true,
+      });
       getRegistration();
       toast.success("Registration deleted");
     } catch (err) {

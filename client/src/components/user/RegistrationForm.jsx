@@ -63,7 +63,7 @@ const RegistrationForm = () => {
       if (data) {
         toast.success(data.data.message);
         navigate("/");
-        console.log(data);
+        // console.log(data);
       }
       setName("");
       setClasss("");

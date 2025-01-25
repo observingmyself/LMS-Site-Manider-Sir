@@ -21,7 +21,10 @@ const NewsUpdateForm = () => {
     try {
       const data = await axios.patch(
         `${baseURL}/api/v1/news/updateImage/${id}`,
-        form
+        form,
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         toast.success("Image Updated");
@@ -37,7 +40,9 @@ const NewsUpdateForm = () => {
 
   const getSingleNews = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/news/${id}`);
+      const data = await axios.get(`${baseURL}/api/v1/news/${id}`, {
+        withCredentials: true,
+      });
       if (data) {
         setNewsHeadline(data.data.data.newsHeadline);
         setNewsDescription(data.data.data.newsDescription);
@@ -55,10 +60,16 @@ const NewsUpdateForm = () => {
     e.preventDefault();
     setContentLoading(true);
     try {
-      const data = await axios.patch(`${baseURL}/api/v1/news/update/${id}`, {
-        newsHeadline: newsHeadline,
-        newsDescription: newsDescription,
-      });
+      const data = await axios.patch(
+        `${baseURL}/api/v1/news/update/${id}`,
+        {
+          newsHeadline: newsHeadline,
+          newsDescription: newsDescription,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         toast.success("News Updated");
         setContentLoading(false);

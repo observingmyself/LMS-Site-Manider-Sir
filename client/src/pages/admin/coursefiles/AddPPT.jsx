@@ -31,7 +31,9 @@ const AddPPT = () => {
   // Fetch the courses data
   const getCourses = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/course/courses`);
+      const data = await axios.get(`${baseURL}/api/v1/course/courses`, {
+        withCredentials: true,
+      });
       if (data) {
         setCourses(data.data.data.data);
       }
@@ -64,6 +66,7 @@ const AddPPT = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true,
         }
       );
       if (data) {
@@ -95,7 +98,10 @@ const AddPPT = () => {
       }
       try {
         const data = await axios.get(
-          `${baseURL}/api/v1/course/ppt/${courseIdForCourse}`
+          `${baseURL}/api/v1/course/ppt/${courseIdForCourse}`,
+          {
+            withCredentials: true,
+          }
         );
         if (data) {
           setPpts(data.data.data.ppt); // Assuming the API response contains the PPTs
@@ -112,7 +118,11 @@ const AddPPT = () => {
   const handleDelete = async (pptId) => {
     try {
       const data = await axios.delete(
-        `${baseURL}/api/v1/course/removePPT/${pptId}`
+        `${baseURL}/api/v1/course/removePPT/${pptId}`,
+        {},
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         toast.success("PPT Deleted");
@@ -124,7 +134,10 @@ const AddPPT = () => {
           }
           try {
             const data = await axios.get(
-              `${baseURL}/api/v1/course/ppt/${courseIdForCourse}`
+              `${baseURL}/api/v1/course/ppt/${courseIdForCourse}`,
+              {
+                withCredentials: true,
+              }
             );
             if (data) {
               setPpts(data.data.data.ppt);

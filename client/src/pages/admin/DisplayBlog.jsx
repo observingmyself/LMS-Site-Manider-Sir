@@ -12,7 +12,9 @@ const DisplayBlog = () => {
 
   const getAllBlogs = async (page = 1) => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/blog?page=${page}`);
+      const data = await axios.get(`${baseURL}/api/v1/blog?page=${page}`, {
+        withCredentials: true,
+      });
       if (data) {
         setBlogs(data.data.data.data);
         setPages(data.data.data.Pages);
@@ -29,7 +31,9 @@ const DisplayBlog = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`${baseURL}/api/v1/blog/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/blog/${id}`, {
+        withCredentials: true,
+      });
       if (data) {
         getAllBlogs(currentPage);
         toast.success("Blog deleted");

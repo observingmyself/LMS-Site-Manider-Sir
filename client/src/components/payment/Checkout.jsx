@@ -22,9 +22,15 @@ const CheckoutPayment = () => {
 
   const payPayment = async (courseId) => {
     try {
-      const res = await axios.post(`${baseURL}/api/v1/payment/checkout`, {
-        courseId: courseId,
-      });
+      const res = await axios.post(
+        `${baseURL}/api/v1/payment/checkout`,
+        {
+          courseId: courseId,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       const data = res.data;
       // console.log(data);
       if (!data.success) {
@@ -49,11 +55,17 @@ const CheckoutPayment = () => {
           response;
 
         axios
-          .post(`${baseURL}/api/v1/payment/verifyPayment`, {
-            order_id: razorpay_order_id,
-            payment_id: razorpay_payment_id,
-            signature: razorpay_signature,
-          })
+          .post(
+            `${baseURL}/api/v1/payment/verifyPayment`,
+            {
+              order_id: razorpay_order_id,
+              payment_id: razorpay_payment_id,
+              signature: razorpay_signature,
+            },
+            {
+              withCredentials: true,
+            }
+          )
           .then((res) => {
             if (res?.data.success) alert("Payment successfull");
             // console.log(res.data);

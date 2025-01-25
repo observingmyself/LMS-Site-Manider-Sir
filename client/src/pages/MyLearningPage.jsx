@@ -11,7 +11,9 @@ const MyLearningPage = () => {
 
   const getAllCourses = async () => {
     try {
-      const response = await axios.get(`${baseURL}/api/v1/course`);
+      const response = await axios.get(`${baseURL}/api/v1/course`, {
+        withCredentials: true,
+      });
       if (response.data.success) {
         setCourses(response.data.data.courses);
       }

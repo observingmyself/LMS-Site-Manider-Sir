@@ -12,7 +12,9 @@ const DisplayNews = () => {
 
   const getAllNews = async (page = 1) => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/news?page=${page}`);
+      const data = await axios.get(`${baseURL}/api/v1/news?page=${page}`, {
+        withCredentials: true,
+      });
       if (data) {
         setNews(data.data.data.news);
         setPages(data.data.data.Pages); // Assuming API returns the total pages
@@ -29,7 +31,9 @@ const DisplayNews = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`${baseURL}/api/v1/news/delete/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/news/delete/${id}`, {
+        withCredentials: true,
+      });
       if (data) {
         getAllNews(currentPage);
         toast.success("News Deleted");

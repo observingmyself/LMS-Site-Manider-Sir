@@ -17,7 +17,10 @@ const EditCertificate = () => {
   const getSingleCourse = async () => {
     try {
       const data = await axios.get(
-        `${baseURL}/api/v1/certificate/single-certificate/${id}`
+        `${baseURL}/api/v1/certificate/single-certificate/${id}`,
+        {
+          withCredentials: true,
+        }
       );
       if (data.data.success) {
         setCourse(data.data.data.course);
@@ -45,6 +48,7 @@ const EditCertificate = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true,
         }
       );
       if (data.data.success) {
@@ -68,6 +72,9 @@ const EditCertificate = () => {
           name: name,
           DOB: dob,
           course: course,
+        },
+        {
+          withCredentials: true,
         }
       );
       if (data.data.success) {

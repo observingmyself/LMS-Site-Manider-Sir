@@ -22,11 +22,14 @@ const BlogUpdateForm = () => {
     try {
       const data = await axios.patch(
         `${baseURL}/api/v1/blog/updateImg/${id}`,
-        form
+        form,
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         toast.success("Image Updated");
-        console.log(data);
+        // console.log(data);
         setIsLoading(false);
       } else {
         toast.error("Failed to Update Image");
@@ -38,7 +41,9 @@ const BlogUpdateForm = () => {
 
   const getSingleBlog = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/blog/${id}`);
+      const data = await axios.get(`${baseURL}/api/v1/blog/${id}`, {
+        withCredentials: true,
+      });
       if (data) {
         setBlogTitle(data.data.data.BlogTitle);
         setBlogDescription(data.data.data.Description);
@@ -59,12 +64,18 @@ const BlogUpdateForm = () => {
     e.preventDefault();
     setContentLoading(true);
     try {
-      const data = await axios.patch(`${baseURL}/api/v1/blog/update/${id}`, {
-        BlogTitle: blogTitle,
-        Description: blogDescription,
-        BlogType: blogType,
-        Instructor: instructor,
-      });
+      const data = await axios.patch(
+        `${baseURL}/api/v1/blog/update/${id}`,
+        {
+          BlogTitle: blogTitle,
+          Description: blogDescription,
+          BlogType: blogType,
+          Instructor: instructor,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         toast.success("Blog Updated");
         setContentLoading(false);

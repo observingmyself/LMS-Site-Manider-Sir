@@ -8,7 +8,9 @@ const DisplayTeamMember = () => {
   const navigate = useNavigate();
   const getTeamMembers = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/team`);
+      const data = await axios.get(`${baseURL}/api/v1/team`, {
+        withCredentials: true,
+      });
       if (data.data.success) {
         setTeam(data.data.data);
       } else {
@@ -25,10 +27,12 @@ const DisplayTeamMember = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`${baseURL}/api/v1/team/delete/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/team/delete/${id}`, {
+        withCredentials: true,
+      });
       getTeamMembers();
       if (data.data.success) {
-        console.log(data);
+        // console.log(data);
         toast.success(data.data.data);
       }
     } catch (e) {

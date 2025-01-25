@@ -49,9 +49,10 @@ const BlogAddForm = () => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        withCredentials: true,
       });
       if (data) {
-        console.log(data);
+        // console.log(data);
         toast.success("Blog Added Successfully");
         setIsLoading(false);
         setBlogDescription("");

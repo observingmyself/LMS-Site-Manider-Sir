@@ -28,12 +28,18 @@ const ContactUs = () => {
     setErrors({});
 
     try {
-      const data = await axios.post(`${baseURL}/api/v1/contact/create`, {
-        name: name,
-        email: email,
-        subject: subject,
-        message: message,
-      });
+      const data = await axios.post(
+        `${baseURL}/api/v1/contact/create`,
+        {
+          name: name,
+          email: email,
+          subject: subject,
+          message: message,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         // console.log(data)
         toast.success("Query Delivered");

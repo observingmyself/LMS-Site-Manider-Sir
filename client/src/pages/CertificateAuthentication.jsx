@@ -14,10 +14,16 @@ const CertificateAuthentication = () => {
     setFormSubmitted(true);
 
     try {
-      const data = await axios.post(`${baseURL}/api/v1/certificate/check`, {
-        name: studentNameuppercase,
-        DOB: dob,
-      });
+      const data = await axios.post(
+        `${baseURL}/api/v1/certificate/check`,
+        {
+          name: studentNameuppercase,
+          DOB: dob,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         const driveLink = `https://drive.google.com/file/d/${data.data.data.fileId}/view?usp=sharing
 `;

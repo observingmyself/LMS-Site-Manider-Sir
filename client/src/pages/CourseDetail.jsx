@@ -8,7 +8,7 @@ function CourseDetail() {
   const [singleCourse, setSingleCourse] = useState({});
   const [enrolledStudent, setEnrolledStudent] = useState([]);
   const [purchased, setPurchased] = useState(false);
-  const [review,setReview] = useState('');
+  const [review, setReview] = useState("");
   const [ppts, setPpts] = useState([]);
   const [ebooks, setEbooks] = useState([]);
   const [isSyllabusOpen, setSyllabusOpen] = useState(false);
@@ -21,7 +21,10 @@ function CourseDetail() {
   const getSingleCourse = async () => {
     try {
       const data = await axios.get(
-        `${baseURL}/api/v1/course/singlecourse/${id}`
+        `${baseURL}/api/v1/course/singlecourse/${id}`,
+        {
+          withCredentials: true,
+        }
       );
       if (data.data.success) {
         // console.log(data.data.data);
@@ -115,26 +118,26 @@ function CourseDetail() {
 
   const handleReview = async (e) => {
     e.preventDefault();
-    if(!isAuthenticated){
-      return navigate("/login")
+    if (!isAuthenticated) {
+      return navigate("/login");
     }
-    if(!review){
-      return toast.error("can't send empty review")
+    if (!review) {
+      return toast.error("can't send empty review");
     }
-    try{
-      const data = await axios.post(`/api/v1/review/create`,{
-        name : user.userName,
-        reviewImage : user.profileImg ? user.profileImg : '',
-        message : review
-      })
-      if(data){
-        toast.success('Review Placed')
-        setReview('')
+    try {
+      const data = await axios.post(`/api/v1/review/create`, {
+        name: user.userName,
+        reviewImage: user.profileImg ? user.profileImg : "",
+        message: review,
+      });
+      if (data) {
+        toast.success("Review Placed");
+        setReview("");
       }
-    }catch(e){
-      console.log('err in review' , e)
+    } catch (e) {
+      console.log("err in review", e);
     }
-  }
+  };
 
   const handlePaymentSuccess = async (response) => {
     console.log(response);
@@ -241,7 +244,6 @@ function CourseDetail() {
                 {new Date(singleCourse.updatedAt).toLocaleDateString()}
               </li>
             </ul>
-            
           </div>
 
           {/* Download Section */}
@@ -322,8 +324,6 @@ function CourseDetail() {
                 )}
               </div>
 
-              
-
               {/* Lecture Notes Dropdown */}
               <div className="space-y-4 mt-4">
                 <div
@@ -390,10 +390,22 @@ function CourseDetail() {
         </div>
 
         <div className="lg:hidden shadow-lg bg-white flex flex-col gap-1 px-4 py-4 mt-3 rounded-lg">
-          <label htmlFor="review" className="font-semibold">Review</label>
-          <textarea value={review} onChange={(e) => setReview(e.target.value)} placeholder="enter your review about this course..." className="px-2 py-2 outline-none border-b w-full focus:border-[#fd0c0c]" />
+          <label htmlFor="review" className="font-semibold">
+            Review
+          </label>
+          <textarea
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            placeholder="enter your review about this course..."
+            className="px-2 py-2 outline-none border-b w-full focus:border-[#fd0c0c]"
+          />
           <div className="w-full flex justify-end">
-            <button onClick={handleReview} className="px-4 rounded-lg text-white font-semibold mt-1 py-2 bg-[#fd0c0c]">Post</button>
+            <button
+              onClick={handleReview}
+              className="px-4 rounded-lg text-white font-semibold mt-1 py-2 bg-[#fd0c0c]"
+            >
+              Post
+            </button>
           </div>
         </div>
 
@@ -426,13 +438,25 @@ function CourseDetail() {
               </li>
             </ul>
           </div>
-        <div className="bg-white shadow-lg flex flex-col gap-1 px-4 py-4 mt-3 rounded-lg">
-          <label htmlFor="review" className="font-semibold">Review</label>
-          <textarea value={review} onChange={(e)=>setReview(e.target.value)} placeholder="enter your review about this course..." className="px-2 py-2 outline-none border-b w-full focus:border-[#fd0c0c]"/>
-          <div className="w-full flex justify-end">
-            <button onClick={handleReview} className="px-4 rounded-lg text-white font-semibold mt-1 py-2 bg-[#fd0c0c]">Post</button>
+          <div className="bg-white shadow-lg flex flex-col gap-1 px-4 py-4 mt-3 rounded-lg">
+            <label htmlFor="review" className="font-semibold">
+              Review
+            </label>
+            <textarea
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              placeholder="enter your review about this course..."
+              className="px-2 py-2 outline-none border-b w-full focus:border-[#fd0c0c]"
+            />
+            <div className="w-full flex justify-end">
+              <button
+                onClick={handleReview}
+                className="px-4 rounded-lg text-white font-semibold mt-1 py-2 bg-[#fd0c0c]"
+              >
+                Post
+              </button>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

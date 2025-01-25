@@ -12,9 +12,15 @@ const ForgotPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post(`${baseURL}/api/v1/user/forget-password`, {
-        email,
-      });
+      const data = await axios.post(
+        `${baseURL}/api/v1/user/forget-password`,
+        {
+          email,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       if (data.data.success) {
         toast.success(data.data.data);
         setEmail("");

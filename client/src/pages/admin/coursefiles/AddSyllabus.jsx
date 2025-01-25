@@ -26,7 +26,9 @@ const AddSyllabus = () => {
   // Fetch the courses data
   const getCourses = async () => {
     try {
-      const data = await axios.get(`${baseURL}/api/v1/course/courses`);
+      const data = await axios.get(`${baseURL}/api/v1/course/courses`, {
+        withCredentials: true,
+      });
       if (data) {
         setCourses(data.data.data.data);
       }
@@ -58,6 +60,7 @@ const AddSyllabus = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true,
         }
       );
       if (data) {
@@ -81,7 +84,11 @@ const AddSyllabus = () => {
   const handleDelete = async (id, syllabusId) => {
     try {
       const data = await axios.delete(
-        `${baseURL}/api/v1/course/removeSyllabus/${id}/${syllabusId}`
+        `${baseURL}/api/v1/course/removeSyllabus/${id}/${syllabusId}`,
+        {},
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         toast.success(data.data.data);

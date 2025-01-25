@@ -10,7 +10,13 @@ const DisplayContact = () => {
 
   const getContacts = async (page = 1) => {
     try {
-      const data = await axios.post(`${baseURL}/api/v1/contact?page=${page}`);
+      const data = await axios.post(
+        `${baseURL}/api/v1/contact?page=${page}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       if (data) {
         setContacts(data.data.data.contacts);
         setPages(data.data.data.Pages);
@@ -27,7 +33,9 @@ const DisplayContact = () => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`${baseURL}/api/v1/contact/${id}`);
+      const data = await axios.delete(`${baseURL}/api/v1/contact/${id}`, {
+        withCredentials: true,
+      });
       if (data) {
         getContacts(currentPage);
         toast.success("Query Deleted");

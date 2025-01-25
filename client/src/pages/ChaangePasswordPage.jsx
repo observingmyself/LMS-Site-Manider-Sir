@@ -34,7 +34,10 @@ const ChangePasswordPage = () => {
     try {
       const data = await axios.patch(
         `${baseURL}/api/v1/user/updatePassword`,
-        formData
+        formData,
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         toast.success(data.data.data);
