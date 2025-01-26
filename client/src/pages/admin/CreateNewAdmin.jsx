@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { baseURL } from "../../constant/constant";
 
-const CreateNewAdmin = () => {
+const CreateNewAdmin = ({ onFormSubmit }) => {
   const [type, setType] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
@@ -34,8 +34,14 @@ const CreateNewAdmin = () => {
 
     // Validate fields
     if (!formValues.email) errors.email = "Email is required";
-    if (!formValues.mobileNo) errors.mobileNo = "Mobile Number is required";
-    if (!formValues.password) errors.password = "Password is required";
+
+    const mobileNoRegex = /^[0-9]{10}$/; // For example, a 10-digit number
+    if (!formValues.mobileNo || !mobileNoRegex.test(formValues.mobileNo)) {
+      errors.mobileNo = "Enter a valid 10-digit Mobile Number";
+    }
+    if (!formValues.password || formValues.password.length < 6) {
+      errors.password = "Password must be at least 6 characters long";
+    }
     if (!formValues.username) errors.username = "Username is required";
 
     setFormErrors(errors);
@@ -43,23 +49,37 @@ const CreateNewAdmin = () => {
     // If no errors, proceed to submit
     if (Object.keys(errors).length === 0) {
       try {
-        const data = await axios.post(
+        const response = await axios.post(
           `${baseURL}/api/v1/user/register`,
           formValues,
           {
             withCredentials: true,
           }
         );
-        if (data) {
-          //    console.log(data)
-          formValues.email("");
-          formValues.mobileNo("");
-          formValues.password("");
-          formValues.username("");
+
+        if (response.data) {
+          toast.success("Admin created successfully!");
+
+          // Reset form values after success
+          setFormValues({
+            email: "",
+            mobileNo: "",
+            password: "",
+            username: "",
+            role: "admin",
+          });
+
+          // Pass form data to parent or handle it here
+          if (onFormSubmit) {
+            onFormSubmit(response.data);
+          }
         }
       } catch (e) {
-        // console.log('err in creating admin',e)
-        toast.error("User Already Exists");
+        console.error(
+          "Error in creating admin:",
+          e.response?.data || e.message
+        );
+        toast.error("User already exists or there was an error.");
       }
     }
   };
@@ -122,10 +142,10 @@ const CreateNewAdmin = () => {
             className="w-full border border-gray-300 rounded px-3 py-2 mt-1"
             placeholder="Enter password"
           />
-          <div className="">
+          <div className="mt-2">
             <p
-              className="mt-2 px-2 py-2 text-center bg-slate-500 text-white"
-              onClick={(e) => setType((prev) => !prev)}
+              className="cursor-pointer text-center bg-slate-500 text-white px-2 py-1 rounded"
+              onClick={() => setType((prev) => !prev)}
             >
               {type ? "Show" : "Hide"}
             </p>

@@ -81,7 +81,7 @@ const AdminHomepage = () => {
             Total Visitors
           </h5>
           <p className="text-right text-2xl">
-            <CountUp start={0} end={1000001} duration={3} />
+            <CountUp start={0} end={91573} duration={3} />
           </p>
         </div>
       </div>

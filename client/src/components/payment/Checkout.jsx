@@ -44,7 +44,7 @@ const CheckoutPayment = () => {
   };
 
   const handlePaymentSuccess = async (response) => {
-    console.log(response);
+    // console.log(response);
     const options = {
       key: "rzp_test_b9FyB1RcbK4rZq",
       order_id: response.id,

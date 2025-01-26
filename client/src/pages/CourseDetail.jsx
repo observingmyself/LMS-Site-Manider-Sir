@@ -156,9 +156,9 @@ function CourseDetail() {
   };
 
   const handlePaymentSuccess = async (response) => {
-    console.log(response);
+    // console.log(response);
     const options = {
-      key: "rzp_test_b9FyB1RcbK4rZq",
+      key: import.meta.VITE_RAZORPAY_KEY,
       order_id: response.id,
       ...response,
       handler: function (response) {
