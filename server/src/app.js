@@ -40,7 +40,6 @@ import { contactRouter } from "./routes/contact.routes.js";
 import { courseRouter } from "./routes/course.routes.js";
 import { teamRouter } from "./routes/team.routes.js";
 import { certificateRouter } from "./routes/certificate.routes.js";
-import { quizRouter } from "./routes/quiz.routes.js";
 import { paymentRouter } from "./routes/coursePurchase.routes.js";
 import { errorHandler } from "./middleware/errorHandler.middleware.js";
 
@@ -53,7 +52,6 @@ app.use("/api/v1/contact", contactRouter);
 app.use("/api/v1/team", teamRouter);
 app.use("/api/v1/certificate", certificateRouter);
 app.use("/api/v1/course", courseRouter);
-app.use("/api/v1/quiz", quizRouter);
 app.use("/api/v1/payment", paymentRouter);
 app.use(errorHandler())
 export { app };
