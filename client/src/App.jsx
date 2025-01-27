@@ -60,6 +60,7 @@ import CancellationPolicy from "./pages/CancellationPolicy";
 import Privacy from "./pages/Privacy";
 import DisplayReview from "./pages/admin/DisplayReview";
 import CreateNewAdmin from "./pages/admin/CreateNewAdmin";
+import DevelopedBySection from "./pages/developed-by/DevelopedBySection";
 function App() {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
 
@@ -198,6 +199,7 @@ function App() {
             <Route path="allUsers" element={<DisplayRegisterUser />} />
           </Route>
           <Route path="*" element={<PagesNotFound />} />
+          <Route path="/developed-by" element={<DevelopedBySection/>} />
         </Routes>
         <ScrollToTopButton />
       </div>

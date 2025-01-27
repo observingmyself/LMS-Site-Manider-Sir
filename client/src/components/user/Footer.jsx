@@ -152,7 +152,7 @@ const Footer = () => {
             </span>{" "}
             <br />
             Powered by{" "}
-            <span className="hover:text-[#fd0c0c] font-semibold">
+            <span onClick={()=>navigate('/developed-by')} className="hover:text-[#fd0c0c] cursor-pointer font-semibold">
               Pardeep & Moksh
             </span>
           </h1>
