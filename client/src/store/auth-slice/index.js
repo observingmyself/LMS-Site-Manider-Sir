@@ -57,7 +57,7 @@ export const checkAuth = createAsyncThunk("/checkauth", async () => {
     });
     return response.data;
   } catch (error) {
-    console.log("checkAuth error", error);
+    console.log("checkAuth error");
   }
 });
 
