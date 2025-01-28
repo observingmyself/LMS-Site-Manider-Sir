@@ -41,7 +41,7 @@ const Blog = () => {
           <box-icon name="fast-forward" flip="vertical"></box-icon>Blog
         </p>
       </div>
-      <div className="mt-10 grid gap-5 lg:mx-32 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-5 mx-3 sm:mx-10 lg:mx-28 xl:mx-36 grid-cols-1  sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
         {blog?.map((blog) => {
           return (
             <div
