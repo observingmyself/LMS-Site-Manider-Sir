@@ -130,22 +130,32 @@ const Footer = () => {
       {/* Social Links Section */}
       <div className="w-full mt-10 lg:mt-10 clear-both">
         <div className="flex gap-6 justify-center items-center h-20">
-          <Link to={"https://www.facebook.com/ADVANCECOMPUTERCENTREDHURI"}>
+          <a
+            href={"https://www.facebook.com/ADVANCECOMPUTERCENTREDHURI"}
+            target="_blank"
+          >
             <i className="fa-brands fa-facebook-f text-[#5A5A5A] hover:text-[#fd0c0c] p-3 rounded-full"></i>
-          </Link>
-          <Link
-            to={
+          </a>
+          <a
+            href={
               "https://www.linkedin.com/in/advance-computer-centre-dhuri-94665a23"
             }
+            target="_blank"
           >
             <i className="fa-brands fa-linkedin-in text-[#5A5A5A] hover:text-[#fd0c0c] p-3 rounded-full"></i>
-          </Link>
-          <Link to={"https://www.youtube.com/@advancecomputercentre620"}>
+          </a>
+          <a
+            href={"https://www.youtube.com/@advancecomputercentre620"}
+            target="_blank"
+          >
             <i className="fa-brands fa-youtube text-[#5A5A5A] hover:text-[#fd0c0c] p-3 rounded-full"></i>
-          </Link>
-          <Link to={"https://www.instagram.com/advancecodingcentre"}>
+          </a>
+          <a
+            href={"https://www.instagram.com/advancecodingcentre"}
+            target="_blank"
+          >
             <i className="fa-brands fa-instagram text-[#5A5A5A] hover:text-[#fd0c0c] p-3 rounded-full"></i>
-          </Link>
+          </a>
         </div>
         <div>
           <h1 className="text-center text-[#5A5A5A] px-5 pb-5">
