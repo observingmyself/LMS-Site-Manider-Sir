@@ -25,7 +25,7 @@ function Terms_Cond() {
         <div className="mb-8">
           <h3 className="text-3xl mb-8 font-semibold">Terms and Conditions</h3>
           <h3 className="mb-8 text-base md:text-lg text-gray-700">
-            Last updated on Sep 5th 2023
+            Last updated on Jan 25th 2025
           </h3>
           <h3 className="mb-8 text-base md:text-lg text-gray-700">
             The Website Owner, including subsidiaries and affiliates (“Website”
@@ -118,7 +118,7 @@ function Terms_Cond() {
         </div>
       </div>
       {/* last div */}
-     <GetStarted/>
+      <GetStarted />
     </>
   );
 }

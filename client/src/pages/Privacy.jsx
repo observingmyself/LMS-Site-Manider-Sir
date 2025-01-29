@@ -25,7 +25,7 @@ function Privacy() {
         <div className="mb-5">
           <h3 className="text-3xl mb-8 font-semibold">Privacy Policy</h3>
           <h3 className="mb-8 text-lg text-gray-700 md:text-xl">
-            Last updated on Sep 5th 2023
+            Last updated on Jan 25th 2025
           </h3>
           <h3 className=" text-base mb-2 text-gray-700 md:text-lg">
             This privacy policy sets out how ADVANCE COMPUTER CENTRE uses and
@@ -165,7 +165,7 @@ function Privacy() {
           </ul>
         </div>
         {/* last div */}
-       <GetStarted/>
+        <GetStarted />
       </div>
     </>
   );

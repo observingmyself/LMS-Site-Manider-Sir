@@ -27,7 +27,7 @@ function CancellationPolicy() {
             Cancellation and Refund Policy
           </h3>
           <h3 className="mb-8 text-lg text-gray-700 md:text-xl">
-            Last updated on Sep 5th 2023
+            Last updated on Jan 25th 2025
           </h3>
           <h3 className="mb-8 text-base text-gray-700 md:text-lg">
             No cancellations & Refunds are entertained
@@ -77,7 +77,7 @@ function CancellationPolicy() {
           <hr className="h-2 border-gray-400" />
         </div>
         {/* last div */}
-        <GetStarted/>
+        <GetStarted />
       </div>
     </>
   );

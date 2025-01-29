@@ -130,16 +130,20 @@ const Footer = () => {
       {/* Social Links Section */}
       <div className="w-full mt-10 lg:mt-10 clear-both">
         <div className="flex gap-6 justify-center items-center h-20">
-          <Link to={""}>
+          <Link to={"https://www.facebook.com/ADVANCECOMPUTERCENTREDHURI"}>
             <i className="fa-brands fa-facebook-f text-[#5A5A5A] hover:text-[#fd0c0c] p-3 rounded-full"></i>
           </Link>
-          <Link to={""}>
+          <Link
+            to={
+              "https://www.linkedin.com/in/advance-computer-centre-dhuri-94665a23"
+            }
+          >
             <i className="fa-brands fa-linkedin-in text-[#5A5A5A] hover:text-[#fd0c0c] p-3 rounded-full"></i>
           </Link>
-          <Link to={""}>
+          <Link to={"https://www.youtube.com/@advancecomputercentre620"}>
             <i className="fa-brands fa-youtube text-[#5A5A5A] hover:text-[#fd0c0c] p-3 rounded-full"></i>
           </Link>
-          <Link to={""}>
+          <Link to={"https://www.instagram.com/advancecodingcentre"}>
             <i className="fa-brands fa-instagram text-[#5A5A5A] hover:text-[#fd0c0c] p-3 rounded-full"></i>
           </Link>
         </div>
@@ -152,7 +156,10 @@ const Footer = () => {
             </span>{" "}
             <br />
             Powered by{" "}
-            <span onClick={()=>navigate('/developed-by')} className="hover:text-[#fd0c0c] cursor-pointer font-semibold">
+            <span
+              onClick={() => navigate("/developed-by")}
+              className="hover:text-[#fd0c0c] cursor-pointer font-semibold"
+            >
               Pardeep & Moksh
             </span>
           </h1>

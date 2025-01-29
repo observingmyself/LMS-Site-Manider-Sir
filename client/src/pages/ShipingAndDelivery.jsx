@@ -26,7 +26,7 @@ function ShipingAndDelivery() {
             Shipping & Delivery Policy
           </h3>
           <h3 className="mb-8 text-base text-gray-700 md:text-lg">
-            Last updated on Sep 5th 2023
+            Last updated on Jan 25th 2025
           </h3>
           <h3 className="mb-8 text-base text-gray-700 md:text-lg">
             Shipping is not applicable for business.
@@ -93,7 +93,7 @@ function ShipingAndDelivery() {
         </div>
 
         {/* last div */}
-      <GetStarted/>
+        <GetStarted />
       </div>
     </>
   );
