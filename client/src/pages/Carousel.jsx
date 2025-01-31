@@ -12,7 +12,7 @@ const Carousel = () => {
 
   const getAllCourses = async () => {
     try {
-      const response = await axios.get(`${baseURL}/api/v1/course`);
+      const response = await axios.get(`${baseURL}/api/v1/course?limit=6`);
       if (response.data.success) {
         setCourses(response.data.data.courses);
       }
