@@ -11,7 +11,6 @@ const CertificateAuthentication = () => {
     e.preventDefault();
     const studentNameuppercase = studentName.toUpperCase();
     // console.log(studentNameuppercase,dob)
-    // setFormSubmitted(true);
 
     try {
       const data = await axios.post(
